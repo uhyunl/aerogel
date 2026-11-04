@@ -279,17 +279,16 @@ details.qa .a p:last-child { margin-bottom: 0; }
 /* ---------- references ---------- */
 .refs { padding-left: 2.6rem; margin: 1rem 0 0; }
 .refs li { padding: 0.35rem 0; font-size: 0.95rem; line-height: 1.7; scroll-margin-top: 5rem; }
-.refs li::marker { font-variant-numeric: tabular-nums; color: var(--muted); content: "[" counter(list-item) "]  "; }
+.refs li::marker { font-variant-numeric: tabular-nums; color: var(--muted); content: counter(list-item) ".  "; }
 .refs li:target { background: var(--tint); outline: 6px solid var(--tint); }
 .refs .t { font-style: italic; }
 .refs a { word-break: break-all; }
 
 /* ---------- team ---------- */
-.members { list-style: none; padding: 0; margin: 1.5rem 0 0; counter-reset: m; }
-.members li { counter-increment: m; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 0.25rem 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
-.members li::before { content: counter(m); font-weight: 300; font-size: 1.6rem; color: var(--accent); line-height: 1.2; grid-row: span 2; }
+.members { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.members li { padding: 0.9rem 1.4rem; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; min-width: 0; }
 .members .name { font-weight: 600; font-size: 1.15rem; }
-.members .role { color: var(--muted); font-size: 0.95rem; }
+.members-note { margin: 1rem 0 0; color: var(--muted); }
 
 /* ---------- prev / next, footer ---------- */
 .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 4rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--line); }
@@ -317,12 +316,323 @@ details.qa .a p:last-child { margin-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 
-/* single-page additions */
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* 숫자로 보는 에어로겔: five aerogel-tinted circles */
+.stats { list-style: none; margin: 1.75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
+.stats li {
+  flex: 0 0 auto; width: 11rem; aspect-ratio: 1 / 1; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 1rem;
+  background: radial-gradient(circle at 34% 28%, #ffffff 0%, var(--tint) 52%, var(--tint-strong) 100%);
+  border: 1px solid var(--tint-strong);
+}
+.stats .k { font-size: 0.88rem; font-weight: 600; color: var(--muted); }
+.stats .v { font-size: 1.75rem; font-weight: 700; color: var(--accent); line-height: 1.15; margin: 0.3rem 0 0.1rem; white-space: nowrap; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.stats .v small { font-size: 0.5em; font-weight: 600; margin-right: 0.2em; color: var(--ink); }
+.stats .u { font-size: 0.85rem; color: var(--ink); }
+@media (max-width: 560px) {
+  .stats { gap: 0.75rem; }
+  .stats li { width: calc(50% - 0.375rem); max-width: 10rem; padding: 0.5rem; }
+  .stats .k { font-size: 0.8rem; }
+  .stats .v { font-size: 1.4rem; }
+}
+
+/* plain-language rewrite: defined terms, stacked heat-path cards, prose lists */
+dfn { font-style: normal; font-weight: 600; }
+.paths { grid-template-columns: 1fr; }
+.paths .p { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); column-gap: 1.25rem; align-items: start; }
+.paths .p svg { grid-row: 1 / span 2; }
+.paths .p h3 { margin-top: 0.1rem; }
+@media (max-width: 640px) {
+  .paths .p { grid-template-columns: 1fr; }
+  .paths .p svg { grid-row: auto; max-width: 16rem; margin: 0 auto 0.25rem; }
+}
+.col > ul:not([class]) li, main .col ul:not([class]) li { margin: 0.35rem 0; }
+
+/* first screen: headline and lead centred over the full-width network figure */
+.hero h1, .hero .lead { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* 왜 지금 에어로겔인가: uses grid, then outlook pair */
+.why-lead { margin: 1rem 0 0; max-width: 46rem; }
+.uses { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.uses li { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.1rem 1.1rem; min-width: 0; }
+.uses h3 { margin: 0 0 0.4rem; font-size: 1.02rem; color: var(--accent); }
+.uses p { margin: 0; font-size: 0.93rem; line-height: 1.7; }
+.uses-more { margin: 0.75rem 0 0; font-size: 0.93rem; text-align: right; }
+.uses + .uses-more + .why { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2.25rem; }
+@media (max-width: 960px) { .uses { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .uses { grid-template-columns: 1fr; } .uses + .uses-more + .why { grid-template-columns: 1fr; } }
+
+/* about page: drying demo, history rail, kinds */
+.statement { font-size: clamp(1.45rem, 3.4vw, 2rem); font-weight: 300; line-height: 1.4; letter-spacing: -0.02em; margin: 1.25rem 0 0.75rem; color: var(--ink); }
+.dry { margin: 2rem 0 0; padding: 1.25rem 1.25rem 1rem; background: var(--surface); border-radius: 10px; }
+.dry-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.dry-panel { min-width: 0; text-align: center; }
+.dry-panel svg { display: block; width: 100%; max-width: 300px; height: auto; margin: 0 auto; }
+.dry-head { margin: 0; font-weight: 600; font-size: 1rem; }
+.dry-head.evap { color: var(--heat); }
+.dry-head.scf { color: var(--accent); }
+.dry-state { margin: 0.25rem 0 0; font-size: 0.92rem; min-height: 2.9em; color: var(--ink); }
+.dry-edges line { stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; }
+.dry-nodes circle { fill: #ffffff; stroke: var(--accent); stroke-width: 1.8; }
+.dry-arrows path { fill: none; stroke: var(--heat); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.dry-ctrl { text-align: center; margin: 0.75rem 0 0; }
+.dry-ctrl button { font: inherit; font-weight: 600; font-size: 0.98rem; padding: 0.55rem 1.6rem; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.dry-ctrl button:disabled { opacity: 0.55; cursor: default; }
+.dry-ctrl button:focus-visible { outline: 3px solid var(--tint-strong); outline-offset: 2px; }
+.dry figcaption { margin-top: 0.9rem; font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 520px) { .dry { padding: 1rem 0.6rem 0.9rem; } .dry-state { font-size: 0.82rem; } .dry-head { font-size: 0.92rem; } }
+
+.rail { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; }
+.rail::before { content: ""; position: absolute; left: 0; right: 0; top: calc(3.175rem - 1px); height: 2px; background: var(--tint-strong); }
+.rail li { position: relative; padding: 0 1rem 0 0; min-width: 0; display: flex; flex-direction: column; }
+.rail .y { display: block; font-size: 1.9rem; font-weight: 300; letter-spacing: -0.02em; color: var(--accent); height: 2.3rem; line-height: 2.3rem; order: 0; }
+.rail li::before { content: ""; display: block; box-sizing: border-box; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: #fff; border: 2px solid var(--accent); margin: 0.5rem 0 0.8rem; position: relative; order: 1; }
+.rail b { order: 2; }
+.rail p { order: 3; }
+.rail b { display: block; font-size: 1rem; margin-bottom: 0.25rem; }
+.rail p { margin: 0; font-size: 0.92rem; line-height: 1.65; }
+.rail li:first-child::before { background: var(--accent); }
+@media (max-width: 720px) {
+  .rail { grid-template-columns: 1fr; gap: 1.25rem; padding-left: 1.4rem; }
+  .rail::before { left: 5px; right: auto; top: 0.4rem; bottom: 0.4rem; width: 2px; height: auto; }
+  .rail li { padding: 0; }
+  .rail li::before { position: absolute; left: 0; top: 0.78rem; margin: 0; }
+  .rail li { padding-left: 0; }
+  .rail li::before { left: -1.4rem; }
+}
+
+.kinds { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 2.25rem; }
+.kind { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); column-gap: 1rem; align-items: start; min-width: 0; }
+.kind svg { width: 4.5rem; height: 4.5rem; display: block; }
+.kind .name { margin: 0.15rem 0 0.3rem; font-size: 1.1rem; font-weight: 600; }
+.kind .name span { font-weight: 400; font-size: 0.9rem; color: var(--muted); margin-left: 0.35rem; }
+.kind p { margin: 0; font-size: 0.93rem; line-height: 1.7; }
+.kind .aside { margin-top: 0.4rem; font-size: 0.82rem; color: var(--muted); }
+@media (max-width: 640px) { .kinds { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+/* science page: zoom figure, reference bars, k(T) chart */
+.zoom { margin: 1.5rem 0 0; }
+.zoom svg { display: block; width: 100%; height: auto; }
+.zoom-steps { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; counter-reset: z; }
+.zoom-steps li { text-align: center; font-size: 0.9rem; line-height: 1.6; min-width: 0; counter-increment: z; }
+.zoom-steps b { display: block; font-size: 1rem; margin-bottom: 0.15rem; }
+.zoom-steps b::before { content: counter(z) " "; color: var(--accent); font-weight: 400; }
+.zoom-steps span { color: var(--ink); }
+.zoom figcaption { margin-top: 0.9rem; font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 560px) { .zoom-steps { gap: 0.5rem; } .zoom-steps li { font-size: 0.8rem; } .zoom-steps b { font-size: 0.9rem; } }
+
+.cmp { margin: 1.25rem 0 0; }
+.cmp-key { margin: 0 0 0.5rem; font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
+.cmp-key .k-band { display: inline-block; width: 1.4rem; height: 0.55rem; border-radius: 3px; background: var(--accent); }
+.cmp-key .k-ref { display: inline-block; width: 2px; height: 0.9rem; background: var(--ink); margin-left: 0.8rem; }
+.cmp-row { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 9.5rem; column-gap: 1rem; align-items: end; padding: 0.4rem 0 0.9rem; border-bottom: 1px solid var(--line); }
+.cmp-name { margin: 0; font-weight: 600; padding-bottom: 0.1rem; }
+.cmp-val { margin: 0; font-size: 0.9rem; text-align: right; padding-bottom: 0.05rem; }
+.cmp-val small { display: block; font-size: 0.75rem; color: var(--muted); }
+.cmp-track { position: relative; height: 2.6rem; }
+.cmp-track::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0.45rem; height: 2px; background: var(--line); }
+.cmp-band { position: absolute; bottom: 0.2rem; height: 0.55rem; border-radius: 4px; background: var(--accent); }
+.cmp-dot { position: absolute; bottom: 0.12rem; width: 0.7rem; height: 0.7rem; margin-left: -0.35rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px #fff; }
+.cmp-ref { position: absolute; bottom: 0; width: 2px; height: 1.15rem; margin-left: -1px; background: var(--ink); }
+.cmp-ref i { position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 0.8rem; color: var(--ink); white-space: nowrap; }
+.cmp-ref.at-start i { left: 0; transform: none; }
+.cmp-ref.at-end i { left: auto; right: 0; transform: none; }
+@media (max-width: 600px) {
+  .cmp-row { grid-template-columns: 1fr auto; row-gap: 0.1rem; }
+  .cmp-track { grid-column: 1 / -1; grid-row: 2; }
+}
+.sci-note { font-size: 0.92rem; color: var(--muted); margin-top: 1rem; }
+
+details.more { margin: 1.25rem 0 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+details.more summary { cursor: pointer; padding: 0.7rem 0; font-weight: 600; color: var(--accent); list-style-position: inside; }
+details.more[open] { padding-bottom: 0.9rem; }
+details.more p, details.more ul { font-size: 0.95rem; }
+.kt svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; }
+.kt .kt-pt { cursor: default; }
+details.more h4.step { font-size: 1rem; font-weight: 600; margin: 1.1rem 0 0.4rem; }
+details.more h4.step:first-of-type { margin-top: 0.4rem; }
+details.more .eq { margin: 0.4rem 0 0.6rem; }
+
+/* making page: process stepper, capillary calculator, drying methods */
+.ps { margin: 1.5rem 0 0; background: var(--surface); border-radius: 10px; padding: 1rem 1.25rem 1.1rem; }
+.ps-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.ps-tabs button { font: inherit; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem 0.45rem 0.5rem; border-radius: 999px; border: 1.5px solid var(--tint-strong); background: #fff; color: var(--ink); cursor: pointer; }
+.ps-tabs button .n { display: inline-grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; background: var(--tint); color: var(--accent); font-size: 0.82rem; font-weight: 600; }
+.ps-tabs button[aria-selected="true"] { border-color: var(--accent); background: var(--accent); color: #fff; font-weight: 600; }
+.ps-tabs button[aria-selected="true"] .n { background: #fff; }
+.ps-tabs button:focus-visible, .ps-nav button:focus-visible, .cap button:focus-visible { outline: 3px solid var(--tint-strong); outline-offset: 2px; }
+.ps-views { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: 1rem; margin-top: 1rem; align-items: end; }
+.ps-view { background: #fff; border-radius: 8px; padding: 0.6rem 0.6rem 0.4rem; min-width: 0; }
+.ps-view svg { display: block; width: 100%; height: auto; max-height: 15rem; margin: 0 auto; }
+.ps-cap { margin: 0 0 0.25rem; font-size: 0.8rem; color: var(--muted); }
+.ps-title { margin: 1rem 0 0.3rem; font-size: 1.08rem; }
+.ps-text { margin: 0; font-size: 0.97rem; line-height: 1.75; min-height: 5.3em; }
+.ps-nav { display: flex; justify-content: space-between; margin-top: 0.75rem; }
+.ps-nav button { font: inherit; font-size: 0.9rem; padding: 0.4rem 0.9rem; border-radius: 999px; border: 1px solid var(--tint-strong); background: #fff; color: var(--accent); cursor: pointer; }
+.ps-nav button:disabled { opacity: 0.4; cursor: default; }
+.ps figcaption { margin-top: 0.8rem; font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 560px) { .ps { padding: 0.9rem 0.7rem; } .ps-tabs button { font-size: 0.85rem; padding: 0.35rem 0.7rem 0.35rem 0.4rem; } .ps-views { gap: 0.5rem; } .ps-text { font-size: 0.92rem; min-height: 0; } .ps-views { grid-template-columns: 1fr; } .ps-view svg { max-height: 11rem; } }
+
+.cap { margin: 1.25rem 0 0; padding: 1.1rem 1.25rem; border: 1px solid var(--line); border-radius: 10px; }
+.cap-row { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; align-items: center; margin-bottom: 0.8rem; }
+.cap-lab { font-size: 0.9rem; color: var(--muted); }
+.cap-sols { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.cap-sols button { font: inherit; font-size: 0.92rem; padding: 0.35rem 0.85rem; border-radius: 999px; border: 1.5px solid var(--tint-strong); background: #fff; color: var(--ink); cursor: pointer; }
+.cap-sols button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.cap-slide { display: flex; align-items: center; gap: 0.75rem; }
+.cap-slide input { flex: 1; min-width: 0; accent-color: var(--accent); }
+.cap-slide output { min-width: 3.5rem; text-align: right; font-weight: 600; }
+.cap-out { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.25rem 1rem; margin: 0.4rem 0 0.5rem; }
+.cap-out span { font-size: 0.9rem; color: var(--muted); }
+.cap-out b { font-size: 1.7rem; font-weight: 600; color: var(--heat); }
+.cap-bar { position: relative; height: 0.7rem; border-radius: 4px; background: var(--tint); margin: 1.6rem 0 0.5rem; }
+.cap-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--heat); transition: width 0.25s; }
+.cap-ref { position: absolute; top: -0.35rem; bottom: -0.35rem; width: 2px; background: var(--ink); }
+.cap-ref i { position: absolute; bottom: 1.55rem; left: 0; font-style: normal; font-size: 0.78rem; white-space: nowrap; color: var(--ink); }
+.cap-note { margin: 0.6rem 0 0; font-size: 0.95rem; }
+@media (prefers-reduced-motion: reduce) { .cap-fill { transition: none; } }
+@media (max-width: 560px) { .cap { padding: 0.9rem 0.8rem; } .cap-row { grid-template-columns: 1fr; gap: 0.35rem; } }
+
+.methods { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 2rem; }
+.methods li { min-width: 0; border-top: 2px solid var(--tint-strong); padding-top: 0.75rem; }
+.methods li.main { border-top-color: var(--accent); }
+.methods b { display: block; font-size: 1.02rem; margin-bottom: 0.25rem; }
+.methods p { margin: 0 0 0.4rem; font-size: 0.93rem; line-height: 1.7; }
+.methods .pm { margin: 0; font-size: 0.9rem; line-height: 1.65; }
+.methods .pm span { display: block; }
+.methods .pm span::before { display: inline-block; width: 1.1rem; font-weight: 700; }
+.methods .pm .good::before { content: "+"; color: var(--accent); }
+.methods .pm .bad::before { content: "−"; color: var(--heat); }
+@media (max-width: 640px) { .methods { grid-template-columns: 1fr; gap: 1.1rem; } }
+
+/* making: all five stages shown at once (wider than the reading column) */
+.ps.ps-all { padding: 1.1rem 1.1rem 1rem; width: min(74rem, calc(100vw - 3rem)); margin-left: calc(50% - min(37rem, 50vw - 1.5rem)); }
+.ps-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.4rem; }
+.ps-card { position: relative; min-width: 0; display: flex; flex-direction: column; }
+.ps-card:not(:last-child)::after { content: ""; position: absolute; right: -1.05rem; top: 7.2rem; width: 0.55rem; height: 0.55rem; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); transform: rotate(45deg); }
+.ps-all .ps-title { margin: 0 0 0.6rem; font-size: 0.98rem; line-height: 1.4; display: flex; gap: 0.45rem; align-items: flex-start; min-height: 2.8em; }
+.ps-all .ps-title .n { flex: none; display: inline-grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.8rem; font-weight: 600; margin-top: 0.05rem; }
+.ps-all .ps-views { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin: 0; }
+.ps-all .ps-view { padding: 0.4rem; }
+.ps-all .ps-view svg { max-height: 10.5rem; }
+.ps-all .ps-text { margin: 0.7rem 0 0; font-size: 0.88rem; line-height: 1.7; min-height: 0; }
+@media (max-width: 1100px) {
+  .ps-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ps-card:not(:last-child)::after { display: none; }
+}
+@media (max-width: 640px) {
+  .ps.ps-all { width: auto; margin-left: 0; padding: 0.9rem 0.7rem; }
+  .ps-cards { grid-template-columns: 1fr; gap: 1.5rem; }
+  .ps-all .ps-views { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+  .ps-all .ps-title { min-height: 0; }
+}
+@media (max-width: 1100px) and (min-width: 641px) { .ps-all .ps-views { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); } }
+
+/* making: static capillary pressure comparison */
+.capbars { margin: 1.25rem 0 0; padding: 1.1rem 1.25rem 1rem; border: 1px solid var(--line); border-radius: 10px; }
+.cb-head { margin: 0 0 0.6rem; font-size: 0.9rem; color: var(--muted); }
+.cb-labrow { padding: 0; }
+.cb-labtrack { position: relative; height: 1.2rem; }
+.cb-reflab { position: absolute; bottom: 0.1rem; font-size: 0.78rem; color: var(--ink); white-space: nowrap; transform: translateX(-50%); }
+.cb-row { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 6.5rem; gap: 0.75rem; align-items: center; padding: 0.45rem 0; }
+.cb-name { font-weight: 600; font-size: 0.95rem; }
+.cb-track { position: relative; height: 1.1rem; background: var(--tint); border-radius: 4px; }
+.cb-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--heat); border-radius: 4px; }
+.cb-ref { position: absolute; top: -0.3rem; bottom: -0.3rem; width: 2px; margin-left: -1px; background: var(--ink); }
+.cb-val { text-align: right; font-weight: 600; color: var(--heat); }
+.cb-val small { display: block; font-weight: 400; font-size: 0.75rem; color: var(--muted); }
+.capbars figcaption { margin-top: 0.8rem; font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+@media (max-width: 560px) {
+  .capbars { padding: 0.9rem 0.8rem; }
+  .cb-row { grid-template-columns: 4.6rem minmax(0, 1fr) 4.8rem; gap: 0.5rem; }
+  .cb-name { font-size: 0.85rem; } .cb-val { font-size: 0.85rem; }
+  .cb-reflab { font-size: 0.7rem; transform: translateX(calc(-100% + 0.4rem)); }
+}
+
+/* applications: temperature spectrum, battery result, beyond insulation */
+.tspec { margin: 1.5rem 0 0; padding: 1.2rem 1.25rem 1rem; background: var(--surface); border-radius: 10px; }
+.ts-area { position: relative; height: 7.2rem; }
+.ts-bar { position: absolute; left: 0; right: 0; top: 2.6rem; height: 0.9rem; border-radius: 999px; background: linear-gradient(90deg, #2c69b0 0%, #9fc4ec 14%, #e9f2fc 22%, #f6e2a0 31%, #f6c445 34%, #e8742a 55%, #c43c1e 78%, #8c1616 100%); }
+.ts-ticks { position: absolute; left: 0; right: 0; top: 3.65rem; height: 1.1rem; }
+.ts-ticks span { position: absolute; transform: translateX(-50%); font-size: 0.76rem; color: var(--muted); white-space: nowrap; }
+.ts-ticks span:last-child { transform: translateX(-100%); }
+.ts-unit { margin: 0; text-align: right; font-size: 0.76rem; color: var(--muted); }
+.ts-pt, .ts-bd { position: absolute; }
+.ts-pt i, .ts-bd i { position: absolute; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 0.85rem; font-weight: 600; color: var(--ink); white-space: nowrap; }
+/* points sit on the bar, with a thin leader to their label */
+.ts-pt { top: 2.6rem; width: 0; height: 0.9rem; }
+.ts-pt::before { content: ""; position: absolute; left: -0.5rem; top: -0.05rem; width: 1rem; height: 1rem; border-radius: 50%; background: #fff; border: 2.5px solid var(--ink); box-sizing: border-box; }
+.ts-pt::after { content: ""; position: absolute; left: -1px; width: 2px; background: var(--ink); }
+.ts-pt.ts-above::after { bottom: 0.95rem; height: 0.95rem; }
+.ts-pt.ts-above i { bottom: 1.9rem; }
+.ts-pt.ts-below::after { top: 0.95rem; height: 2.65rem; }
+.ts-pt.ts-below i { top: 3.6rem; }
+.ts-pt.at-start i { left: -0.5rem; transform: none; }
+/* bands run beside the bar: above it, or below the tick labels */
+.ts-bd { height: 0.45rem; border-radius: 4px; background: var(--ink); }
+.ts-bd.ts-above { top: 1.8rem; }
+.ts-bd.ts-above i { bottom: 0.7rem; }
+.ts-bd.ts-below { top: 5.05rem; }
+.ts-bd.ts-below i { top: 0.7rem; }
+.tspec figcaption { margin-top: 0.6rem; font-size: 0.85rem; color: var(--muted); }
+.ts-pt i .ls, .ts-bd i .ls { display: none; }
+@media (max-width: 560px) { .tspec { padding: 1rem 0.8rem 0.8rem; } .ts-pt i, .ts-bd i { font-size: 0.72rem; } .ts-pt i .lf, .ts-bd i .lf { display: none; } .ts-pt i .ls, .ts-bd i .ls { display: inline; } .ts-ticks span { font-size: 0.66rem; } }
+
+.tuses { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 2rem; }
+.tuses li { min-width: 0; border-top: 2px solid var(--tint-strong); padding-top: 0.8rem; }
+.tuses .tag { display: inline-block; font-size: 0.8rem; font-weight: 600; padding: 0.12rem 0.55rem; border-radius: 999px; margin-bottom: 0.4rem; }
+.tuses .use-cold .tag { background: #dbe8f8; color: #1f4f8a; }
+.tuses .use-room .tag { background: var(--tint); color: var(--accent); }
+.tuses .use-warm .tag { background: #fbe9d6; color: #9a4a12; }
+.tuses .use-hot .tag { background: var(--heat-tint); color: #a63a14; }
+.tuses h3 { margin: 0 0 0.3rem; font-size: 1.05rem; }
+.tuses p { margin: 0; font-size: 0.94rem; line-height: 1.7; }
+@media (max-width: 640px) { .tuses { grid-template-columns: 1fr; gap: 1.2rem; } }
+
+.btfig { margin: 1.5rem 0 0; padding: 1.1rem 1.25rem 1rem; border: 1px solid var(--line); border-radius: 10px; }
+.bt-title { margin: 0 0 0.9rem; font-size: 0.92rem; color: var(--muted); }
+.bt-row { display: grid; grid-template-columns: 7rem minmax(0, 1fr) 8.5rem 4rem; gap: 0.75rem; align-items: center; padding: 0.4rem 0; }
+.bt-row.is-aero .bt-name { color: var(--accent); }
+.bt-head { padding: 0 0 0.1rem; font-size: 0.78rem; color: var(--muted); }
+.bt-head .bt-cells span { text-align: center; }
+.bt-name { font-weight: 600; font-size: 0.95rem; }
+.bt-cells { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.3rem; }
+.bt-cell { display: grid; place-items: center; height: 2.6rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(19,35,63,0.15); }
+.bt-first { font-weight: 600; font-size: 0.95rem; }
+.bt-first small { display: block; font-weight: 400; font-size: 0.75rem; color: var(--muted); }
+.bt-row.is-aero .bt-first { color: var(--accent); }
+.bt-spread { text-align: right; font-weight: 600; }
+.bt-head .bt-first, .bt-head .bt-spread { font-weight: 400; font-size: 0.78rem; }
+.btfig .m-lab { display: none; }
+.bt-legend { position: relative; margin: 2rem 0 0 calc(7rem + 0.75rem); max-width: 20rem; height: 1.8rem; }
+.bt-grad { display: flex; height: 0.6rem; border-radius: 3px; overflow: hidden; }
+.bt-grad span { flex: 1; }
+.bt-legend .bt-l0, .bt-legend .bt-l1, .bt-legend .bt-l170 { position: absolute; top: 0.8rem; font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.bt-l0 { left: 0; } .bt-l1 { right: 0; } .bt-legend .bt-l170 { top: -1.35rem; transform: translateX(-50%); color: var(--ink); }
+.bt-l170::after { content: ""; position: absolute; left: 50%; top: 1.05rem; width: 2px; height: 0.95rem; margin-left: -1px; background: var(--ink); }
+.btfig figcaption { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 640px) {
+  .btfig { padding: 0.9rem 0.7rem; }
+  .bt-row { grid-template-columns: 1fr auto; row-gap: 0.35rem; }
+  .bt-row .bt-cells { grid-column: 1 / -1; grid-row: 2; }
+  .bt-row .bt-first { grid-column: 1; grid-row: 3; font-size: 0.85rem; }
+  .bt-row .bt-spread { grid-column: 2; grid-row: 3; }
+  .bt-head { display: none; }
+  .btfig .m-lab { display: inline; font-weight: 400; color: var(--muted); }
+  .bt-cell { height: 2.2rem; font-size: 0.75rem; }
+  .bt-legend { margin-left: 0; }
+}
+
+.beyond { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.beyond li { min-width: 0; border-top: 2px solid var(--accent); padding-top: 0.8rem; }
+.beyond h3 { margin: 0 0 0.35rem; font-size: 1.02rem; }
+.beyond p { margin: 0; font-size: 0.92rem; line-height: 1.7; }
+@media (max-width: 760px) { .beyond { grid-template-columns: 1fr; gap: 1.1rem; } }
+
+/* one file, one page shown at a time */
+[hidden] { display: none !important; }
 .menu a[aria-current] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent); border-radius: 0; }
-.page-sec { border-top: 1px solid var(--line); }
-.page-sec .page-head { padding-top: 0.5rem; }
+.page-sec .page-head { padding-top: 1.5rem; }
 .sec-title { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 300; margin: 0; letter-spacing: -0.035em; }
 .page-sec h3[id] { font-size: 1.55rem; font-weight: 600; margin: 3.5rem 0 1rem; }
 .page-sec h4 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 0.5rem; }
@@ -333,6 +643,50 @@ html { scroll-behavior: smooth; }
 .top-link { display: inline-block; margin-top: 2.5rem; font-size: 0.9rem; }
 @media (max-width: 640px) { .page-sec h3[id] { font-size: 1.35rem; margin-top: 2.75rem; } }
 
+/* Knudsen simulation */
+.sim .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin-bottom: 0.9rem; }
+.sim .controls label { font-weight: 600; }
+.sim .controls input[type="range"] { flex: 1 1 14rem; accent-color: var(--accent); min-width: 0; }
+.sim .dval { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 5.5rem; }
+.sim .presets { display: flex; flex-wrap: wrap; gap: 0.4rem; width: 100%; }
+.sim button {
+  font: inherit; font-size: 0.85rem; padding: 0.35rem 0.75rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+.sim button:hover { border-color: var(--accent); color: var(--accent); }
+.sim button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+.sim canvas { display: block; width: 100%; height: auto; border-radius: 4px; background: var(--bg); }
+.sim .readout { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem 1rem; margin: 0.9rem 0 0; }
+.sim .readout div { min-width: 0; }
+.sim .readout dt { font-size: 0.8rem; color: var(--muted); }
+.sim .readout dd { margin: 0; font-size: 1.25rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sim .readout .wall dd { color: var(--heat); }
+.sim .readout .mol dd { color: var(--accent); }
+.sim .verdict { margin: 0.75rem 0 0; font-size: 0.95rem; }
+.sim .playrow { display: flex; gap: 0.4rem; margin-left: auto; }
+@media (max-width: 640px) { .sim .readout { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sim .playrow { margin-left: 0; } }
+
+/* battery thermal runaway simulation */
+.bsim .row { display: flex; flex-wrap: wrap; align-items: end; gap: 0.75rem 1rem; margin-bottom: 0.9rem; }
+.bsim .fld { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.bsim .fld label { font-size: 0.82rem; color: var(--muted); }
+.bsim select {
+  font: inherit; font-size: 0.95rem; padding: 0.45rem 0.6rem; border-radius: 6px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+.bsim .go { background: var(--heat); border-color: var(--heat); color: #ffffff; font-weight: 600; }
+.bsim .go:hover { color: #ffffff; filter: brightness(1.05); }
+.bsim canvas { display: block; width: 100%; height: auto; background: var(--bg); border-radius: 4px; }
+.bsim .chart { margin-top: 0.6rem; }
+.bsim .readout { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.bsim .readout .bad dd { color: var(--heat); }
+.bsim .readout .good dd { color: var(--accent); }
+.bsim .runs { margin: 1rem 0 0; }
+.bsim .runs caption { text-align: left; font-size: 0.85rem; color: var(--muted); padding-bottom: 0.4rem; }
+.bsim details { margin-top: 0.9rem; font-size: 0.9rem; }
+.bsim details summary { cursor: pointer; color: var(--accent); }
+.bsim details ul { margin: 0.5rem 0 0; padding-left: 1.2rem; line-height: 1.7; }
+
 </style>
 </head>
 <body>
@@ -342,11 +696,11 @@ html { scroll-behavior: smooth; }
 <nav class="menu" aria-label="주 메뉴"><ul><li><a href="#about">에어로겔이란</a></li><li><a href="#science">구조와 원리</a></li><li><a href="#making">만드는 법</a></li><li><a href="#application">응용</a></li><li><a href="#trend">산업과 시장</a></li><li><a href="#issue">한계와 해결</a></li><li><a href="#reference">참고문헌</a></li><li><a href="#team">조원</a></li></ul></nav>
 </div></header>
 <main id="main">
-<div id="top"></div>
+<div id="top" class="page">
 
 <section class="hero gutter"><div class="col-wide">
-<h1>부피의 <span style="white-space:nowrap">99.8%가</span> <span style="white-space:nowrap">빈 공간인 고체</span><a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a></h1>
-<p class="lead">에어로겔은 젤 속의 액체를 기체로 바꾸고 고체 골격만 남긴 물질이다 <a class="cite" href="#ref-1" title="S. Kistler, Coherent Expanded Aerogels and Jellies, Nature 127, 741 (1931). doi:10.1038/12…">[1]</a>. 골격 사이의 기공이 공기 분자가 움직이는 평균 거리보다 작아서, 열이 거의 지나가지 못한다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>.</p>
+<h1>부피의 <span style="white-space:nowrap">99.8%가</span> <span style="white-space:nowrap">빈 공간인 고체</span></h1>
+<p class="lead">공기로 만든 고체. 아주 작은 구멍 속 공기로 가득 차 있어 가장 가벼운 고체 중 하나다. 구멍이 너무 좁아서 공기 분자들이 서로 열을 건네기 전에 벽에 먼저 부딪히고, 그래서 열도 거의 지나가지 못한다.</p>
 <figure class="network">
 <svg viewBox="0 0 1080 476" role="img" aria-labelledby="net-t" xmlns="http://www.w3.org/2000/svg">
 <title id="net-t">실리카 에어로겔 골격 모식도: 수 나노미터 입자가 사슬처럼 이어지고 그 사이에 기공이 있다</title>
@@ -1055,116 +1409,108 @@ html { scroll-behavior: smooth; }
 <circle cx="250.4" cy="128.5" r="13.5" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
 <path d="M250.4 115.0 V34" stroke="var(--ink)" stroke-width="1"/>
 <circle cx="250.4" cy="22.0" r="11" fill="var(--ink)"/><text x="250.4" y="26.5" text-anchor="middle" font-size="14" font-weight="600" fill="var(--surface)">a</text>
-<text class="svg-label" x="268.4" y="27.0" font-size="15" fill="var(--ink)">1차 입자: 지름 2–10 nm</text>
+<text class="svg-label" x="268.4" y="27.0" font-size="15" fill="var(--ink)">골격 입자: 지름 2–10 nm</text>
 <circle cx="955" cy="147" r="54.4" fill="var(--bg)" fill-opacity="0.35" stroke="var(--ink)" stroke-width="1.6" stroke-dasharray="5 5"/>
 <path d="M955 92.6 V34" stroke="var(--ink)" stroke-width="1"/>
 <circle cx="955" cy="22.0" r="11" fill="var(--ink)"/><text x="955" y="26.5" text-anchor="middle" font-size="14" font-weight="600" fill="var(--surface)">b</text>
-<text class="svg-label" x="937" y="27.0" text-anchor="end" font-size="15" fill="var(--ink)">기공: 평균 지름 20–40 nm</text>
+<text class="svg-label" x="937" y="27.0" text-anchor="end" font-size="15" fill="var(--ink)">기공: 평균 지름 20–40 nm</text>
 <g stroke="var(--ink)" stroke-width="2"><path d="M8 426 H88 M8 420 V432 M88 420 V432"/></g>
-<text x="100" y="431" font-size="14" fill="var(--ink)">20 nm</text>
+<text x="100" y="431" font-size="14" fill="var(--ink)">20 nm</text>
 <g stroke="var(--heat)" stroke-width="2"><path d="M200 426 H476 M200 420 V432 M476 420 V432"/></g>
-<text x="488" y="431" font-size="14" fill="var(--ink)">69 nm</text>
-<text class="svg-label" x="200" y="458" font-size="14" fill="var(--muted)">공기 분자가 다른 분자와 부딪히기 전까지 움직이는 평균 거리(평균자유행로). 기공보다 길다.</text>
+<text x="488" y="431" font-size="14" fill="var(--ink)">69 nm</text>
+<text class="svg-label" x="200" y="458" font-size="14" fill="var(--muted)">공기 분자가 다른 분자와 부딪히기 전까지 날아가는 평균 거리</text>
 </svg>
 <ol class="net-legend" type="a">
-<li>1차 입자: 지름 2–10 nm <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></li>
-<li>기공: 평균 지름 20–40 nm <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a></li>
-<li>짧은 막대 20 nm, 긴 막대 69 nm(공기 분자의 평균자유행로) <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a></li>
+<li>골격 입자: 지름 2–10 nm의 실리카 알갱이</li>
+<li>기공: 골격 사이의 빈 공간, 평균 지름 20–40 nm</li>
+<li>짧은 막대 20 nm, 긴 막대 69 nm: 공기 분자가 다른 분자와 부딪히기 전까지 날아가는 평균 거리</li>
 </ol>
-<figcaption><b>그림 0-1</b> 실리카 에어로겔 골격 모식도. 입자, 기공, 평균자유행로를 같은 축척(1 nm = 4 단위)으로 그렸다. 수치 출처 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a><a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>, 그림은 새로 그림.</figcaption>
+<figcaption><b>그림 0-1</b> 실리카 에어로겔 모식도.</figcaption>
 </figure>
-</div></section>
-
-<section class="band gutter" aria-labelledby="why"><div class="col-wide">
-<h2 id="why">왜 지금 에어로겔인가</h2>
-<ul class="why">
-<li><span class="when">2025년 9월부터</span><p>LG화학 충남 당진 에어로겔 공장이 풀가동 중이다. 생산 물량은 이미 수년치 선계약으로 채워졌다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</p></li>
-<li><span class="when">배터리 화재</span><p>셀 하나의 과열이 옆 셀로 번지는 것을 막는 차단재로 전기차와 에너지저장장치(ESS) 수요가 늘고 있다 <a class="cite" href="#ref-18" title="Aspen Aerogels, Battery Electric Vehicles (PyroThin 열 차단재). aerogel.com">[18]</a><a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a><a class="cite" href="#ref-23" title="알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입, 더팀스(PR Newswire 배포), 2025.06.04. theteams.kr">[23]</a>.</p></li>
-<li><span class="when">연 17% 성장 전망</span><p>CAS는 에어로겔 시장이 2025–2035년 연평균 약 17% 성장할 것으로 본다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>.</p></li>
-</ul>
 </div></section>
 
 <section class="band gutter" aria-labelledby="numbers"><div class="col-wide">
 <h2 id="numbers">숫자로 보는 에어로겔</h2>
-<div class="table-wrap"><table>
-<thead><tr><th scope="col">항목</th><th scope="col">값</th><th scope="col">비교</th></tr></thead>
-<tbody>
-<tr><th scope="row">빈 공간 비율</th><td class="num">최대 99.8% <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a></td><td>유리보다 약 1,000배 가볍다 <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a></td></tr>
-<tr><th scope="row">평균 기공 지름</th><td class="num">20–40 nm <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a></td><td>공기 분자 평균자유행로 약 69 nm <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a></td></tr>
-<tr><th scope="row">열전도율(상용 단열재)</th><td class="num">약 13 mW/(m·K) <a class="cite" href="#ref-4" title="R. Baetens, B. P. Jelle, A. Gustavsen, Aerogel insulation for building applications: A sta…">[4]</a></td><td>미네랄울 30–40 mW/(m·K) <a class="cite" href="#ref-5" title="B. P. Jelle, A. Gustavsen 외, Properties, requirements and possibilities of traditional, st…">[5]</a></td></tr>
-<tr><th scope="row">비표면적</th><td class="num">500–1,500 m²/g <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>1 g의 표면적이 농구 코트(28 m × 15 m = 420 m²) 1.2–3.6개 넓이</td></tr>
-<tr><th scope="row">가장 낮은 밀도 기록</th><td class="num">0.16 mg/cm³ <a class="cite" href="#ref-12" title="H. Sun, Z. Xu, C. Gao, Multifunctional, Ultra-Flyweight, Synergistically Assembled Carbon …">[12]</a></td><td>2013년 탄소 에어로겔, 공기의 약 6분의 1 <a class="cite" href="#ref-24" title="World&#x27;s lightest material (저장대 탄소 에어로겔 연구 소개), Nanowerk, 2013.03.22. nanowerk.com">[24]</a></td></tr>
-</tbody></table></div>
+<ul class="stats">
+<li><span class="k">빈 공간 비율</span><span class="v"><small>최대</small>99.8%</span></li>
+<li><span class="k">평균 기공 지름</span><span class="v">20–40</span><span class="u">nm</span></li>
+<li><span class="k">열전도율</span><span class="v"><small>약</small>13</span><span class="u">mW/(m·K)</span></li>
+<li><span class="k">비표면적</span><span class="v">500–1,500</span><span class="u">m²/g</span></li>
+<li><span class="k">최저 밀도 기록</span><span class="v">0.16</span><span class="u">mg/cm³</span></li>
+</ul>
 </div></section>
 
-<section class="band gutter" aria-labelledby="contents"><div class="col-wide">
-<h2 id="contents">차례</h2>
-<ol class="toc"><li><a href="#about"><span class="n">1</span><span class="t">에어로겔이란</span><span class="d">젤 속 액체를 기체로 바꾼 물질. 1931년부터 지금까지의 역사와 종류</span></a></li><li><a href="#science"><span class="n">2</span><span class="t">구조와 원리</span><span class="d">입자·사슬·기공 구조와, 열이 잘 통하지 않는 이유</span></a></li><li><a href="#making"><span class="n">3</span><span class="t">만드는 법</span><span class="d">졸-겔 반응과 숙성, 그리고 가장 중요한 건조 단계</span></a></li><li><a href="#application"><span class="n">4</span><span class="t">응용</span><span class="d">배터리 화재 차단, 산업 배관, 우주 탐사, 건축 채광</span></a></li><li><a href="#trend"><span class="n">5</span><span class="t">산업과 시장</span><span class="d">시장 전망, 주요 기업, 국내 양산 동향</span></a></li><li><a href="#issue"><span class="n">6</span><span class="t">한계와 해결</span><span class="d">잘 부서지고 비싸다는 약점과 해결 방향, 우리 조의 견해</span></a></li><li><a href="#reference"><span class="n">7</span><span class="t">참고문헌</span><span class="d">본문에 쓴 논문과 자료 24건</span></a></li><li><a href="#team"><span class="n">8</span><span class="t">조원</span><span class="d">컴퓨터화학 ○조 조원과 역할</span></a></li></ol>
+<section class="band gutter" aria-labelledby="why"><div class="col-wide">
+<h2 id="why">왜 지금 에어로겔인가</h2>
+<p class="why-lead">아주 얇은 두께로도 열을 막을 수 있어서, 열 관리가 중요한 첨단 분야일수록 에어로겔을 찾는다.</p>
+<ul class="uses">
+<li><h3>전기차·ESS 배터리</h3><p>셀 하나에 불이 나면 옆 셀로 번지기 쉽다. 셀 사이에 얇은 에어로겔 시트를 끼워 불이 번지는 것을 막는다.</p></li>
+<li><h3>액화수소·에너지 설비</h3><p>뜨거운 산업 배관에서 빠져나가는 열과, 약 −253 °C 액화수소 설비로 스며드는 열을 줄인다.</p></li>
+<li><h3>우주 탐사</h3><p>NASA 스타더스트 탐사선이 에어로겔로 혜성 먼지를 망가뜨리지 않고 붙잡아 지구로 가져왔다. 화성 로버의 단열재로도 쓰였다.</p></li>
+<li><h3>건축 채광</h3><p>빛은 통과시키고 열은 막는 단열재로 건물 채광창에 쓰인다. 빛을 부드럽게 퍼뜨려 눈부심도 줄인다.</p></li>
+</ul>
+<p class="uses-more"><a href="#application">응용 분야 자세히 보기</a></p>
+<ul class="why">
+<li><span class="when">연 17% 성장 전망</span><p>그래서 시장도 빠르게 커지고 있다. 미국화학회(ACS) 산하 정보기관 CAS는 에어로겔 시장이 2025–2035년에 해마다 평균 17%씩 커질 것으로 본다. 이 속도라면 4–5년마다 두 배가 된다.</p></li>
+<li><span class="when">주문이 꽉 찬 국내 공장</span><p>LG화학이 충남 당진에 지은 에어로겔 공장은 2025년 9월부터 쉬지 않고 돌아가고 있다. 앞으로 몇 년 동안 만들 물량까지 이미 주문이 들어와 있다.</p></li>
+</ul>
 </div></section>
 
-<section class="band gutter" aria-labelledby="faq"><div class="col-wide"><div style="max-width:var(--measure)">
-<h2 id="faq">자주 묻는 질문</h2>
-<details class="qa"><summary>에어로겔은 무엇인가요?</summary><div class="a"><p>젤 속의 액체를 기체로 바꾸면서 고체 골격은 거의 그대로 남긴 물질이다 <a class="cite" href="#ref-1" title="S. Kistler, Coherent Expanded Aerogels and Jellies, Nature 127, 741 (1931). doi:10.1038/12…">[1]</a>. 기공이 100 nm보다 작고 부피의 90–99.8%가 빈 공간이다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>.</p></div></details><details class="qa"><summary>왜 '얼어붙은 연기'라고 부르나요?</summary><div class="a"><p>반투명하고 푸른빛이 돌아서다 <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a>. 푸른빛은 나노 크기 골격이 빛을 산란하는 레일리 산란 때문이다 <a class="cite" href="#ref-17" title="Aerogel.org, Properties of Aerogels. aerogel.org">[17]</a>. 하늘이 파란 이유와 같다.</p></div></details><details class="qa"><summary>무엇으로 만드나요?</summary><div class="a"><p>가장 흔한 것은 실리카(SiO₂) 에어로겔로, TEOS 같은 규소 알콕사이드나 값싼 물유리로 만든다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>. 고분자, 탄소, 여러 재료를 섞은 복합 에어로겔도 있다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>.</p></div></details><details class="qa"><summary>왜 열이 잘 안 통하나요?</summary><div class="a"><p>기공(평균 20–40 nm)이 공기 분자의 평균자유행로(약 69 nm)보다 작아서, 공기 분자가 다른 분자보다 기공 벽에 먼저 부딪힌다. 그래서 기체가 열을 나르기 어렵다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>. 자세한 내용은 <a href="#heat">구조와 원리</a>에 있다.</p></div></details><details class="qa"><summary>지금 어디에 쓰이나요?</summary><div class="a"><p>산업 배관 단열 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a>, 전기차·ESS 배터리의 열폭주 차단재 <a class="cite" href="#ref-18" title="Aspen Aerogels, Battery Electric Vehicles (PyroThin 열 차단재). aerogel.com">[18]</a><a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>, 건축 채광 단열재 <a class="cite" href="#ref-20" title="Cabot Corporation, Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting, 201…">[20]</a>에 쓰인다. 우주에서는 혜성 먼지를 붙잡는 데 썼다 <a class="cite" href="#ref-16" title="NASA Science, Stardust (미션 소개). science.nasa.gov">[16]</a>.</p></div></details>
-<p class="small muted" style="margin-top:2rem">만든 사람: 컴퓨터화학 ○조 (기여도 순) 조원 이름 1, 조원 이름 2, 조원 이름 3. <a href="#team">조원 소개</a></p>
-</div></div></section>
+</div>
+<section id="about" class="band gutter page-sec page" aria-labelledby="h-about"><div class="col">
+<div class="page-head"><p class="seq">1 / 6</p><h2 class="sec-title" id="h-about">에어로겔이란</h2><p class="en">About</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#define">정의: 액체 대신 공기가 찬 겔</a><a href="#history">기술 발전사: 무너지는 겔을 붙잡기까지</a><a href="#types">종류: 무엇으로 골격을 만드나</a></nav>
 
-<section id="about" class="band gutter page-sec" aria-labelledby="h-about"><div class="col">
-<div class="page-head"><p class="seq">1 / 6</p><h2 class="sec-title" id="h-about">에어로겔이란</h2><p class="en">About</p><section class="summary" aria-labelledby="sum-about"><h3 id="sum-about">요약</h3><ul><li>에어로겔은 젤 속 액체를 기체로 바꾸고 골격은 남긴 초다공성 고체다.</li><li>1931년 키슬러가 처음 만들었고, 우주 탐사를 거쳐 지금은 배터리와 건물 단열재로 쓰인다.</li><li>골격 재료에 따라 무기(실리카 등), 고분자, 탄소, 복합 에어로겔로 나눈다.</li></ul></section></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#define">정의: 액체 대신 기체가 찬 젤</a><a href="#history">역사: 실험실에서 우주로, 다시 공장으로</a><a href="#types">종류: 무엇으로 골격을 만드나</a></nav>
+<h3 id="define">정의: 액체 대신 공기가 찬 겔</h3>
+<p class="statement">겔에서 액체만 빼내고 그 자리를 공기로 채우면 에어로겔이 된다.</p>
+<p>겔(gel)은 젤리처럼 고체 분자의 가는 그물 사이를 액체가 채운 물질이다. 에어로겔이라는 이름도 공기(aero)와 겔(gel)을 합친 말이다. 어려운 건 액체를 빼는 방법이다. 두 방법을 비교해 보자.</p>
 
-<h3 id="define">정의: 액체 대신 기체가 찬 젤</h3>
-<p>젤(gel)은 고체 그물 구조 안에 액체가 가득 찬 물질이다. 1931년 새뮤얼 키슬러(Samuel Kistler)는 젤 속 액체를 성질이 전혀 다른 액체로 바꿔도 그물 구조가 유지된다는 것을 보였다. 동시에 액체를 그냥 증발시키면 젤이 크게 수축한다는 문제를 지적했다 <a class="cite" href="#ref-1" title="S. Kistler, Coherent Expanded Aerogels and Jellies, Nature 127, 741 (1931). doi:10.1038/12…">[1]</a>. 그는 액체를 고온·고압의 초임계 상태로 만든 뒤 빼내는 방법으로 이 문제를 풀었다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>.</p>
-<p>이렇게 액체 자리를 기체가 차지한 젤이 에어로겔이다. 오늘날에는 기공이 100 nm보다 작고 부피의 90–99.8%가 빈 공간인 고체로 설명한다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>. 반투명하고 푸른빛이 돌아 '얼어붙은 연기(frozen smoke)'라고도 부른다 <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a>.</p>
+<figure class="dry" id="dry-demo">
+<div class="dry-panels">
+<div class="dry-panel" data-mode="evap">
+<p class="dry-head evap">그냥 말리면</p>
+<svg viewBox="0 0 300 300" role="img" aria-label="액체가 찬 겔을 그냥 말리면 그물이 안쪽으로 끌려가며 크게 쪼그라드는 모습"></svg>
+<p class="dry-state" aria-live="polite">액체가 가득 찬 겔</p>
+</div>
+<div class="dry-panel" data-mode="scf">
+<p class="dry-head scf">초임계 건조하면</p>
+<svg viewBox="0 0 300 300" role="img" aria-label="액체가 찬 겔을 초임계 건조하면 액체만 사라지고 그물은 그대로 남는 모습"></svg>
+<p class="dry-state" aria-live="polite">액체가 가득 찬 겔</p>
+</div>
+</div>
+<div class="dry-ctrl"><button type="button" id="dry-go">말려 보기</button></div>
+<figcaption><b>그림 1-1</b> 겔을 말리는 두 방법. 줄어드는 정도는 실제 비율이 아닌 모식도다. 원리는 <a href="#drying">만드는 법</a>에서 설명한다.</figcaption>
+</figure>
 
-<h3 id="history">역사: 실험실에서 우주로, 다시 공장으로</h3>
-<ol class="timeline">
-<li class="key"><span class="y">1931</span><span>키슬러가 Nature에 에어로겔을 발표했다 <a class="cite" href="#ref-1" title="S. Kistler, Coherent Expanded Aerogels and Jellies, Nature 127, 741 (1931). doi:10.1038/12…">[1]</a>.</span></li>
-<li><span class="y">1995</span><span>초임계 장비 없이 상압에서 기공률 98.5%의 에어로겔 필름을 만드는 방법이 나왔다 <a class="cite" href="#ref-9" title="S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, Silica aerogel films prepared at ambi…">[9]</a>.</span></li>
-<li><span class="y">1997</span><span>화성 탐사 로버 소저너(Sojourner)의 전자장치 상자 단열재로 쓰였다 <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a>.</span></li>
-<li><span class="y">1999</span><span>NASA 스타더스트(Stardust) 탐사선이 에어로겔 포집기를 싣고 발사됐다 <a class="cite" href="#ref-16" title="NASA Science, Stardust (미션 소개). science.nasa.gov">[16]</a>.</span></li>
-<li><span class="y">2002</span><span>골격을 고분자로 감싸 강도를 100배 이상 높인 에어로겔이 보고됐다 <a class="cite" href="#ref-11" title="N. Leventis, C. Sotiriou-Leventis, G. Zhang, A.-M. M. Rawashdeh, Nanoengineering Strong Si…">[11]</a>.</span></li>
-<li><span class="y">2003</span><span>캐벗(Cabot)이 건축 채광용 에어로겔 단열재를 시장에 내놓았다 <a class="cite" href="#ref-20" title="Cabot Corporation, Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting, 201…">[20]</a>.</span></li>
-<li><span class="y">2004</span><span>스타더스트가 빌트 2(Wild 2) 혜성을 250 km 거리에서 지나며 먼지를 붙잡았다 <a class="cite" href="#ref-16" title="NASA Science, Stardust (미션 소개). science.nasa.gov">[16]</a>.</span></li>
-<li class="key"><span class="y">2006</span><span>스타더스트 캡슐이 1월 15일 미국 유타주에 착륙했다. 혜성 샘플을 지구로 가져온 첫 우주선이다 <a class="cite" href="#ref-16" title="NASA Science, Stardust (미션 소개). science.nasa.gov">[16]</a>.</span></li>
-<li><span class="y">2013</span><span>중국 저장대학교가 밀도 0.16 mg/cm³의 탄소 에어로겔을 발표했다 <a class="cite" href="#ref-12" title="H. Sun, Z. Xu, C. Gao, Multifunctional, Ultra-Flyweight, Synergistically Assembled Carbon …">[12]</a><a class="cite" href="#ref-24" title="World&#x27;s lightest material (저장대 탄소 에어로겔 연구 소개), Nanowerk, 2013.03.22. nanowerk.com">[24]</a>.</span></li>
-<li><span class="y">2023</span><span>LG화학이 충남 당진에 에어로겔 공장을 착공했다 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a>.</span></li>
-<li class="key"><span class="y">2025</span><span>LG화학 당진 공장이 9월부터 풀가동에 들어갔다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</span></li>
+<p style="margin-top:1.75rem">1931년 새뮤얼 키슬러(Samuel Kistler)가 초임계 건조로 첫 에어로겔을 만들었다. 오늘날에는 기공이 100 nm(머리카락 굵기의 약 1,000분의 1)보다 작고 부피의 90–99.8%가 빈 공간인 고체를 에어로겔이라고 한다. 반투명하고 푸른빛이 돌아 '얼어붙은 연기(frozen smoke)'라는 별명도 있다.</p>
+
+<h3 id="history">기술 발전사: 무너지는 겔을 붙잡기까지</h3>
+<ol class="rail">
+<li><span class="y">1931</span><b>첫 에어로겔</b><p>액체를 초임계 상태로 만들어 빼내, 쪼그라들지 않은 겔을 처음 만들었다.</p></li>
+<li><span class="y">1995</span><b>대기압에서 말리기</b><p>표면을 물을 싫어하게 바꾸자, 줄었던 골격이 다시 펴졌다.</p></li>
+<li><span class="y">2002</span><b>강도 100배</b><p>가는 골격을 고분자로 감싸 잘 부서지는 약점을 보완했다.</p></li>
+<li><span class="y">2013</span><b>공기의 6분의 1</b><p>탄소 골격으로 밀도 0.16 mg/cm³를 기록했다.</p></li>
 </ol>
 
 <h3 id="types">종류: 무엇으로 골격을 만드나</h3>
-<p>CAS는 에어로겔을 무기, 고분자, 복합 세 가지로 나눈다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>. 여기에 따로 연구가 활발한 탄소 에어로겔을 한 줄 더했다.</p>
-<div class="table-wrap"><table>
-<thead><tr><th scope="col">종류</th><th scope="col">대표 예</th><th scope="col">특징</th><th scope="col">쓰임</th></tr></thead>
-<tbody>
-<tr><th scope="row">무기</th><td>실리카(SiO₂)</td><td>가장 널리 연구됐다. 투명하거나 흰색이고 단단하지만 잘 부서진다 <a class="cite" href="#ref-17" title="Aerogel.org, Properties of Aerogels. aerogel.org">[17]</a></td><td>단열, 촉매, 반도체 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a></td></tr>
-<tr><th scope="row">고분자</th><td>고분자 에어로겔</td><td>유기 고분자로 골격을 만든다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a></td><td>단열, 보호 장비, 생의학 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a></td></tr>
-<tr><th scope="row">탄소</th><td>탄소 에어로겔</td><td>밀도 0.16 mg/cm³까지 가볍게 만든 기록이 있다 <a class="cite" href="#ref-12" title="H. Sun, Z. Xu, C. Gao, Multifunctional, Ultra-Flyweight, Synergistically Assembled Carbon …">[12]</a></td><td>기름·유기용매 흡착 <a class="cite" href="#ref-24" title="World&#x27;s lightest material (저장대 탄소 에어로겔 연구 소개), Nanowerk, 2013.03.22. nanowerk.com">[24]</a></td></tr>
-<tr><th scope="row">복합</th><td>맥신(MXene)·MOF 기반</td><td>서로 다른 재료를 한 골격에 묶는다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a></td><td>슈퍼커패시터 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a></td></tr>
-</tbody></table></div>
-<p class="small muted">기업과 언론은 같은 aerogel을 '에어로젤'로 많이 쓴다 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a><a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>. 이 사이트는 '에어로겔'로 통일했다.</p>
+<ul class="kinds"><li class="kind"><svg viewBox="0 0 80 80" role="img" aria-label="구슬 사슬 모양의 실리카 골격"><circle cx="40" cy="40" r="39" fill="var(--tint)"/><circle cx="14" cy="46" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="22" cy="40" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="30" cy="37" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="38" cy="40" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="45" cy="46" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="53" cy="49" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="61" cy="45" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="67" cy="38" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="30" cy="29" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="27" cy="21" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="45" cy="54" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="42" cy="62" r="4.6" fill="#fff" stroke="var(--accent)" stroke-width="1.6"/></svg><div><h4 class="name">무기<span>실리카(SiO₂)</span></h4><p>가장 많이 연구된 에어로겔이다. 투명하거나 흰색이고 단단하지만 충격에 잘 부서진다. 단열재, 촉매, 반도체에 쓰인다.</p></div></li><li class="kind"><svg viewBox="0 0 80 80" role="img" aria-label="실처럼 얽힌 고분자 골격"><circle cx="40" cy="40" r="39" fill="var(--tint)"/><path d="M10,30 C25,10 35,55 50,32 S70,20 72,40" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/><path d="M12,52 C28,40 30,70 46,52 S66,36 70,58" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/><path d="M20,18 C30,35 18,48 34,62 S52,70 58,62" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/><path d="M50,14 C42,28 62,36 54,50" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"/></svg><div><h4 class="name">고분자</h4><p>플라스틱처럼 탄소 사슬로 된 고분자로 골격을 만든다. 단열재, 보호 장비, 생의학 분야에 쓰인다.</p></div></li><li class="kind"><svg viewBox="0 0 80 80" role="img" aria-label="벌집 모양의 탄소 골격"><circle cx="40" cy="40" r="39" fill="var(--tint)"/><polygon points="48.2,44.8 40.0,49.5 31.8,44.8 31.8,35.2 40.0,30.5 48.2,35.2" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="31.8,44.8 23.5,49.5 15.3,44.8 15.3,35.2 23.5,30.5 31.8,35.2" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="64.7,44.8 56.5,49.5 48.2,44.8 48.2,35.2 56.5,30.5 64.7,35.2" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="40.0,30.5 31.8,35.2 23.5,30.5 23.5,21.0 31.8,16.2 40.0,21.0" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="56.5,30.5 48.2,35.2 40.0,30.5 40.0,21.0 48.2,16.2 56.5,21.0" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="40.0,59.0 31.8,63.8 23.5,59.0 23.5,49.5 31.8,44.8 40.0,49.5" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="56.5,59.0 48.2,63.8 40.0,59.0 40.0,49.5 48.2,44.8 56.5,49.5" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/></svg><div><h4 class="name">탄소</h4><p>가장 가벼운 기록(0.16 mg/cm³)을 가졌다. 기름과 유기용매를 빨아들이는 흡착제로 쓰인다.</p></div></li><li class="kind"><svg viewBox="0 0 80 80" role="img" aria-label="두 재료가 섞인 복합 골격"><circle cx="40" cy="40" r="39" fill="var(--tint)"/><polygon points="38.2,38.8 30.0,43.5 21.8,38.8 21.8,29.2 30.0,24.5 38.2,29.2" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="54.7,38.8 46.5,43.5 38.2,38.8 38.2,29.2 46.5,24.5 54.7,29.2" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><polygon points="46.5,53.0 38.2,57.8 30.0,53.0 30.0,43.5 38.2,38.8 46.5,43.5" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><circle cx="56" cy="30" r="4.4" fill="var(--ink)" fill-opacity="0.82"/><circle cx="62" cy="40" r="4.4" fill="var(--ink)" fill-opacity="0.82"/><circle cx="58" cy="51" r="4.4" fill="var(--ink)" fill-opacity="0.82"/><circle cx="20" cy="52" r="4.4" fill="var(--ink)" fill-opacity="0.82"/><circle cx="28" cy="60" r="4.4" fill="var(--ink)" fill-opacity="0.82"/><circle cx="48" cy="62" r="4.4" fill="var(--ink)" fill-opacity="0.82"/></svg><div><h4 class="name">복합</h4><p>서로 다른 재료를 한 골격에 묶어 장점을 합친다. 빠르게 충전·방전하는 슈퍼커패시터에 쓰인다.</p></div></li></ul>
 
-</div></section><section id="science" class="band gutter page-sec" aria-labelledby="h-science"><div class="col">
-<div class="page-head"><p class="seq">2 / 6</p><h2 class="sec-title" id="h-science">구조와 원리</h2><p class="en">Structure & Science</p><section class="summary" aria-labelledby="sum-science"><h3 id="sum-science">요약</h3><ul><li>지름 수 nm의 입자가 사슬처럼 이어진 골격과, 그 사이의 기공으로 이루어져 있다.</li><li>기공(평균 20–40 nm)이 공기 분자의 평균자유행로(약 69 nm)보다 작아 기체가 열을 거의 나르지 못한다.</li><li>그래서 상용 제품의 열전도율은 약 13 mW/(m·K)로, 미네랄울(30–40)의 절반에도 못 미친다.</li></ul></section></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#structure">구조: 입자, 사슬, 기공</a><a href="#heat">왜 열이 잘 안 통할까</a><a href="#compare">다른 단열재와 비교</a></nav>
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#top"><span>이전</span><b>처음으로</b></a><a class="next" href="#science"><span>다음</span><b>구조와 원리</b></a></nav>
+</div></section><section id="science" class="band gutter page-sec page" aria-labelledby="h-science"><div class="col">
+<div class="page-head"><p class="seq">2 / 6</p><h2 class="sec-title" id="h-science">구조와 원리</h2><p class="en">Structure & Science</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#structure">구조: 덩어리에서 입자까지</a><a href="#heat">왜 열이 잘 안 통할까</a><a href="#compare">다른 단열재와 비교</a></nav>
 
-<h3 id="structure">구조: 입자, 사슬, 기공</h3>
-<p>실리카 에어로겔의 골격은 지름 2–10 nm의 1차 입자가 진주 목걸이처럼 이어진 사슬이다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>. 사슬 사이의 빈 곳이 기공이고, 기공 지름은 대부분 20–40 nm다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>. <a href="#top">첫 화면의 그림</a>이 이 구조를 같은 축척으로 그린 것이다.</p>
-<div class="table-wrap"><table>
-<thead><tr><th scope="col">물성(실리카 에어로겔)</th><th scope="col">값</th><th scope="col">출처</th></tr></thead>
-<tbody>
-<tr><th scope="row">겉보기 밀도</th><td class="num">0.003–0.5 g/cm³</td><td><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">기공률</th><td class="num">80–99.8%</td><td><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">평균 기공 지름</th><td class="num">2–50 nm (대부분 20–40 nm)</td><td><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a><a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a></td></tr>
-<tr><th scope="row">1차 입자 지름</th><td class="num">2–10 nm</td><td><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">비표면적</th><td class="num">500–1,500 m²/g</td><td><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">굴절률</th><td class="num">1.007–1.24</td><td><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">음속</th><td class="num">약 100 m/s</td><td><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">열전도율(상온)</th><td class="num">0.016–0.03 W/(m·K)</td><td><a class="cite" href="#ref-17" title="Aerogel.org, Properties of Aerogels. aerogel.org">[17]</a></td></tr>
-</tbody></table></div>
-<p class="small muted">물성 범위는 문헌마다 조금씩 다르다. 예를 들어 Aerogel.org는 밀도를 0.0011–0.650 g/cm³로 적는다 <a class="cite" href="#ref-17" title="Aerogel.org, Properties of Aerogels. aerogel.org">[17]</a>. 굴절률이 공기(1.0)에 가까워 빛이 거의 꺾이지 않고, 나노 골격이 빛을 레일리 산란시켜 푸른빛이 돈다 <a class="cite" href="#ref-17" title="Aerogel.org, Properties of Aerogels. aerogel.org">[17]</a>.</p>
+<h3 id="structure">구조: 덩어리에서 입자까지</h3>
+<p>에어로겔을 점점 확대하면 세 단계 구조가 보인다.</p>
+<figure class="zoom"><svg viewBox="0 0 960 330" role="img" aria-label="에어로겔을 확대한 세 단계: 덩어리, 골격 사슬과 기공, 골격 입자"><defs><radialGradient id="zf-haze" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3eefa"/></radialGradient><radialGradient id="zf-ball" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.6" stop-color="#dce9f8"/><stop offset="1" stop-color="#b9d1ee"/></radialGradient><clipPath id="zf-ca"><circle cx="160" cy="165" r="128"/></clipPath><clipPath id="zf-cb"><circle cx="480" cy="165" r="140"/></clipPath><clipPath id="zf-cc"><circle cx="800" cy="165" r="128"/></clipPath></defs><circle cx="160" cy="165" r="128" fill="url(#zf-haze)"/><g clip-path="url(#zf-ca)" stroke="var(--accent)" stroke-width="1.4" stroke-linejoin="round"><path d="M98,135 l40,-32.0 h108 l-40,32.0 z" fill="#d7e7f8" fill-opacity="0.9"/><path d="M206,135 l40,-32.0 v108 l-40,32.0 z" fill="#b6d0ee" fill-opacity="0.85"/><rect x="98" y="135" width="108" height="108" fill="#c6dcf4" fill-opacity="0.8"/></g><path d="M174,181 L462,27 M174,205 L462,303" stroke="var(--muted)" stroke-opacity="0.55" stroke-width="1.2" fill="none"/><path d="M555.270392590554,211.44931774795958 L786,39 M555.270392590554,243.44931774795958 L786,291" stroke="var(--muted)" stroke-opacity="0.55" stroke-width="1.2" fill="none"/><rect x="150" y="181" width="24" height="24" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="160" cy="165" r="128" fill="none" stroke="var(--tint-strong)" stroke-width="2"/><circle cx="480" cy="165" r="140" fill="url(#zf-haze)" stroke="var(--tint-strong)" stroke-width="2"/><g clip-path="url(#zf-cb)"><circle cx="527.9" cy="259.3" r="9.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="437.3" cy="220.0" r="6.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="408.4" cy="259.5" r="8.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="407.0" cy="277.2" r="7.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="468.3" cy="143.8" r="5.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="443.0" cy="183.4" r="8.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="454.9" cy="261.0" r="9.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="523.2" cy="271.6" r="5.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="442.7" cy="229.0" r="5.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="450.9" cy="238.4" r="8.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="442.7" cy="265.7" r="5.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="432.1" cy="293.0" r="7.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="445.9" cy="293.1" r="7.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="459.6" cy="287.7" r="8.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="446.6" cy="171.2" r="5.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="459.9" cy="148.3" r="5.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="437.6" cy="277.8" r="8.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="409.8" cy="246.0" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="406.0" cy="235.0" r="6.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="392.7" cy="236.9" r="8.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="450.8" cy="156.8" r="8.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="436.5" cy="161.8" r="8.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="425.0" cy="281.7" r="5.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="378.4" cy="239.5" r="7.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="429.7" cy="174.0" r="7.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="464.1" cy="275.2" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="405.5" cy="222.7" r="7.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="473.7" cy="268.2" r="6.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="581.2" cy="85.8" r="8.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="421.7" cy="184.0" r="6.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="367.5" cy="244.0" r="5.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="522.3" cy="282.2" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="410.8" cy="192.6" r="8.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="402.0" cy="202.2" r="5.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="392.0" cy="206.0" r="6.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="513.6" cy="291.7" r="7.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="567.7" cy="84.2" r="6.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="557.0" cy="88.3" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="391.9" cy="220.8" r="7.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="499.4" cy="288.1" r="8.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="486.3" cy="268.7" r="7.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="611.8" cy="125.8" r="8.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="379.6" cy="201.7" r="8.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="553.2" cy="100.7" r="7.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="377.8" cy="222.5" r="7.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="608.0" cy="138.1" r="5.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="550.5" cy="115.8" r="9.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="500.5" cy="267.0" r="8.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="490.5" cy="296.7" r="5.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="364.1" cy="224.0" r="7.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="556.6" cy="131.2" r="8.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="605.9" cy="148.3" r="5.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="548.9" cy="46.8" r="7.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="513.0" cy="262.7" r="6.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="367.2" cy="204.2" r="5.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="356.2" cy="207.5" r="7.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="610.3" cy="160.4" r="8.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="557.9" cy="54.6" r="5.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="552.1" cy="146.0" r="7.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="552.3" cy="161.2" r="8.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="364.5" cy="192.1" r="8.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="604.1" cy="173.3" r="7.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="594.0" cy="180.8" r="6.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="586.0" cy="192.4" r="8.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="609.1" cy="187.0" r="8.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="543.0" cy="172.4" r="7.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="355.5" cy="180.8" r="7.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="578.6" cy="206.8" r="8.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="541.8" cy="184.3" r="5.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="560.8" cy="67.4" r="9.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="609.0" cy="201.2" r="6.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="352.8" cy="168.5" r="6.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="579.2" cy="222.9" r="8.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="511.7" cy="250.9" r="6.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="501.9" cy="240.4" r="8.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="492.2" cy="228.4" r="8.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="497.2" cy="214.9" r="7.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="601.4" cy="211.3" r="6.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="551.1" cy="78.1" r="6.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="497.1" cy="203.4" r="5.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="546.3" cy="87.9" r="5.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="508.7" cy="198.3" r="8.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="573.1" cy="234.8" r="6.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="522.3" cy="198.7" r="6.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="537.1" cy="78.1" r="8.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="531.6" cy="204.6" r="5.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="600.8" cy="224.9" r="7.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="549.2" cy="192.5" r="6.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="556.8" cy="201.6" r="6.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="524.2" cy="75.5" r="5.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="358.2" cy="157.8" r="7.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="541.5" cy="210.7" r="6.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="371.3" cy="160.1" r="7.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="540.1" cy="97.1" r="6.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="562.6" cy="214.8" r="8.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="589.9" cy="231.3" r="5.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="523.2" cy="64.8" r="5.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="382.6" cy="153.5" r="6.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="565.4" cy="245.8" r="8.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="521.8" cy="54.2" r="5.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="528.5" cy="101.3" r="6.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="583.5" cy="242.0" r="7.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="520.3" cy="110.6" r="6.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="567.5" cy="258.5" r="5.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="517.4" cy="122.6" r="6.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="555.3" cy="227.4" r="7.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="356.5" cy="145.6" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="364.5" cy="136.9" r="6.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="510.1" cy="133.7" r="7.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="500.0" cy="143.9" r="7.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="543.4" cy="229.7" r="6.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="529.1" cy="45.8" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="564.5" cy="268.9" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="511.8" cy="73.6" r="7.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="534.2" cy="224.4" r="5.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="504.0" cy="62.1" r="7.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="486.3" cy="146.8" r="7.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="517.2" cy="41.6" r="7.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="525.0" cy="218.8" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="360.8" cy="125.7" r="6.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="350.4" cy="122.8" r="5.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="384.9" cy="141.3" r="6.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="385.7" cy="129.6" r="6.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="388.3" cy="117.8" r="7.1" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="498.4" cy="49.1" r="8.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="477.2" cy="154.2" r="5.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="504.9" cy="33.1" r="8.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="512.3" cy="213.9" r="8.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="399.5" cy="110.8" r="7.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="394.2" cy="152.4" r="5.9" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="381.1" cy="106.8" r="7.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="412.8" cy="104.8" r="8.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="425.9" cy="104.5" r="5.8" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="490.7" cy="38.0" r="6.5" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="405.5" cy="145.0" r="8.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="373.3" cy="98.1" r="5.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="366.9" cy="89.8" r="6.0" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="361.3" cy="102.9" r="8.7" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="419.3" cy="145.1" r="6.3" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="473.6" cy="165.4" r="7.6" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="429.9" cy="144.9" r="5.2" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/><circle cx="439.0" cy="137.7" r="7.4" fill="#fff" stroke="var(--accent)" stroke-width="1.3"/></g><circle cx="470" cy="95" r="37.2" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="5 4"/><text x="470" y="100" text-anchor="middle" font-size="15" font-weight="600" fill="var(--ink)">기공</text><circle cx="555.3" cy="227.4" r="16" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="800" cy="165" r="128" fill="url(#zf-haze)" stroke="var(--tint-strong)" stroke-width="2"/><g clip-path="url(#zf-cc)"><circle cx="732" cy="214" r="40" fill="url(#zf-ball)" stroke="var(--accent)" stroke-width="1.6"/><circle cx="790" cy="160" r="44" fill="url(#zf-ball)" stroke="var(--accent)" stroke-width="1.6"/><circle cx="858" cy="128" r="36" fill="url(#zf-ball)" stroke="var(--accent)" stroke-width="1.6"/><circle cx="862" cy="212" r="34" fill="url(#zf-ball)" stroke="var(--accent)" stroke-width="1.6"/><circle cx="712" cy="128" r="30" fill="url(#zf-ball)" stroke="var(--accent)" stroke-width="1.6"/></g></svg><ol class="zoom-steps"><li><b>덩어리</b><span>반투명하고 푸르스름한 고체</span></li><li><b>그물</b><span>구슬 사슬이 얽힌 골격과 그 사이의 기공(20–40 nm)</span></li><li><b>골격 입자</b><span>지름 2–10 nm의 속이 꽉 찬 실리카 알갱이</span></li></ol><figcaption><b>그림 2-1</b> 실리카 에어로겔을 확대한 모식도.</figcaption></figure>
+<p class="sci-note">기공은 부피의 대부분, 최대 99.8%를 차지한다. 1 g 속 기공 벽을 모두 펼치면 500–1,500 m², 농구 코트 1.2–3.6개 넓이다.</p>
+
+<h4>익숙한 물질과 견주어 보기</h4>
+<div class="cmp" role="group" aria-label="에어로겔 물성을 공기, 물, 유리와 비교"><p class="cmp-key"><span class="k-band"></span>에어로겔 <span class="k-ref"></span>비교 대상</p><div class="cmp-row"><p class="cmp-name">밀도</p><div class="cmp-track"><span class="cmp-band" style="left:13.6%;width:63.5%" title="에어로겔 0.003–0.5 g/cm³"></span><span class="cmp-ref at-start" style="left:2.3%" title="공기 0.0012"><i>공기</i></span><span class="cmp-ref" style="left:85.7%" title="물 1"><i>물</i></span><span class="cmp-ref at-end" style="left:97.1%" title="유리 2.5"><i>유리</i></span></div><p class="cmp-val">0.003–0.5 g/cm³<small>로그 눈금</small></p></div><div class="cmp-row"><p class="cmp-name">굴절률</p><div class="cmp-track"><span class="cmp-band" style="left:1.2%;width:38.8%" title="에어로겔 1.007–1.24"></span><span class="cmp-ref at-start" style="left:0.0%" title="공기 1"><i>공기</i></span><span class="cmp-ref" style="left:55.0%" title="물 1.33"><i>물</i></span><span class="cmp-ref" style="left:83.3%" title="유리 1.5"><i>유리</i></span></div><p class="cmp-val">1.007–1.24</p></div><div class="cmp-row"><p class="cmp-name">소리 빠르기</p><div class="cmp-track"><span class="cmp-dot" style="left:25.0%" title="에어로겔 약 100 m/s"></span><span class="cmp-ref" style="left:85.0%" title="공기 340"><i>공기</i></span></div><p class="cmp-val">약 100 m/s</p></div><div class="cmp-row"><p class="cmp-name">열전도율</p><div class="cmp-track"><span class="cmp-band" style="left:24.0%;width:4.0%" title="에어로겔 약 13 mW/(m·K)"></span><span class="cmp-ref" style="left:52.0%" title="정지한 공기 26"><i>정지한 공기</i></span></div><p class="cmp-val">약 13 mW/(m·K)</p></div></div>
+<p class="sci-note">굴절률이 공기에 가까워 거의 투명하고, 빛 파장보다 훨씬 작은 골격이 파란빛을 더 많이 흩뜨려(레일리 산란) 하늘처럼 푸르스름하다. 물성 범위는 문헌마다 조금씩 다르다.</p>
 
 <h3 id="heat">왜 열이 잘 안 통할까</h3>
-<p>다공성 물질 속에서 열은 고체 골격, 기공 속 기체, 복사의 세 길로 전해진다. 기공 지름이 4 mm보다 작으면 공기가 흐르며 열을 옮기는 대류는 무시할 수 있다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>. 에어로겔은 남은 세 길을 모두 좁힌다.</p>
+<p>열은 세 길로 지나간다. 에어로겔은 세 길을 모두 좁힌다. 열이 얼마나 잘 통하는지는 <dfn>열전도율</dfn>로 나타내고, 작을수록 단열이 잘 된다.</p>
 <div class="paths">
 <div class="p"><svg viewBox="0 0 300 190" role="img" aria-label="고체 전도: 열이 가늘고 구불구불한 입자 사슬을 따라 어렵게 전달된다" xmlns="http://www.w3.org/2000/svg">
 <rect x="0" y="0" width="34" height="190" fill="var(--heat-tint)"/><rect x="266" y="0" width="34" height="190" fill="var(--tint)"/>
@@ -1188,8 +1534,8 @@ html { scroll-behavior: smooth; }
 </g>
 <path d="M40.0 95.0 L55.0 127.8 L70.0 113.8 L85.0 88.1 L100.0 69.0 L115.0 56.3 L130.0 49.5 L145.0 61.9 L160.0 93.6 L175.0 110.3 L190.0 127.7 L205.0 142.9 L220.0 129.1 L235.0 114.9 L250.0 86.8" fill="none" stroke="var(--heat)" stroke-width="2" stroke-dasharray="3 4" marker-end="url(#hs-a)"/>
 <defs><marker id="hs-a" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--heat)"/></marker></defs>
-</svg><h4>고체 전도</h4><p>열은 골격 입자의 격자 진동으로 전해진다. 입자(2–5 nm)끼리 닿는 면적이 작고 길이 구불구불해서 잘 전달되지 않는다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>.</p></div>
-<div class="p"><svg viewBox="0 0 300 190" role="img" aria-label="기체 전도: 기공이 평균자유행로보다 작아 공기 분자가 다른 분자보다 벽에 먼저 부딪힌다" xmlns="http://www.w3.org/2000/svg">
+</svg><h4>① 고체 전도</h4><p>고체에서 열은 원자들이 진동을 옆 원자에게 차례로 넘기며 전달된다. 그런데 에어로겔 골격은 작은 입자들이 점처럼 살짝 닿은 채 가늘고 구불구불하게 이어져 있다. 진동이 건너갈 통로가 좁고 길이 멀어서, 열이 잘 전달되지 않는다.</p></div>
+<div class="p"><svg viewBox="0 0 300 190" role="img" aria-label="기체 전도: 기공이 분자가 다른 분자와 부딪히기 전까지 날아가는 거리보다 작아 공기 분자가 다른 분자보다 벽에 먼저 부딪힌다" xmlns="http://www.w3.org/2000/svg">
 <defs><marker id="hg-a" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--heat)"/></marker></defs>
 <g fill="var(--tint-strong)" stroke="var(--accent)" stroke-width="1">
 <circle cx="232.0" cy="95.0" r="7.4"/>
@@ -1229,7 +1575,7 @@ html { scroll-behavior: smooth; }
 <circle cx="136.4" cy="156.3" r="4" fill="var(--heat)"/>
 <path d="M211.3 88.2 L156.8 157.6 L109.2 135.8" fill="none" stroke="var(--heat)" stroke-width="1.5" marker-end="url(#hg-a)"/>
 <circle cx="211.3" cy="88.2" r="4" fill="var(--heat)"/>
-</svg><h4>기체 전도</h4><p>공기 분자는 서로 부딪히며 열을 나른다. 기공이 평균자유행로보다 작으면 분자가 다른 분자보다 벽에 먼저 부딪혀 열을 나르지 못한다. 이를 크누센(Knudsen) 효과라 한다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>.</p></div>
+</svg><h4>② 기체 전도</h4><p>공기 속에서 열은 분자끼리 부딪히며 에너지를 건네는 방식으로 전달된다. 그런데 에어로겔의 기공(20–40 nm)은 너무 작아서, 분자가 다른 분자와 부딪히기 전에 벽에 먼저 닿는다. 그래서 에너지가 거의 전달되지 않는다. 이것이 <dfn>크누센 효과</dfn>다.</p></div>
 <div class="p"><svg viewBox="0 0 300 190" role="img" aria-label="복사: 적외선이 골격 입자에 흡수되거나 산란된다" xmlns="http://www.w3.org/2000/svg">
 <defs><marker id="hr-a" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--heat)"/></marker></defs>
 <g fill="var(--tint-strong)" stroke="var(--accent)" stroke-width="1">
@@ -1261,66 +1607,102 @@ html { scroll-behavior: smooth; }
 <path d="M128.0 100.0 L126.8 104.2 L127.6 106.3 L130.9 105.7 L135.3 103.9 L138.6 103.3 L139.4 105.4 L138.1 109.7 L136.9 113.9 L137.8 115.9 L141.1 115.2 L145.6 113.4 L148.8 112.9 L149.5 115.1 L148.2 119.3 L147.1 123.5 L147.9 125.5 L151.4 124.8 L155.8 123.0 L159.0 122.5 L159.7 124.7 L158.4 129.0 L157.2 133.2 L158.1 135.1 L161.6 134.3 L166.0 132.6 L169.2 132.1 L169.8 134.4 L168.5 138.7 L167.3 142.8 L168.3 144.7 L171.8 143.9 L176.3 142.1 L179.4 141.7 L179.9 144.0 L178.6 148.4 L177.5 152.5 L178.5 154.3 L182.1 153.5 L186.5 151.7 L189.6 151.3 L190.1 153.7 L188.7 158.0 L187.6 162.1 L188.7 163.9 L192.3 163.0 L196.7 161.2 L199.8 160.9 L200.2 163.4 L198.8 167.7" fill="none" stroke="var(--heat)" stroke-width="1.5" stroke-opacity="0.6" marker-end="url(#hr-a)"/>
 <path d="M10.0 150.0 L12.0 153.9 L14.0 154.9 L16.0 152.1 L18.0 147.8 L20.0 145.1 L22.0 146.1 L24.0 150.1 L26.0 154.0 L28.0 154.8 L30.0 152.1 L32.0 147.7 L34.0 145.1 L36.0 146.2 L38.0 150.2 L40.0 154.0 L42.0 154.8 L44.0 152.0 L46.0 147.6 L48.0 145.1 L50.0 146.2 L52.0 150.3 L54.0 154.1 L56.0 154.8 L58.0 151.9 L60.0 147.6 L62.0 145.1 L64.0 146.3 L66.0 150.3 L68.0 154.1 L70.0 154.8 L72.0 151.8 L74.0 147.5 L76.0 145.1 L78.0 146.4 L80.0 150.4 L82.0 154.2 L84.0 154.8 L86.0 151.7 L88.0 147.4 L90.0 145.0 L92.0 146.4 L94.0 150.5 L96.0 154.2 L98.0 154.7 L100.0 151.7 L102.0 147.3 L104.0 145.0 L106.0 146.5 L108.0 150.6 L110.0 154.3" fill="none" stroke="var(--heat)" stroke-width="1.5"/>
 <circle cx="112" cy="150" r="3" fill="var(--heat)"/>
-</svg><h4>복사</h4><p>적외선으로 전해지는 열이다. 골격이 일부를 흡수·산란한다. 고온에서는 3–8 μm 근적외선이 잘 통과해 열전도율이 크게 오른다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>.</p></div>
+</svg><h4>③ 복사</h4><p>뜨거운 물체는 눈에 보이지 않는 빛(적외선)을 내보내 열을 전달한다. 빛은 빈 공간을 그대로 지나가지만, 에어로겔의 실리카 골격은 상온의 물체가 내는 적외선(약 10 μm 근처)을 잘 흡수한다. 수많은 골격 입자가 적외선을 흡수해 막아서, 복사로 건너가는 열도 줄어든다.</p></div>
 </div>
-<p class="small muted" style="margin-top:0.75rem"><b>그림 2-1</b> 열이 지나가는 세 길. <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>의 설명을 바탕으로 새로 그림.</p>
+<p class="small muted" style="margin-top:0.75rem"><b>그림 2-2</b> 열이 지나가는 세 길.</p>
 
-<h4>크누센 수로 보는 기체 전도</h4>
-<p>기체 분자의 평균자유행로 <var>l</var><sub>m</sub>과 기공 크기 <var>D</var>의 비를 크누센 수 Kn이라 한다. Kn이 클수록 기공 속 기체의 열전도율 λ<sub>g</sub>가 자유 공간의 값 λ<sub>0</sub>보다 작아진다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>.</p>
-<div class="eq" role="group" aria-label="크누센 수와 기체 열전도율 식">
-<div class="row"><span class="label">크누센 수</span><span class="math">Kn = <var>l</var><sub>m</sub> / <var>D</var></span></div>
-<div class="row"><span class="label">기체 열전도율</span><span class="math">λ<sub>g</sub> = λ<sub>0</sub> / (1 + 2β·Kn)</span></div>
+
+<h4>시뮬레이션: 기공 크기를 바꿔 보기</h4>
+<p>기공 지름을 바꿔 보자. 기공을 좁힐수록 분자끼리의 충돌보다 벽 충돌이 늘어난다.</p>
+<figure class="fig-panel sim" id="knudsen-sim">
+<div class="controls">
+<label for="sim-d">기공 지름 D</label>
+<input type="range" id="sim-d" min="0" max="1000" step="1" value="380" aria-describedby="sim-dval">
+<output class="dval" id="sim-dval" for="sim-d">30 nm</output>
+<div class="presets" role="group" aria-label="기공 지름 예시">
+<button type="button" data-d="30">에어로겔 기공 30 nm</button>
+<button type="button" data-d="69">분자가 다른 분자와 부딪히기 전까지 날아가는 거리 69 nm</button>
+<button type="button" data-d="500">큰 기공 500 nm</button>
+<span class="playrow"><button type="button" id="sim-play" aria-pressed="false">일시정지</button><button type="button" id="sim-reset">횟수 초기화</button></span>
 </div>
-<p>공기의 <var>l</var><sub>m</sub> ≈ 69 nm이고 <var>D</var> ≈ 20–40 nm이면 Kn ≈ 1.7–3.5다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a>. Kn이 1보다 크다는 것은 분자가 다른 분자보다 벽에 더 자주 부딪힌다는 뜻이다. (β는 기체 종류에 따라 정해지는 계수다.)</p>
+</div>
+<canvas id="sim-canvas" width="720" height="460" role="img" aria-label="기공 안에서 공기 분자가 움직이며 다른 분자나 벽과 부딪히는 시뮬레이션"></canvas>
+<dl class="readout">
+<div><dt>크누센 수 Kn = 69 nm ÷ D</dt><dd id="sim-kn">2.3</dd></div>
+<div class="mol"><dt>분자끼리 충돌</dt><dd id="sim-mol">0</dd></div>
+<div class="wall"><dt>벽 충돌</dt><dd id="sim-wall">0</dd></div>
+<div><dt>벽 충돌 비율</dt><dd id="sim-ratio">–</dd></div>
+</dl>
+<p class="verdict" id="sim-verdict"></p>
+<figcaption><b>그림 2-3</b> 크누센 효과 시뮬레이션.</figcaption>
+</figure>
+
+<details class="more">
+<summary>식으로 더 보기: 크누센 수</summary>
+<h4 class="step">① 크누센 수: 기공이 얼마나 좁은지 나타내는 숫자</h4>
+<div class="eq" role="group" aria-label="크누센 수 식">
+<div class="row"><span class="math">Kn = <var>l</var><sub>m</sub> / <var>D</var></span></div>
+<div class="row"><span class="small muted"><var>l</var><sub>m</sub>: 분자가 다른 분자와 부딪히기 전까지 날아가는 거리(평균 약 69 nm, 평균자유행로)<br><var>D</var>: 기공 지름</span></div>
+</div>
+<p>에어로겔 기공(20–40 nm)을 넣으면 Kn ≈ 1.7–3.5다. Kn이 1보다 크면 분자가 다른 분자보다 벽에 더 자주 부딪힌다.</p>
+<h4 class="step">② 기공 속 공기가 나르는 열</h4>
+<div class="eq" role="group" aria-label="기공 속 공기의 열전도율 식">
+<div class="row"><span class="math">λ<sub>g</sub> = λ<sub>0</sub> / (1 + 2β·Kn)</span></div>
+<div class="row"><span class="small muted">λ<sub>0</sub>: 보통 공기의 열전도율<br>λ<sub>g</sub>: 기공 속 공기의 열전도율<br>β: 기체마다 정해진 수(공기는 약 2)</span></div>
+</div>
+<p>Kn이 커질수록 분모가 커지니 λ<sub>g</sub>가 작아진다. 기공이 좁을수록 기공 속 공기가 열을 덜 나른다는 뜻이다.</p>
+<h4 class="step">③ 직접 넣어 보면 (β = 2)</h4>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">기공 지름</th><th scope="col" class="num">크누센 수</th><th scope="col">기공 속 공기가 나르는 열</th></tr></thead>
+<tbody>
+<tr><th scope="row">500 nm</th><td class="num">0.14</td><td>보통 공기의 약 64%</td></tr>
+<tr><th scope="row">69 nm</th><td class="num">1</td><td>약 20%</td></tr>
+<tr><th scope="row">30 nm (에어로겔)</th><td class="num">2.3</td><td>약 10%</td></tr>
+</tbody></table></div>
+</details>
 
 <h3 id="compare">다른 단열재와 비교</h3>
+<p>같은 단열 성능에 필요한 두께는 열전도율에 비례한다. 열전도율이 3분의 1이면 두께도 3분의 1이면 된다.</p>
 <figure class="fig-panel">
 <div class="bars" role="img" aria-label="건축 단열재의 열전도율 범위. 에어로겔 12–14, 미네랄울과 EPS, XPS 30–40, 진공단열패널 4–8 mW/(m·K)"><div class="axis"><span>mW/(m·K)</span><span class="ticks"><span style="left:0%">0</span><span style="left:20%">10</span><span style="left:40%">20</span><span style="left:60%">30</span><span style="left:80%">40</span><span style="left:100%">50</span></span><span></span></div><div class="row"><span class="name">셀룰로오스</span><span class="track"><span class="seg" style="left:80.0%;width:20.0%"></span></span><span class="val">40–50</span></div><div class="row"><span class="name">코르크</span><span class="track"><span class="seg" style="left:80.0%;width:20.0%"></span></span><span class="val">40–50</span></div><div class="row"><span class="name">미네랄울</span><span class="track"><span class="seg" style="left:60.0%;width:20.0%"></span></span><span class="val">30–40</span></div><div class="row"><span class="name">EPS(스티로폼)</span><span class="track"><span class="seg" style="left:60.0%;width:20.0%"></span></span><span class="val">30–40</span></div><div class="row"><span class="name">XPS</span><span class="track"><span class="seg" style="left:60.0%;width:20.0%"></span></span><span class="val">30–40</span></div><div class="row"><span class="name">폴리우레탄</span><span class="track"><span class="seg" style="left:40.0%;width:20.0%"></span></span><span class="val">20–30</span></div><div class="row hl"><span class="name">에어로겔</span><span class="track"><span class="seg" style="left:24.0%;width:4.0%"></span></span><span class="val">12–14</span></div><div class="row"><span class="name">진공단열패널</span><span class="track"><span class="seg" style="left:8.0%;width:8.0%"></span></span><span class="val">4–8</span></div></div>
-<figcaption><b>그림 2-2</b> 건축 단열재의 열전도율(낮을수록 단열이 잘 된다). 진공단열패널은 새 제품 4, 25년 사용 후 8이다. <a class="cite" href="#ref-5" title="B. P. Jelle, A. Gustavsen 외, Properties, requirements and possibilities of traditional, st…">[5]</a>의 표를 바탕으로 새로 그림.</figcaption>
+<figcaption><b>그림 2-4</b> 건축 단열재의 열전도율(낮을수록 단열이 잘 된다).</figcaption>
 </figure>
-<p>평판에서 열저항은 두께 ÷ 열전도율이다. 그래서 같은 단열 성능에 필요한 두께는 열전도율에 비례한다. 진공단열패널은 더 낮지만 오래 쓰면 성능이 떨어지고 못에 뚫리면 크게 나빠진다 <a class="cite" href="#ref-5" title="B. P. Jelle, A. Gustavsen 외, Properties, requirements and possibilities of traditional, st…">[5]</a>. 에어로겔은 상용 단열재 중 가장 낮은 축에 든다 <a class="cite" href="#ref-4" title="R. Baetens, B. P. Jelle, A. Gustavsen, Aerogel insulation for building applications: A sta…">[4]</a><a class="cite" href="#ref-5" title="B. P. Jelle, A. Gustavsen 외, Properties, requirements and possibilities of traditional, st…">[5]</a>.</p>
 <div class="calc">
 <label for="mw">미네랄울 두께</label>
-<div class="inrow"><input type="range" id="mw" min="20" max="300" step="10" value="100"><output id="mw-out" for="mw">100 mm</output></div>
-<p class="res" id="mw-res">같은 단열 성능을 내는 에어로겔 두께: 약 33–43 mm</p>
-<p class="small muted" style="margin:0.4rem 0 0">계산: 미네랄울 두께 × 13 ÷ (30–40). 열전도율은 <a class="cite" href="#ref-4" title="R. Baetens, B. P. Jelle, A. Gustavsen, Aerogel insulation for building applications: A sta…">[4]</a><a class="cite" href="#ref-5" title="B. P. Jelle, A. Gustavsen 외, Properties, requirements and possibilities of traditional, st…">[5]</a>.</p>
+<div class="inrow"><input type="range" id="mw" min="20" max="300" step="10" value="100"><output id="mw-out" for="mw">100 mm</output></div>
+<p class="res" id="mw-res">같은 단열 성능을 내는 에어로겔 두께: 약 33–43 mm</p>
 </div>
 
-</div></section><section id="making" class="band gutter page-sec" aria-labelledby="h-making"><div class="col">
-<div class="page-head"><p class="seq">3 / 6</p><h2 class="sec-title" id="h-making">만드는 법</h2><p class="en">Making</p><section class="summary" aria-labelledby="sum-making"><h3 id="sum-making">요약</h3><ul><li>실리카 에어로겔은 졸-겔 반응으로 젤을 만들고, 숙성과 용매 치환을 거쳐 건조해서 만든다.</li><li>핵심은 건조다. 액체를 그냥 증발시키면 모세관 압력 때문에 골격이 무너진다.</li><li>초임계 건조로 액체-기체 경계를 없애거나, 표면을 바꿔 상압에서 건조한다.</li></ul></section></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#process">전체 공정</a><a href="#solgel">졸-겔 반응</a><a href="#catalyst">산 촉매와 염기 촉매</a><a href="#drying">건조: 왜 그냥 말리면 안 될까</a></nav>
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#about"><span>이전</span><b>에어로겔이란</b></a><a class="next" href="#making"><span>다음</span><b>만드는 법</b></a></nav>
+</div></section><section id="making" class="band gutter page-sec page" aria-labelledby="h-making"><div class="col">
+<div class="page-head"><p class="seq">3 / 6</p><h2 class="sec-title" id="h-making">만드는 법</h2><p class="en">Making</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#process">에어로겔 만드는 과정</a><a href="#catalyst">산 촉매와 염기 촉매</a><a href="#drying">건조: 왜 그냥 말리면 안 될까</a></nav>
 
-<h3 id="process">전체 공정</h3>
-<ol class="steps">
-<li><b>졸 만들기</b><p>전구체(TEOS, TMOS, 물유리 등)를 용매(에탄올 등), 물, 촉매와 섞는다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>.</p></li>
-<li><b>겔화</b><p>가수분해와 축합으로 Si–O–Si 그물이 자라 용기 전체가 젤이 된다 <a class="cite" href="#ref-6" title="U. Schubert, Chemistry and Fundamentals of the Sol–Gel Process, in D. Levy, M. Zayat (eds.…">[6]</a>.</p></li>
-<li><b>숙성·용매 치환</b><p>골격을 단단하게 하고 기공 속 액체를 건조에 맞는 용매로 바꾼다. 오래 숙성할수록 비표면적은 줄어든다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>.</p></li>
-<li><b>건조</b><p>골격은 그대로 두고 기공 속 액체만 빼낸다. 공정에서 가장 어려운 단계다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a><a class="cite" href="#ref-10" title="G. A. Spiering, G. F. Godshall, R. B. Moore, Effect of the Gel Drying Method on Properties…">[10]</a>.</p></li>
-</ol>
-<p style="margin-top:1.5rem">원료는 TEOS, TMOS 같은 규소 알콕사이드가 대표적이지만 비싸고 유해하다. 그래서 값싼 물유리(규산나트륨)가 선호되고, 실리카를 19–22% 함유한 왕겨도 연구된다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>. 졸-겔 공정 전반은 <a class="cite" href="#ref-7" title="C. J. Brinker, G. W. Scherer, Sol-Gel Science: The Physics and Chemistry of Sol-Gel Proces…">[7]</a>에 정리돼 있다.</p>
-
-<h3 id="solgel">졸-겔 반응</h3>
-<p>규소 알콕사이드(Si–OR)는 물과 만나 실란올(Si–OH)이 되고, 실란올끼리 또는 실란올과 알콕사이드가 축합해 실록산 결합(Si–O–Si)을 만든다 <a class="cite" href="#ref-6" title="U. Schubert, Chemistry and Fundamentals of the Sol–Gel Process, in D. Levy, M. Zayat (eds.…">[6]</a>.</p>
+<h3 id="process">에어로겔 만드는 과정</h3>
+<p>액체 속에서 골격을 만든 뒤, 골격은 남기고 액체만 빼낸다.</p>
+<figure class="ps ps-all" id="process-steps"><ol class="ps-cards"><li class="ps-card"><h4 class="ps-title"><span class="n">1</span>졸 만들기</h4><div class="ps-views"><div class="ps-view"><svg viewBox="0 0 160 205" role="img" aria-label="병 속에 맑은 액체가 들어 있다"><g transform="translate(0,0) rotate(0 80 110)"><clipPath id="jar1"><rect x="31" y="41" width="98" height="138" rx="13"/></clipPath><g clip-path="url(#jar1)"><rect x="20" y="78" width="120" height="110" fill="#e3eefa"/><line x1="20" y1="78" x2="140" y2="78" stroke="#9fc4ec" stroke-width="2"/></g><rect x="30" y="40" width="100" height="140" rx="14" fill="none" stroke="#8c97a8" stroke-width="1.8"/><rect x="44" y="24" width="72" height="16" rx="4" fill="#fff" stroke="#8c97a8" stroke-width="1.6"/></g><text x="80" y="199" text-anchor="middle" font-size="14" fill="#5a6880">맑은 액체</text></svg></div><div class="ps-view"><svg viewBox="0 0 260 200" role="img" aria-label="TEOS 분자: 규소 하나에 산소를 거쳐 에틸기 네 개가 붙어 있고, 주변에 물 분자가 있다"><line x1="130.0" y1="104.0" x2="101.7" y2="75.7" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><line x1="101.7" y1="75.7" x2="77.7" y2="51.7" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><rect x="52.7" y="40.7" width="50" height="22" rx="11" fill="#e8ecf2" stroke="#9aa5b5"/><text x="77.7" y="56.2" text-anchor="middle" font-size="12" fill="#13233f">C₂H₅</text><circle cx="101.7" cy="75.7" r="11" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="101.7" y="79.7" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><line x1="130.0" y1="104.0" x2="158.3" y2="75.7" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><line x1="158.3" y1="75.7" x2="182.3" y2="51.7" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><rect x="157.3" y="40.7" width="50" height="22" rx="11" fill="#e8ecf2" stroke="#9aa5b5"/><text x="182.3" y="56.2" text-anchor="middle" font-size="12" fill="#13233f">C₂H₅</text><circle cx="158.3" cy="75.7" r="11" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="158.3" y="79.7" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><line x1="130.0" y1="104.0" x2="158.3" y2="132.3" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><line x1="158.3" y1="132.3" x2="182.3" y2="156.3" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><rect x="157.3" y="145.3" width="50" height="22" rx="11" fill="#e8ecf2" stroke="#9aa5b5"/><text x="182.3" y="160.8" text-anchor="middle" font-size="12" fill="#13233f">C₂H₅</text><circle cx="158.3" cy="132.3" r="11" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="158.3" y="136.3" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><line x1="130.0" y1="104.0" x2="101.7" y2="132.3" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><line x1="101.7" y1="132.3" x2="77.7" y2="156.3" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><rect x="52.7" y="145.3" width="50" height="22" rx="11" fill="#e8ecf2" stroke="#9aa5b5"/><text x="77.7" y="160.8" text-anchor="middle" font-size="12" fill="#13233f">C₂H₅</text><circle cx="101.7" cy="132.3" r="11" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="101.7" y="136.3" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><circle cx="130" cy="104" r="17" fill="#e6d6b8" stroke="#8a6d3b" stroke-width="1.5"/><text x="130" y="108.7" text-anchor="middle" font-size="13" font-weight="600" fill="#13233f">Si</text><line x1="222.0" y1="28.0" x2="210.0" y2="37.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="222.0" y1="28.0" x2="234.0" y2="37.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><circle cx="210" cy="37" r="6" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="210" y="40.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="234" cy="37" r="6" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="234" y="40.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="222" cy="28" r="10" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="222" y="32.0" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><line x1="40.0" y1="172.0" x2="28.0" y2="181.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="40.0" y1="172.0" x2="52.0" y2="181.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><circle cx="28" cy="181" r="6" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="28" y="184.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="52" cy="181" r="6" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="52" y="184.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="40" cy="172" r="10" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="40" y="176.0" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text></svg></div></div><p class="ps-text">실리카 원료(TEOS)를 에탄올, 물, 촉매와 섞는다. 아직은 맑은 액체로, 이를 졸이라고 한다.</p></li><li class="ps-card"><h4 class="ps-title"><span class="n">2</span>겔화: 그물이 생긴다</h4><div class="ps-views"><div class="ps-view"><svg viewBox="0 0 160 205" role="img" aria-label="병을 기울여도 겔이 흐르지 않는다"><g transform="translate(0,-14) rotate(-24 80 110)"><clipPath id="jar2"><rect x="31" y="41" width="98" height="138" rx="13"/></clipPath><g clip-path="url(#jar2)"><rect x="20" y="78" width="120" height="110" fill="#bcd5f1"/><line x1="20" y1="78" x2="140" y2="78" stroke="#7fa9dc" stroke-width="2"/></g><rect x="30" y="40" width="100" height="140" rx="14" fill="none" stroke="#8c97a8" stroke-width="1.8"/><rect x="44" y="24" width="72" height="16" rx="4" fill="#fff" stroke="#8c97a8" stroke-width="1.6"/></g><text x="80" y="199" text-anchor="middle" font-size="14" fill="#5a6880">기울여도 흐르지 않는다</text></svg></div><div class="ps-view"><svg viewBox="0 0 260 200" role="img" aria-label="Si–OH 두 개가 만나 물 한 분자를 내놓고 Si–O–Si 다리로 이어진다"><line x1="34.0" y1="52.0" x2="12.0" y2="34.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="34.0" y1="52.0" x2="12.0" y2="52.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="34.0" y1="52.0" x2="12.0" y2="70.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="34.0" y1="52.0" x2="74.0" y2="52.0" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><line x1="74.0" y1="52.0" x2="98.0" y2="52.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><circle cx="98" cy="52" r="7" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="98" y="55.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="74" cy="52" r="11" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="74" y="56.0" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><circle cx="34" cy="52" r="15" fill="#e6d6b8" stroke="#8a6d3b" stroke-width="1.5"/><text x="34" y="56.7" text-anchor="middle" font-size="13" font-weight="600" fill="#13233f">Si</text><line x1="226.0" y1="52.0" x2="248.0" y2="34.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="226.0" y1="52.0" x2="248.0" y2="52.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="226.0" y1="52.0" x2="248.0" y2="70.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="226.0" y1="52.0" x2="186.0" y2="52.0" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><line x1="186.0" y1="52.0" x2="162.0" y2="52.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><circle cx="162" cy="52" r="7" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="162" y="55.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="186" cy="52" r="11" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="186" y="56.0" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><circle cx="226" cy="52" r="15" fill="#e6d6b8" stroke="#8a6d3b" stroke-width="1.5"/><text x="226" y="56.7" text-anchor="middle" font-size="13" font-weight="600" fill="#13233f">Si</text><text x="130" y="58" text-anchor="middle" font-size="20" fill="#5a6880">+</text><path d="M130,80 V118 M122,110 L130,120 L138,110" fill="none" stroke="#5a6880" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="70.0" y1="156.0" x2="48.0" y2="138.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="70.0" y1="156.0" x2="48.0" y2="156.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="70.0" y1="156.0" x2="48.0" y2="174.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="170.0" y1="156.0" x2="192.0" y2="138.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="170.0" y1="156.0" x2="192.0" y2="156.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="170.0" y1="156.0" x2="192.0" y2="174.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="70.0" y1="156.0" x2="120.0" y2="156.0" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><line x1="120.0" y1="156.0" x2="170.0" y2="156.0" stroke="#5a6880" stroke-width="3" stroke-linecap="round"/><circle cx="120" cy="156" r="11" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="120" y="160.0" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><circle cx="70" cy="156" r="15" fill="#e6d6b8" stroke="#8a6d3b" stroke-width="1.5"/><text x="70" y="160.7" text-anchor="middle" font-size="13" font-weight="600" fill="#13233f">Si</text><circle cx="170" cy="156" r="15" fill="#e6d6b8" stroke="#8a6d3b" stroke-width="1.5"/><text x="170" y="160.7" text-anchor="middle" font-size="13" font-weight="600" fill="#13233f">Si</text><line x1="234.0" y1="150.0" x2="222.0" y2="159.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><line x1="234.0" y1="150.0" x2="246.0" y2="159.0" stroke="#5a6880" stroke-width="2" stroke-linecap="round"/><circle cx="222" cy="159" r="6" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="222" y="162.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="246" cy="159" r="6" fill="#ffffff" stroke="#8c97a8" stroke-width="1.5"/><text x="246" y="162.2" text-anchor="middle" font-size="9" font-weight="600" fill="#13233f">H</text><circle cx="234" cy="150" r="10" fill="#f3b2aa" stroke="#c0392b" stroke-width="1.5"/><text x="234" y="154.0" text-anchor="middle" font-size="11" font-weight="600" fill="#13233f">O</text><text x="258" y="190" text-anchor="end" font-size="14" fill="#5a6880">물이 빠진다</text></svg></div></div><p class="ps-text">물이 TEOS의 –OC₂H₅를 –OH로 바꾸고(가수분해), –OH 두 개가 만나 물을 내놓으며 Si–O–Si로 이어진다(축합). 축합이 이어지면 용기 전체에 걸친 3차원 실리카 망상 구조가 만들어진다.</p></li><li class="ps-card"><h4 class="ps-title"><span class="n">3</span>에이징: 골격을 단단하게</h4><div class="ps-views"><div class="ps-view"><svg viewBox="0 0 160 205" role="img" aria-label="겔이 든 병을 그대로 둔다"><g transform="translate(0,0) rotate(0 80 110)"><clipPath id="jar3"><rect x="31" y="41" width="98" height="138" rx="13"/></clipPath><g clip-path="url(#jar3)"><rect x="20" y="78" width="120" height="110" fill="#a9c8ec"/><line x1="20" y1="78" x2="140" y2="78" stroke="#6d9bd3" stroke-width="2"/></g><rect x="30" y="40" width="100" height="140" rx="14" fill="none" stroke="#8c97a8" stroke-width="1.8"/><rect x="44" y="24" width="72" height="16" rx="4" fill="#fff" stroke="#8c97a8" stroke-width="1.6"/></g><text x="80" y="199" text-anchor="middle" font-size="14" fill="#5a6880">한동안 그대로 둔다</text></svg></div><div class="ps-view"><svg viewBox="0 0 260 200" role="img" aria-label="실리카 입자 사슬의 이음매가 두꺼워지며 골격이 단단해진다"><circle cx="53.0" cy="107.0" r="11" fill="#c6dcf4" stroke="none"/><circle cx="91.0" cy="104.0" r="11" fill="#c6dcf4" stroke="none"/><circle cx="130.0" cy="101.0" r="11" fill="#c6dcf4" stroke="none"/><circle cx="170.0" cy="99.0" r="11" fill="#c6dcf4" stroke="none"/><circle cx="209.0" cy="98.0" r="11" fill="#c6dcf4" stroke="none"/><circle cx="34" cy="118" r="17" fill="#ffffff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="72" cy="96" r="15" fill="#ffffff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="110" cy="112" r="18" fill="#ffffff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="150" cy="90" r="16" fill="#ffffff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="190" cy="108" r="17" fill="#ffffff" stroke="var(--accent)" stroke-width="1.6"/><circle cx="228" cy="88" r="15" fill="#ffffff" stroke="var(--accent)" stroke-width="1.6"/><ellipse cx="53.0" cy="107.0" rx="7" ry="10" fill="#c6dcf4" stroke="var(--accent)" stroke-width="1.2" transform="rotate(-30 53.0 107.0)"/><ellipse cx="91.0" cy="104.0" rx="7" ry="10" fill="#c6dcf4" stroke="var(--accent)" stroke-width="1.2" transform="rotate(23 91.0 104.0)"/><ellipse cx="130.0" cy="101.0" rx="7" ry="10" fill="#c6dcf4" stroke="var(--accent)" stroke-width="1.2" transform="rotate(-29 130.0 101.0)"/><ellipse cx="170.0" cy="99.0" rx="7" ry="10" fill="#c6dcf4" stroke="var(--accent)" stroke-width="1.2" transform="rotate(24 170.0 99.0)"/><ellipse cx="209.0" cy="98.0" rx="7" ry="10" fill="#c6dcf4" stroke="var(--accent)" stroke-width="1.2" transform="rotate(-28 209.0 98.0)"/><path d="M130.0,87.0 L136.0,48" stroke="#5a6880" stroke-width="1.3" fill="none"/><text x="254" y="40" text-anchor="end" font-size="15" fill="#13233f">이음매가 두꺼워진다</text><text x="130" y="170" text-anchor="middle" font-size="14" fill="#5a6880">실리카 입자 사슬</text></svg></div></div><p class="ps-text">겔을 한동안 그대로 두면 입자 사이 이음매가 두꺼워져 골격이 단단해진다.</p></li><li class="ps-card"><h4 class="ps-title"><span class="n">4</span>용매 교체: 기공 속 액체 바꾸기</h4><div class="ps-views"><div class="ps-view"><svg viewBox="0 0 160 205" role="img" aria-label="겔을 새 액체에 담가 기공 속 액체를 바꾼다"><rect x="14" y="70" width="132" height="112" rx="10" fill="#e3eefa" stroke="#8c97a8" stroke-width="1.8"/><rect x="50" y="104" width="60" height="62" rx="6" fill="#a9c8ec" stroke="var(--accent)" stroke-width="1.4"/><path d="M50,96 C40,84 34,82 26,84 M31,79 L25,84 L31,89" fill="none" stroke="#8c97a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M134,84 C126,82 118,86 112,96 M110,88 L112,97 L120,94" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><text x="80" y="199" text-anchor="middle" font-size="14" fill="#5a6880">새 액체에 담가 바꾼다</text></svg></div><div class="ps-view"><svg viewBox="0 0 260 200" role="img" aria-label="기공 속 에탄올이 빠져나가고 액체 이산화탄소가 들어온다"><circle cx="132.2" cy="119.5" r="4.2" fill="#9fc4ec"/><circle cx="107.4" cy="115.8" r="4.2" fill="#9fc4ec"/><circle cx="127.5" cy="98.3" r="4.2" fill="#9fc4ec"/><circle cx="175.6" cy="102.5" r="4.2" fill="#9fc4ec"/><circle cx="129.2" cy="108.4" r="4.2" fill="#9fc4ec"/><circle cx="155.7" cy="99.5" r="4.2" fill="#9fc4ec"/><circle cx="143.4" cy="85.4" r="4.2" fill="#9fc4ec"/><circle cx="124.7" cy="95.9" r="4.2" fill="#9fc4ec"/><circle cx="98.6" cy="76.7" r="4.2" fill="#9fc4ec"/><circle cx="90.0" cy="96.1" r="4.2" fill="#9fc4ec"/><circle cx="128.3" cy="98.0" r="4.2" fill="#9fc4ec"/><circle cx="131.7" cy="78.8" r="4.2" fill="#9fc4ec"/><circle cx="129.5" cy="101.1" r="4.2" fill="#9fc4ec"/><circle cx="147.1" cy="87.3" r="4.2" fill="#9fc4ec"/><circle cx="120.7" cy="69.1" r="4.2" fill="#9fc4ec"/><circle cx="118.8" cy="67.8" r="4.2" fill="#9fc4ec"/><circle cx="95.5" cy="117.6" r="4.2" fill="#9fc4ec"/><circle cx="82.0" cy="111.4" r="4.2" fill="#9fc4ec"/><circle cx="133.9" cy="97.6" r="4.2" fill="#9fc4ec"/><circle cx="137.8" cy="105.9" r="4.2" fill="#9fc4ec"/><circle cx="153.3" cy="96.6" r="4.2" fill="#9fc4ec"/><circle cx="118.5" cy="92.3" r="4.2" fill="#9fc4ec"/><circle cx="109.0" cy="99.4" r="4.2" fill="#9fc4ec"/><circle cx="111.1" cy="116.9" r="4.2" fill="#9fc4ec"/><circle cx="87.4" cy="83.6" r="4.2" fill="#9fc4ec"/><circle cx="109.0" cy="69.7" r="4.2" fill="#9fc4ec"/><circle cx="218.0" cy="100.0" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="212.7" cy="121.2" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="197.4" cy="139.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="174.0" cy="153.7" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="145.3" cy="161.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="114.7" cy="161.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="86.0" cy="153.7" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="62.6" cy="139.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="47.3" cy="121.2" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="42.0" cy="100.0" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="47.3" cy="78.8" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="62.6" cy="60.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="86.0" cy="46.3" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="114.7" cy="38.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="145.3" cy="38.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="174.0" cy="46.3" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="197.4" cy="60.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="212.7" cy="78.8" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><path d="M206,60 C228,40 240,36 252,30 M244,28 L253,29 L249,38" fill="none" stroke="#8c97a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><text x="256" y="18" text-anchor="end" font-size="14" fill="#5a6880">에탄올이 나가고</text><path d="M8,170 C24,166 40,156 56,142 M48,140 L57,141 L55,150" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><text x="6" y="194" font-size="14" fill="var(--accent)">액체 CO₂가 들어온다</text></svg></div></div><p class="ps-text">기공 속 물과 에탄올을 건조하기 좋은 액체로 바꾼다. 초임계 건조를 할 때는 액체 이산화탄소로 바꾼다.</p></li><li class="ps-card"><h4 class="ps-title"><span class="n">5</span>건조: 액체만 빼내기</h4><div class="ps-views"><div class="ps-view"><svg viewBox="0 0 160 205" role="img" aria-label="병에서 꺼낸 반투명한 에어로겔 덩어리"><line x1="10" y1="168" x2="150" y2="168" stroke="#c9d3e0" stroke-width="2"/><path d="M34,92 l30,-21.0 h74 l-30,21.0 z" fill="#e3eefa" stroke="var(--accent)" stroke-width="1.3"/><path d="M108,92 l30,-21.0 v74 l-30,21.0 z" fill="#c6dcf4" stroke="var(--accent)" stroke-width="1.3"/><rect x="34" y="92" width="74" height="74" fill="#d7e7f8" fill-opacity="0.85" stroke="var(--accent)" stroke-width="1.3"/><text x="80" y="199" text-anchor="middle" font-size="14" fill="#5a6880">모양 그대로, 속은 공기</text></svg></div><div class="ps-view"><svg viewBox="0 0 260 200" role="img" aria-label="액체가 빠지고 기공이 빈 공간으로 남은 그물"><circle cx="218.0" cy="100.0" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="212.7" cy="121.2" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="197.4" cy="139.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="174.0" cy="153.7" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="145.3" cy="161.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="114.7" cy="161.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="86.0" cy="153.7" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="62.6" cy="139.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="47.3" cy="121.2" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="42.0" cy="100.0" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="47.3" cy="78.8" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="62.6" cy="60.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="86.0" cy="46.3" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="114.7" cy="38.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="145.3" cy="38.9" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="174.0" cy="46.3" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="197.4" cy="60.1" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><circle cx="212.7" cy="78.8" r="11.5" fill="#fff" stroke="var(--accent)" stroke-width="1.5"/><text x="130" y="106" text-anchor="middle" font-size="15" font-weight="600" fill="#13233f">빈 공간(공기)</text></svg></div></div><p class="ps-text">골격은 그대로 두고 액체만 빼내면 에어로겔이 된다. 가장 어려운 단계로, 아래에서 자세히 본다.</p></li></ol><figcaption><b>그림 3-1</b> 에어로겔을 만드는 다섯 단계. 병 그림은 눈으로 본 모습, 분자 그림은 분자 수준에서 본 모습이다.</figcaption></figure>
+<details class="more">
+<summary>식으로 더 보기: 졸-겔 반응식</summary>
 <div class="eq" role="group" aria-label="졸-겔 반응식">
 <div class="row"><span class="label">가수분해</span><span class="math">≡Si–OR + H₂O → ≡Si–OH + ROH</span></div>
-<div class="row"><span class="label">알코올 생성 축합</span><span class="math">≡Si–OH + RO–Si≡ → ≡Si–O–Si≡ + ROH</span></div>
 <div class="row"><span class="label">물 생성 축합</span><span class="math">≡Si–OH + HO–Si≡ → ≡Si–O–Si≡ + H₂O</span></div>
+<div class="row"><span class="label">알코올 생성 축합</span><span class="math">≡Si–OH + RO–Si≡ → ≡Si–O–Si≡ + ROH</span></div>
 <div class="row"><span class="label">TEOS 완전 가수분해</span><span class="math">Si(OC₂H₅)₄ + 4 H₂O → Si(OH)₄ + 4 C₂H₅OH</span></div>
 </div>
-<p>국내 연구에서 암모니아 염기 조건의 TEOS 반응을 보면, 가수분해가 전체 속도를 정하는 단계이고 물 생성 축합이 알코올 생성 축합보다 우세했다 <a class="cite" href="#ref-8" title="윤호성, 박형상, 김상환, 알칼리 조건하에서 졸-겔 법에 의한 TEOS의 가수 분해와 축합중합 반응에 대한 속도론적 연구, 화학공학 32(4), 557–565 (…">[8]</a>.</p>
+<p>축합 중에서는 물이 빠지는 축합이 우세했고, 활성화 에너지(반응이 일어나려면 넘어야 하는 에너지 언덕)도 가장 낮았다.</p>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">반응(NH₃ 촉매, TEOS)</th><th scope="col" class="num">활성화 에너지</th></tr></thead>
 <tbody>
-<tr><th scope="row">가수분해</th><td class="num">5.99 kcal/mol</td></tr>
-<tr><th scope="row">물 생성 축합</th><td class="num">3.69 kcal/mol</td></tr>
-<tr><th scope="row">알코올 생성 축합</th><td class="num">15.4 kcal/mol</td></tr>
+<tr><th scope="row">가수분해</th><td class="num">5.99 kcal/mol</td></tr>
+<tr><th scope="row">물 생성 축합</th><td class="num">3.69 kcal/mol</td></tr>
+<tr><th scope="row">알코올 생성 축합</th><td class="num">15.4 kcal/mol</td></tr>
 </tbody></table></div>
-<p class="small muted">출처 <a class="cite" href="#ref-8" title="윤호성, 박형상, 김상환, 알칼리 조건하에서 졸-겔 법에 의한 TEOS의 가수 분해와 축합중합 반응에 대한 속도론적 연구, 화학공학 32(4), 557–565 (…">[8]</a>.</p>
+</details>
 
 <h3 id="catalyst">산 촉매와 염기 촉매</h3>
-<p>같은 원료라도 촉매에 따라 젤의 모양이 달라진다 <a class="cite" href="#ref-6" title="U. Schubert, Chemistry and Fundamentals of the Sol–Gel Process, in D. Levy, M. Zayat (eds.…">[6]</a>.</p>
+<p>같은 원료라도 산을 넣느냐 염기를 넣느냐에 따라 그물 모양이 달라진다.</p>
 <div class="pair">
-<div class="p"><svg viewBox="0 0 300 180" role="img" aria-label="산 촉매 젤: 가는 사슬이 얽힌 고분자 같은 그물, 기공이 작다" xmlns="http://www.w3.org/2000/svg">
+<div class="p"><svg viewBox="0 0 300 180" role="img" aria-label="산 촉매 겔: 가는 사슬이 얽힌 고분자 같은 그물, 기공이 작다" xmlns="http://www.w3.org/2000/svg">
 <g fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
 <path d="M52.8 122.3 L54.8 115.5 L48.2 113.2 L45.5 119.7 L41.4 125.3 L35.8 129.5 L28.8 129.3 L21.8 128.9 L14.8 129.2 L8.8 125.6 L5.0 123.7 L5.0 118.3 L5.8 111.3 L11.3 107.1 L14.6 100.9 L7.8 99.2 L5.0 93.3 L5.0 87.1"/>
 <path d="M133.1 167.7 L126.6 170.1 L124.0 175.0 L128.8 175.0 L127.4 175.0 L124.9 175.0 L118.2 175.0 L111.5 173.0 L105.9 168.8 L100.5 164.4 L94.7 160.4 L87.7 160.4"/>
@@ -1348,8 +1730,8 @@ html { scroll-behavior: smooth; }
 <path d="M138.0 11.0 L144.6 8.5 L151.6 8.1 L155.5 5.0 L158.0 5.0 L151.0 5.0 L144.5 7.6 L137.5 7.4 L133.2 5.0 L129.1 5.0 L122.4 5.0 L115.4 5.9 L108.7 5.0 L101.9 5.0 L95.5 5.0 L94.1 5.0 L94.5 5.0 L90.7 5.0"/>
 <path d="M20.9 68.0 L22.3 61.1 L26.7 55.7 L27.3 48.7 L26.1 41.8 L24.6 35.0 L21.6 28.6 L18.5 22.3 L17.3 15.5 L12.7 10.2 L5.7 9.9 L5.0 11.6 L5.0 12.9 L5.0 9.8 L5.0 10.0 L5.0 14.1 L5.0 11.4 L5.0 8.9"/>
 <path d="M42.7 132.8 L47.2 127.5 L50.6 121.3 L50.9 114.4 L51.8 107.4 L55.3 101.4 L52.5 95.0 L49.7 88.5 L48.1 81.7 L52.5 76.2 L54.1 69.4 L59.9 65.5"/>
-</g></svg><h4>산 촉매</h4><p>이미 결합이 많은 규소에서 반응이 잘 일어나 사슬 모양 그물이 생긴다. 기공이 작은 고분자 같은 젤이 된다 <a class="cite" href="#ref-6" title="U. Schubert, Chemistry and Fundamentals of the Sol–Gel Process, in D. Levy, M. Zayat (eds.…">[6]</a>.</p></div>
-<div class="p"><svg viewBox="0 0 300 180" role="img" aria-label="염기 촉매 젤: 큰 입자가 가지를 치며 뭉친 콜로이드 그물, 기공이 크다" xmlns="http://www.w3.org/2000/svg">
+</g></svg><h4>산 촉매: 가는 사슬 그물</h4><p>–OH가 빨리 생겨서 작은 조각끼리 서로 이어 붙는다. 가는 사슬 그물이 되고 기공이 작다.</p></div>
+<div class="p"><svg viewBox="0 0 300 180" role="img" aria-label="염기 촉매 겔: 큰 입자가 가지를 치며 뭉친 콜로이드 그물, 기공이 크다" xmlns="http://www.w3.org/2000/svg">
 <g fill="var(--tint-strong)" stroke="var(--accent)" stroke-width="1">
 <circle cx="75.0" cy="24.9" r="7.6"/>
 <circle cx="26.9" cy="73.9" r="9.7"/>
@@ -1421,17 +1803,14 @@ html { scroll-behavior: smooth; }
 <circle cx="130.2" cy="60.0" r="8.6"/>
 <circle cx="197.8" cy="166.6" r="7.3"/>
 <circle cx="166.5" cy="34.3" r="6.3"/>
-</g></svg><h4>염기 촉매</h4><p>사슬 끝의 규소에서 반응이 잘 일어나 가지가 많은 입자 덩어리가 생긴다. 입자와 기공이 큰 콜로이드 젤이 된다 <a class="cite" href="#ref-6" title="U. Schubert, Chemistry and Fundamentals of the Sol–Gel Process, in D. Levy, M. Zayat (eds.…">[6]</a>. 더 다공성인 재료가 나온다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>.</p></div>
+</g></svg><h4>염기 촉매: 둥근 입자 덩어리</h4><p>–OH가 조금씩 생겨서, 생기는 대로 이미 자란 덩어리에 달라붙는다. 둥근 입자가 자라 이어지고, 입자와 기공이 크다.</p></div>
 </div>
-<p class="small muted" style="margin-top:0.75rem"><b>그림 3-1</b> 촉매에 따른 젤 구조 모식도. <a class="cite" href="#ref-6" title="U. Schubert, Chemistry and Fundamentals of the Sol–Gel Process, in D. Levy, M. Zayat (eds.…">[6]</a>의 설명을 바탕으로 새로 그림.</p>
+<p class="small muted" style="margin-top:0.75rem"><b>그림 3-2</b> 촉매에 따른 겔 구조 모식도.</p>
 
 <h3 id="drying">건조: 왜 그냥 말리면 안 될까</h3>
-<p>기공 속 액체가 증발할 때 액체와 기체의 경계면이 기공 벽을 안쪽으로 당긴다. 이 모세관 압력은 기공 반지름 <var>r</var><sub>c</sub>가 작을수록 커진다 <a class="cite" href="#ref-10" title="G. A. Spiering, G. F. Godshall, R. B. Moore, Effect of the Gel Drying Method on Properties…">[10]</a>. 기공이 수십 nm인 에어로겔은 이 힘을 가장 크게 받는다.</p>
-<div class="eq" role="group" aria-label="모세관 압력 식">
-<div class="row"><span class="label">모세관 압력</span><span class="math"><var>P</var><sub>c</sub> = −2γ cos θ / <var>r</var><sub>c</sub></span></div>
-<div class="row"><span class="label"></span><span class="small muted">γ: 액체의 표면장력, θ: 기공 벽과의 접촉각, <var>r</var><sub>c</sub>: 기공 반지름</span></div>
-</div>
-<p>초임계 건조는 온도와 압력을 임계점 위로 올려 액체와 기체의 구분을 없앤 뒤 빼낸다. 모세관 압력을 만드는 경계면이 생기지 않아 구조가 가장 잘 보존된다 <a class="cite" href="#ref-10" title="G. A. Spiering, G. F. Godshall, R. B. Moore, Effect of the Gel Drying Method on Properties…">[10]</a>. 이산화탄소의 임계점은 약 31 °C(304.18 K), 73.8 bar라서 <a class="cite" href="#ref-13" title="NIST Chemistry WebBook, SRD 69, Carbon dioxide: Phase change data (임계온도 304.18 K, 임계압력 73.…">[13]</a> 비교적 낮은 온도에서 건조할 수 있다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>.</p>
+<p>좁은 틈 속 액체는 벽을 끌어당긴다(모세관 현상). 겔을 그냥 말리면 증발하는 액체가 기공 벽을 안쪽으로 세게 당겨 골격이 무너진다.</p>
+<figure class="capbars" role="group" aria-label="기공 반지름 10 nm에서 액체별 모세관 압력: 물 약 142기압, 에탄올 약 43기압, 헥산 약 36기압, 초임계 이산화탄소 0기압"><p class="cb-head">기공 벽을 안쪽으로 당기는 압력 (기공 반지름 10 nm)</p><div class="cb-row cb-labrow" aria-hidden="true"><span></span><span class="cb-labtrack"><span class="cb-reflab" style="left:62.5%">깊이 1,000 m 바닷속 ≈ 100기압</span></span><span></span></div><div class="cb-row"><span class="cb-name">물</span><span class="cb-track"><span class="cb-fill" style="width:88.8%"></span><span class="cb-ref" style="left:62.5%"></span></span><span class="cb-val">약 142기압</span></div><div class="cb-row"><span class="cb-name">에탄올</span><span class="cb-track"><span class="cb-fill" style="width:27.1%"></span><span class="cb-ref" style="left:62.5%"></span></span><span class="cb-val">약 43기압</span></div><div class="cb-row"><span class="cb-name">헥산</span><span class="cb-track"><span class="cb-fill" style="width:22.2%"></span><span class="cb-ref" style="left:62.5%"></span></span><span class="cb-val">약 36기압</span></div><div class="cb-row"><span class="cb-name">초임계 CO₂</span><span class="cb-track"><span class="cb-fill" style="width:0.0%"></span><span class="cb-ref" style="left:62.5%"></span></span><span class="cb-val">0기압<small>경계면이 없다</small></span></div><figcaption>모세관 압력 = 2 × 표면장력 ÷ 기공 반지름. 표면장력은 물 0.072, 에탄올 0.022, 헥산 0.018 N/m로 계산했다.</figcaption></figure>
+<p style="margin-top:1.5rem">그래서 초임계 건조를 쓴다. 온도와 압력을 임계점 위로 올리면 액체와 기체의 구분이 사라져, 벽을 당기는 경계면 자체가 없어진다. 이산화탄소는 임계점이 약 31 °C, 73.8 bar로 낮아 많이 쓰인다.</p>
 <figure class="fig-panel">
 <div class="scroll-x"><svg viewBox="0 0 640 410" role="img" aria-labelledby="pd-t" xmlns="http://www.w3.org/2000/svg">
 <title id="pd-t">이산화탄소 상평형 그림 위의 두 건조 경로. 증발 건조는 액체-기체 경계를 지나고, 초임계 건조는 임계점을 돌아 경계를 지나지 않는다.</title>
@@ -1452,13 +1831,13 @@ html { scroll-behavior: smooth; }
 <circle cx="200" cy="290" r="4" fill="var(--ink)"/>
 <circle cx="430" cy="130" r="6" fill="var(--ink)"/>
 <text x="442" y="152" font-size="14" font-weight="600" fill="var(--ink)">임계점</text>
-<text x="442" y="170" font-size="13" fill="var(--ink)">31 °C, 73.8 bar</text>
+<text x="442" y="170" font-size="13" fill="var(--ink)">31 °C, 73.8 bar</text>
 <text x="120" y="170" font-size="15" fill="var(--muted)">고체</text>
 <text x="300" y="120" font-size="15" fill="var(--muted)">액체</text>
 <text x="470" y="330" font-size="15" fill="var(--muted)">기체</text>
 <text x="500" y="62" font-size="15" font-weight="600" fill="var(--accent)">초임계 유체</text>
 <circle cx="282" cy="205" r="5" fill="var(--ink)"/>
-<text x="272" y="229" text-anchor="end" font-size="13" fill="var(--ink)">젖은 젤</text>
+<text x="272" y="229" text-anchor="end" font-size="13" fill="var(--ink)">젖은 겔</text>
 <path d="M288 205 H434" stroke="var(--heat)" stroke-width="2.5" fill="none" marker-end="url(#pd-h)"/>
 <path d="M357.0 197.8 l14 14 M371.0 197.8 l-14 14" stroke="var(--heat)" stroke-width="2.5"/>
 <text x="374" y="233" font-size="13" font-weight="600" fill="var(--heat)">증발 건조: 경계를 지난다</text>
@@ -1466,118 +1845,242 @@ html { scroll-behavior: smooth; }
 <path d="M282 199 V92 H540 V340" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linejoin="round" marker-end="url(#pd-b)"/>
 <text x="290" y="82" font-size="13" font-weight="600" fill="var(--accent)">초임계 건조: 임계점을 돌아간다</text>
 <text x="552" y="250" font-size="13" fill="var(--accent)">감압</text>
-<text x="620" y="402" text-anchor="end" font-size="12" fill="var(--muted)" dx="-48">(축척 아님)</text>
-</svg></div>
-<figcaption><b>그림 3-2</b> 이산화탄소 상평형 그림 위의 두 건조 경로. 증발 건조(주황)는 액체-기체 경계를 지나고, 초임계 건조(파랑)는 임계점을 돌아 경계를 지나지 않는다. 임계점 값 <a class="cite" href="#ref-13" title="NIST Chemistry WebBook, SRD 69, Carbon dioxide: Phase change data (임계온도 304.18 K, 임계압력 73.…">[13]</a>, 원리 <a class="cite" href="#ref-10" title="G. A. Spiering, G. F. Godshall, R. B. Moore, Effect of the Gel Drying Method on Properties…">[10]</a>, 그림은 새로 그림.</figcaption>
-</figure>
-<div class="table-wrap"><table>
-<thead><tr><th scope="col">건조 방법</th><th scope="col">원리</th><th scope="col">장점</th><th scope="col">단점</th></tr></thead>
-<tbody>
-<tr><th scope="row">고온 초임계</th><td>알코올을 그대로 초임계 상태로 만든다. 1931년 키슬러의 방법 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>구조 보존</td><td>고온·고압, 화재 위험 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">저온 초임계</th><td>액체 CO₂로 바꾼 뒤 초임계 CO₂로 빼낸다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>온도가 낮고 비교적 저렴 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>고압 장비가 필요하고 결과물이 친수성이다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">상압</th><td>표면을 실릴화(TMCS, HMDS 등)해 소수성으로 만들면, 건조 중 줄었다가 다시 펴진다 <a class="cite" href="#ref-9" title="S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, Silica aerogel films prepared at ambi…">[9]</a><a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>고압 장비가 필요 없다 <a class="cite" href="#ref-9" title="S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, Silica aerogel films prepared at ambi…">[9]</a></td><td>공정이 4–7일 걸린다. 시약을 조합해 1일로 줄인 보고도 있다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">동결</th><td>−50 ~ −83 °C, 5–30 Pa 진공에서 얼린 용매를 승화시킨다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>모세관 압력을 피한다 <a class="cite" href="#ref-10" title="G. A. Spiering, G. F. Godshall, R. B. Moore, Effect of the Gel Drying Method on Properties…">[10]</a></td><td>용매 결정이 자라며 균열이 생길 수 있다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a><a class="cite" href="#ref-10" title="G. A. Spiering, G. F. Godshall, R. B. Moore, Effect of the Gel Drying Method on Properties…">[10]</a></td></tr>
-</tbody></table></div>
-<p>상업 생산은 아직 대부분 초임계 건조를 쓴다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>. LG화학도 2013년 연구를 시작해 2016년 파일럿 설비를 거쳐 초임계 건조 공정을 자체 기술로 국산화했다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</p>
 
-</div></section><section id="application" class="band gutter page-sec" aria-labelledby="h-application"><div class="col">
-<div class="page-head"><p class="seq">4 / 6</p><h2 class="sec-title" id="h-application">응용</h2><p class="en">Applications</p><section class="summary" aria-labelledby="sum-application"><h3 id="sum-application">요약</h3><ul><li>가장 큰 쓰임은 단열이다. 산업 배관, 배터리, 건물에 들어간다.</li><li>혜성 먼지를 붙잡는 등 우주라는 극한 환경에서 먼저 검증됐다.</li><li>넓은 표면적 덕분에 기름 흡착, 검출기, 화장품 등으로도 쓰임이 넓어지고 있다.</li></ul></section></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#battery">전기차·ESS 배터리</a><a href="#industry">산업 배관·에너지</a><a href="#space">우주 탐사</a><a href="#building">건축 채광 단열</a><a href="#environment">환경: 기름 흡착</a><a href="#others">그 밖의 쓰임</a></nav>
-<p style="margin-top:2rem">응용 분야마다 어떤 문제를 에어로겔이 어떻게 푸는지, 실제 사례와 함께 정리했다.</p>
-<div class="cases"><section class="case" aria-labelledby="battery"><h3 id="battery">전기차·ESS 배터리</h3><dl><dt>문제</dt><dd>배터리 셀 하나가 과열되면 열이 옆 셀로 번지며 연쇄적으로 불이 나는 열폭주가 일어난다.</dd><dt>역할</dt><dd>셀과 셀 사이에 얇은 차단재로 들어가 셀 단위에서 열 전파를 막는다 <a class="cite" href="#ref-18" title="Aspen Aerogels, Battery Electric Vehicles (PyroThin 열 차단재). aerogel.com">[18]</a>.</dd><dt>사례</dt><dd>Aspen Aerogels의 PyroThin은 800V 이상 초고속 충전 팩까지 대상으로 한다 <a class="cite" href="#ref-18" title="Aspen Aerogels, Battery Electric Vehicles (PyroThin 열 차단재). aerogel.com">[18]</a>. Alkegen은 분진이 적은 섬유 강화 에어로겔을 양산하기 시작했다 <a class="cite" href="#ref-23" title="알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입, 더팀스(PR Newswire 배포), 2025.06.04. theteams.kr">[23]</a>. LG화학에는 화재 위험에 민감한 대형 ESS 주문이 늘고 있다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</dd></dl></section><section class="case" aria-labelledby="industry"><h3 id="industry">산업 배관·에너지</h3><dl><dt>문제</dt><dd>고온 배관이나 극저온 설비에서 열이 새면 에너지가 그대로 버려진다.</dd><dt>역할</dt><dd>얇은 두께로 배관과 설비의 열 손실을 줄인다 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a>.</dd><dt>사례</dt><dd>LG화학은 산업 현장 배관·설비 단열과 액화수소 수송·보관용 수요를 겨냥한다 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a>. Aspen Aerogels는 고온용 Pyrogel과 극저온용 Cryogel을 만든다 <a class="cite" href="#ref-18" title="Aspen Aerogels, Battery Electric Vehicles (PyroThin 열 차단재). aerogel.com">[18]</a>.</dd></dl></section><section class="case" aria-labelledby="space"><h3 id="space">우주 탐사</h3><dl><dt>문제</dt><dd>혜성 먼지는 소총 탄환의 최대 6배 속도로 날아와, 손상 없이 붙잡기 어렵다 <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a>.</dd><dt>역할</dt><dd>충돌면은 가장 성기고 안쪽으로 갈수록 촘촘한 에어로겔이 입자를 서서히 멈춰 세운다. 입자는 자기 길이의 최대 200배인 당근 모양 자국을 남긴다 <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a>.</dd><dt>사례</dt><dd>스타더스트는 이렇게 모은 혜성 샘플을 2006년 지구로 가져왔다 <a class="cite" href="#ref-16" title="NASA Science, Stardust (미션 소개). science.nasa.gov">[16]</a>. 1997년 화성 로버 소저너의 전자장치 단열에도 쓰였다 <a class="cite" href="#ref-15" title="NASA Jet Propulsion Laboratory, Ideas that gel, 2002.02.11. jpl.nasa.gov">[15]</a>.</dd></dl></section><section class="case" aria-labelledby="building"><h3 id="building">건축 채광 단열</h3><dl><dt>문제</dt><dd>창과 채광창은 빛을 들이지만 그만큼 열이 많이 샌다.</dd><dt>역할</dt><dd>빛은 통과시키고 열은 막는다. 에어로겔은 태양광 영역에서 투과율이 높을 수 있다 <a class="cite" href="#ref-4" title="R. Baetens, B. P. Jelle, A. Gustavsen, Aerogel insulation for building applications: A sta…">[4]</a>.</dd><dt>사례</dt><dd>Cabot의 Lumira는 공기가 90% 이상인 소수성 에어로겔 입자로, 건물 채광 시스템에 쓰인다. 빛을 부드럽게 퍼뜨려 눈부심도 줄인다 <a class="cite" href="#ref-20" title="Cabot Corporation, Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting, 201…">[20]</a>.</dd></dl></section><section class="case" aria-labelledby="environment"><h3 id="environment">환경: 기름 흡착</h3><dl><dt>문제</dt><dd>물 위에 퍼진 기름이나 유기 용매를 빠르게 걷어내야 한다.</dd><dt>역할</dt><dd>넓은 표면과 빈 공간이 기름을 빨아들인다. 오염물 필터와 흡착제로 연구된다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>.</dd><dt>사례</dt><dd>저장대학교의 탄소 에어로겔은 자기 무게의 최대 900배까지 기름을 흡수했다 <a class="cite" href="#ref-24" title="World&#x27;s lightest material (저장대 탄소 에어로겔 연구 소개), Nanowerk, 2013.03.22. nanowerk.com">[24]</a>.</dd></dl></section><section class="case" aria-labelledby="others"><h3 id="others">그 밖의 쓰임</h3><dl><dt>문제</dt><dd>가볍고, 굴절률이 낮고, 표면적이 넓은 성질을 다른 분야에서도 활용한다.</dd><dt>역할</dt><dd>입자 검출용 체렌코프 검출기, 흡음재, 촉매 담체, 약물 전달 소재로 쓰이거나 연구된다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>.</dd><dt>사례</dt><dd>화장품의 번들거림 방지제, 자외선 차단 효과를 높이는 TiO₂–실리카 첨가제가 있다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>.</dd></dl></section></div>
-</div></section><section id="trend" class="band gutter page-sec" aria-labelledby="h-trend"><div class="col">
-<div class="page-head"><p class="seq">5 / 6</p><h2 class="sec-title" id="h-trend">산업과 시장</h2><p class="en">Industry & Market</p><section class="summary" aria-labelledby="sum-trend"><h3 id="sum-trend">요약</h3><ul><li>시장 전망은 기관마다 다르지만 모두 빠른 성장을 예상한다(연평균 약 17%에서 30% 이상).</li><li>수요는 전기차·ESS 배터리와 에너지 설비가 이끌고, 그만큼 배터리 경기에 따라 흔들린다.</li><li>국내에서는 LG화학이 2025년 9월부터 당진 공장을 풀가동하고 있다.</li></ul></section></div>
+</svg></div>
+<figcaption><b>그림 3-3</b> 이산화탄소 상평형 모식도 위의 두 건조 경로.</figcaption>
+</figure>
+
+<h4>네 가지 건조 방법</h4>
+<ul class="methods">
+<li><b>고온 초임계 건조</b><p>기공 속 알코올을 그대로 초임계 상태로 만들어 뺀다. 1931년 키슬러의 방법이다.</p><p class="pm"><span class="good">구조가 잘 남는다</span><span class="bad">뜨겁고 압력이 높아 불이 날 위험이 있다</span></p></li>
+<li><b>저온 초임계 건조(CO₂)</b><p>기공 속 액체를 액체 CO₂로 바꾼 뒤, 임계점 위에서 빼낸다.</p><p class="pm"><span class="good">온도가 낮고 비교적 싸다</span><span class="bad">고압 장비가 필요하다</span></p></li>
+<li><b>상압 건조</b><p>표면을 물을 싫어하게 바꿔 보통 대기압에서 말린다. 줄었던 골격이 다시 펴진다.</p><p class="pm"><span class="good">고압 장비가 필요 없다</span><span class="bad">4–7일 걸린다(1일로 줄인 보고도 있다)</span></p></li>
+<li><b>동결 건조</b><p>얼린 뒤 진공에서 얼음을 바로 기체로 날린다(승화).</p><p class="pm"><span class="good">액체-기체 경계가 생기지 않는다</span><span class="bad">얼음 결정이 자라 금이 갈 수 있다</span></p></li>
+</ul>
+<details class="more">
+<summary>더 보기: 상압 건조에서 골격이 다시 펴지는 이유</summary>
+<p>표면에 –OH가 남아 있으면, 마르면서 골격이 줄어들 때 맞닿은 벽끼리 Si–O–Si로 붙어 버려 다시 펴지지 못한다. –OH를 물을 싫어하는 작용기로 미리 막아 두면 벽끼리 붙지 않아, 액체가 다 빠진 뒤 골격이 용수철처럼 다시 펴진다. 이를 스프링백(springback)이라 한다.</p>
+</details>
+<p style="margin-top:1.5rem">상업 생산은 아직 대부분 초임계 건조를 쓴다. LG화학도 2013년 연구를 시작해 초임계 건조 공정을 자체 기술로 국산화했다.</p>
+
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#science"><span>이전</span><b>구조와 원리</b></a><a class="next" href="#application"><span>다음</span><b>응용</b></a></nav>
+</div></section><section id="application" class="band gutter page-sec page" aria-labelledby="h-application"><div class="col">
+<div class="page-head"><p class="seq">4 / 6</p><h2 class="sec-title" id="h-application">응용</h2><p class="en">Applications</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#temp">온도 차가 큰 곳에서 열을 막는다</a><a href="#battery">배터리: 불이 옆 셀로 번지는 것을 막는다</a><a href="#beyond">단열 말고도</a></nav>
+
+<h3 id="temp">온도 차가 큰 곳에서 열을 막는다</h3>
+<p>에어로겔은 영하 253 °C의 액화수소부터 수백 °C의 배관과 배터리까지, 안팎의 온도 차가 큰 곳에서 쓰인다.</p>
+<figure class="tspec" role="img" aria-label="에어로겔이 쓰이는 온도: 액화수소 영하 253도, 건물 상온, 고온 산업 배관 수백 도, 배터리 열폭주 170도에서 약 720도"><div class="ts-area"><div class="ts-bar"></div><div class="ts-ticks"><span style="left:20.6%">0</span><span style="left:40.5%">250</span><span style="left:60.3%">500</span><span style="left:80.2%">750</span><span style="left:100.0%">1,000</span></div><span class="ts-pt ts-below at-start" style="left:0.6%"><i><span class="lf">액화수소 −253 °C</span><span class="ls">액화수소 −253 °C</span></i></span><span class="ts-pt ts-above" style="left:22.2%"><i><span class="lf">건물 · 상온</span><span class="ls">건물</span></i></span><span class="ts-bd ts-above" style="left:28.6%;width:39.7%"><i><span class="lf">고온 산업 배관 · 수백 °C</span><span class="ls">고온 배관</span></i></span><span class="ts-bd ts-below" style="left:34.1%;width:43.7%"><i><span class="lf">배터리 열폭주 · 170 → 약 720 °C</span><span class="ls">배터리 열폭주</span></i></span></div><p class="ts-unit">온도(°C)</p><figcaption><b>그림 4-1</b> 에어로겔이 열을 막는 온도 범위.</figcaption></figure>
+<ul class="tuses"><li class="use-cold"><span class="tag">−253 °C</span><h4>액화수소 탱크·배관</h4><p>바깥 열이 스며들면 액체 수소가 끓어 날아간다. LG화학은 액화수소 수송·보관용 수요를 겨냥하고, Aspen Aerogels는 극저온용 Cryogel을 만든다.</p></li><li class="use-room"><span class="tag">상온</span><h4>건물 채광창</h4><p>창과 채광창은 빛을 들이는 만큼 열도 샌다. Cabot의 Lumira는 빛은 통과시키고 열은 막는 에어로겔 알갱이로, 빛을 부드럽게 퍼뜨려 눈부심도 줄인다.</p></li><li class="use-warm"><span class="tag">수백 °C</span><h4>고온 산업 배관</h4><p>뜨거운 증기 배관과 설비에서 새는 열을 얇은 두께로 줄인다. Aspen Aerogels의 고온용 Pyrogel이 대표적이다.</p></li><li class="use-hot"><span class="tag">170 °C →</span><h4>배터리 열폭주</h4><p>셀 하나에 불이 나면 옆 셀로 번지기 쉽다. 셀 사이에 얇은 에어로겔 시트를 끼워 막는다. 아래에서 자세히 본다.</p></li></ul>
+
+<h3 id="battery">배터리: 불이 옆 셀로 번지는 것을 막는다</h3>
+<p>배터리 셀 하나가 과열되면 스스로 열을 내며 온도가 치솟는다. 이를 <dfn>열폭주</dfn>라 한다. 이 열이 옆 셀로 번지면 연쇄적으로 불이 난다. 셀 사이에 얇은 차단재를 끼워 열이 넘어가는 것을 막는데, 차단재를 바꿔 같은 조건에서 계산해 보면 차이가 뚜렷하다.</p>
+<figure class="btfig"><p class="bt-title">셀 1이 열폭주하고 5분 뒤 (셀 사이 차단재 2 mm, 냉각판 있음)</p><div class="bt-row bt-head" aria-hidden="true"><span></span><span class="bt-cells"><span>셀 1</span><span>셀 2</span><span>셀 3</span><span>셀 4</span><span>셀 5</span></span><span class="bt-first">셀 2에 불이 붙기까지</span><span class="bt-spread">번진 셀</span></div><div class="bt-row"><span class="bt-name">폴리우레탄 폼</span><span class="bt-cells"><span class="bt-cell" style="background:rgb(199,65,31);color:#fff">673°</span><span class="bt-cell" style="background:rgb(199,65,31);color:#fff">676°</span><span class="bt-cell" style="background:rgb(198,64,31);color:#fff">680°</span><span class="bt-cell" style="background:rgb(198,63,31);color:#fff">684°</span><span class="bt-cell" style="background:rgb(198,63,31);color:#fff">687°</span></span><span class="bt-first"><span class="m-lab">셀 2 열폭주까지 </span>9초</span><span class="bt-spread"><span class="m-lab">번진 셀 </span>4 / 4</span></div><div class="bt-row"><span class="bt-name">마이카 시트</span><span class="bt-cells"><span class="bt-cell" style="background:rgb(201,67,32);color:#fff">662°</span><span class="bt-cell" style="background:rgb(199,65,31);color:#fff">674°</span><span class="bt-cell" style="background:rgb(196,61,30);color:#fff">697°</span><span class="bt-cell" style="background:rgb(191,56,29);color:#fff">729°</span><span class="bt-cell" style="background:rgb(185,53,28);color:#fff">756°</span></span><span class="bt-first"><span class="m-lab">셀 2 열폭주까지 </span>30초</span><span class="bt-spread"><span class="m-lab">번진 셀 </span>4 / 4</span></div><div class="bt-row is-aero"><span class="bt-name">에어로겔</span><span class="bt-cells"><span class="bt-cell" style="background:rgb(201,68,32);color:#fff">657°</span><span class="bt-cell" style="background:rgb(246,226,159);color:#13233f">121°</span><span class="bt-cell" style="background:rgb(203,220,240);color:#13233f">28°</span><span class="bt-cell" style="background:rgb(201,220,243);color:#13233f">25°</span><span class="bt-cell" style="background:rgb(201,220,243);color:#13233f">25°</span></span><span class="bt-first">번지지 않음<small>셀 2 최고 133 °C</small></span><span class="bt-spread"><span class="m-lab">번진 셀 </span>0 / 4</span></div><div class="bt-legend"><span class="bt-grad"><span style="background:rgb(201,220,243)"></span><span style="background:rgb(213,222,222)"></span><span style="background:rgb(224,223,200)"></span><span style="background:rgb(236,225,179)"></span><span style="background:rgb(246,224,155)"></span><span style="background:rgb(246,210,111)"></span><span style="background:rgb(246,196,69)"></span><span style="background:rgb(244,187,66)"></span><span style="background:rgb(243,179,63)"></span><span style="background:rgb(241,170,60)"></span><span style="background:rgb(240,162,57)"></span><span style="background:rgb(239,153,55)"></span><span style="background:rgb(237,145,52)"></span><span style="background:rgb(236,136,49)"></span><span style="background:rgb(234,128,46)"></span><span style="background:rgb(233,119,43)"></span><span style="background:rgb(230,113,41)"></span><span style="background:rgb(227,109,40)"></span><span style="background:rgb(224,104,39)"></span><span style="background:rgb(221,100,38)"></span><span style="background:rgb(218,95,38)"></span><span style="background:rgb(216,90,37)"></span><span style="background:rgb(213,86,36)"></span><span style="background:rgb(210,81,35)"></span><span style="background:rgb(207,77,34)"></span><span style="background:rgb(204,72,33)"></span><span style="background:rgb(201,68,32)"></span><span style="background:rgb(198,63,31)"></span><span style="background:rgb(195,59,30)"></span><span style="background:rgb(190,56,29)"></span><span style="background:rgb(186,53,28)"></span><span style="background:rgb(181,50,28)"></span><span style="background:rgb(176,47,27)"></span><span style="background:rgb(172,44,27)"></span><span style="background:rgb(167,41,26)"></span><span style="background:rgb(163,37,25)"></span><span style="background:rgb(158,34,25)"></span><span style="background:rgb(154,31,24)"></span><span style="background:rgb(149,28,23)"></span><span style="background:rgb(145,25,23)"></span><span style="background:rgb(140,22,22)"></span></span><span class="bt-l0">25 °C</span><span class="bt-l170" style="left:14.9%">170 °C 열폭주</span><span class="bt-l1">1,000 °C</span></div><figcaption><b>그림 4-2</b> 차단재에 따른 열폭주 전파 계산 결과. 셀 안 숫자는 5분 뒤 온도다.</figcaption></figure>
+<p>폴리우레탄 폼과 마이카 시트는 1분도 안 돼 옆 셀로 번졌지만, 에어로겔은 셀 2가 133 °C에 그쳐 번지지 않았다. 다만 냉각판 없이 자연 냉각만 하면 에어로겔도 5분 12초 뒤 셀 2로 번진다. 차단재와 냉각을 함께 써야 하는 이유다.</p>
+<p>실제로 Aspen Aerogels의 PyroThin은 800 V 이상 초고속 충전 배터리 팩까지 겨냥하고, Alkegen은 가루가 덜 날리는 섬유 강화 에어로겔을 양산하기 시작했다. LG화학에는 화재 위험에 민감한 대형 ESS(에너지저장장치) 주문이 늘고 있다.</p>
+<details class="more">
+<summary>더 보기: 계산 조건과 값의 출처</summary>
+<ul>
+<li>셀은 온도가 하나인 덩어리로 보고, 셀과 셀 사이는 두께 2 mm 차단재를 통한 열전도로만 연결했다. 2 mm는 Aspen Aerogels PyroThin 시트 두께다(Charged EVs, 2023).</li>
+<li>열전도율: 폴리우레탄 폼 0.03, 마이카 0.71 W/(m·K)(Engineering ToolBox). 에어로겔은 0 °C 0.020에서 600 °C 0.089 W/(m·K)까지 온도에 따라 커지는 Pyrogel XTE 데이터시트 값을 썼다.</li>
+<li>폴리우레탄 폼은 약 100–300 °C까지만 견딘다(Charged EVs, 2023). 그래서 300 °C를 넘으면 차단 기능을 잃는 것으로 처리했다.</li>
+<li>열폭주 시작 온도 170 °C는 NCM523 파우치 셀 실험의 기준값이다(Wang 외, 2024). 최고 온도는 실험값(약 720 °C)보다 가혹하게 1,000 °C로 두었다.</li>
+<li>셀 비열 1,040 J/(kg·K)(Battery Design 정리, Maleki 외 1999 측정), 셀 두께 20 mm, 밀도 2,500 kg/m³(가정). 냉각판은 50, 자연 냉각은 7 W/(m²·K)(Wang 외, 2024)로 두었다.</li>
+<li>5분은 중국 배터리 안전 기준의 열 전파 경보 시간이다(Charged EVs, 2023). 불꽃, 가스 분출, 셀 팽창은 넣지 않은 단순화 모델이라 소재끼리 비교하는 용도로 읽어야 한다.</li>
+</ul>
+</details>
+
+<h3 id="beyond">단열 말고도</h3>
+<p>가벼움, 넓은 표면, 낮은 굴절률을 살린 쓰임도 있다.</p>
+<ul class="beyond"><li><h4>우주 탐사</h4><p>혜성 먼지는 소총 탄환의 최대 6배 속도로 날아온다. 입구는 성기고 안쪽으로 갈수록 촘촘한 에어로겔이 먼지를 서서히 멈춰 세워, NASA 스타더스트 탐사선이 2006년 혜성 먼지를 지구로 가져왔다. 1997년에는 화성 로버 소저너의 단열재로도 쓰였다.</p></li><li><h4>기름 흡착</h4><p>넓은 표면과 빈 공간이 스펀지처럼 기름을 빨아들인다. 중국 저장대학교의 탄소 에어로겔은 자기 무게의 최대 900배까지 기름을 흡수했다.</p></li><li><h4>그 밖의 쓰임</h4><p>빠른 입자를 구별하는 체렌코프 검출기, 흡음재, 촉매 담체, 약물 전달 소재로 쓰이거나 연구된다. 화장품에는 번들거림을 줄이거나 자외선 차단 효과를 높이는 첨가제로 들어간다.</p></li></ul>
+
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#making"><span>이전</span><b>만드는 법</b></a><a class="next" href="#trend"><span>다음</span><b>산업과 시장</b></a></nav>
+</div></section><section id="trend" class="band gutter page-sec page" aria-labelledby="h-trend"><div class="col">
+<div class="page-head"><p class="seq">5 / 6</p><h2 class="sec-title" id="h-trend">산업과 시장</h2><p class="en">Industry & Market</p></div>
 <nav class="onpage" aria-label="이 부분의 내용"><a href="#market">시장 전망</a><a href="#companies">주요 기업</a><a href="#swing">수요가 흔들릴 때</a><a href="#korea">국내 동향: LG화학</a></nav>
 
 <h3 id="market">시장 전망</h3>
+<p>에어로겔 시장이 얼마나 커질지는 발표한 곳마다 숫자가 다르다.</p>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">출처</th><th scope="col">전망</th></tr></thead>
 <tbody>
-<tr><th scope="row">CAS (2025)</th><td>2025–2035년 연평균 약 17% 성장 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a></td></tr>
-<tr><th scope="row">IDTechEx (매일경제 인용, 2026)</th><td>2033년 세계 시장 약 24억 달러 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a></td></tr>
-<tr><th scope="row">LG화학 (2023 보도자료, 2026 보도)</th><td>연평균 30% 이상 성장 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a><a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a></td></tr>
+<tr><th scope="row">CAS (2025)</th><td>2025–2035년 연평균 약 17% 성장</td></tr>
+<tr><th scope="row">IDTechEx (매일경제 인용, 2026)</th><td>2033년 세계 시장 약 24억 달러</td></tr>
+<tr><th scope="row">LG화학 (2023 보도자료, 2026 보도)</th><td>연평균 30% 이상 성장</td></tr>
 </tbody></table></div>
-<p>세 전망은 기간과 기준이 서로 달라 숫자도 다르다. 그래서 하나의 숫자보다 '연 17%에서 30% 이상'처럼 범위와 출처를 함께 말하는 편이 정확하다.</p>
-<p>연구도 상용화 쪽으로 움직이고 있다. CAS 분석에 따르면 2013년 이후 에어로겔 특허가 꾸준히 늘었고, 일부 유형은 특허 수가 논문 수를 앞선다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>.</p>
+<p>세 전망은 기간과 기준이 서로 달라 숫자도 다르다. 공통점은 모두 빠른 성장을 예상한다는 것이다. 연평균 17%는 매년 17%씩 커진다는 뜻으로, 이 속도라면 4–5년마다 시장이 두 배가 된다. 하나의 숫자보다 '연 17%에서 30% 이상'처럼 범위와 출처를 함께 말하는 편이 정확하다.</p>
+<p>연구가 실제 제품으로 넘어가고 있다는 신호도 있다. CAS 분석에 따르면 2013년 이후 에어로겔 특허가 꾸준히 늘었고, 일부 유형은 특허 수가 논문 수를 앞선다. 논문보다 특허가 많다는 것은 기업들이 상품화를 준비하고 있다는 뜻으로 읽을 수 있다.</p>
 
 <h3 id="companies">주요 기업</h3>
 <div class="table-wrap"><table>
 <thead><tr><th scope="col">기업</th><th scope="col">주요 제품·사업</th><th scope="col">최근 소식</th></tr></thead>
 <tbody>
-<tr><th scope="row">Aspen Aerogels</th><td>PyroThin(배터리 열 차단재), Pyrogel(고온), Cryogel(극저온) <a class="cite" href="#ref-18" title="Aspen Aerogels, Battery Electric Vehicles (PyroThin 열 차단재). aerogel.com">[18]</a></td><td>2025년 매출 2억 7,110만 달러 <a class="cite" href="#ref-19" title="Aspen Aerogels, Aspen Aerogels, Inc. Reports Fourth Quarter and Full Year 2025 Financial R…">[19]</a></td></tr>
-<tr><th scope="row">Cabot</th><td>Lumira(건축 채광 단열재), 독일 프랑크푸르트 인근 공장에서 생산 <a class="cite" href="#ref-20" title="Cabot Corporation, Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting, 201…">[20]</a></td><td>2003년 채광 시장 진출, 2011년 Lumira 브랜드 출시 <a class="cite" href="#ref-20" title="Cabot Corporation, Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting, 201…">[20]</a></td></tr>
-<tr><th scope="row">LG화학</th><td>산업 배관·설비 단열재, 배터리용 에어로겔 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a><a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a></td><td>당진 공장 2025년 9월부터 풀가동, 2026년 하반기 글로벌 완성차 납품 예정 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a></td></tr>
-<tr><th scope="row">Alkegen</th><td>전기차 배터리용 섬유 강화 에어로겔 AlkeGel <a class="cite" href="#ref-23" title="알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입, 더팀스(PR Newswire 배포), 2025.06.04. theteams.kr">[23]</a></td><td>2025년 본격 생산 시작, 12개국 60곳 이상 제조 시설 <a class="cite" href="#ref-23" title="알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입, 더팀스(PR Newswire 배포), 2025.06.04. theteams.kr">[23]</a></td></tr>
+<tr><th scope="row">Aspen Aerogels (미국)</th><td>PyroThin(배터리 열 차단재), Pyrogel(고온용), Cryogel(극저온용)</td><td>2025년 매출 2억 7,110만 달러</td></tr>
+<tr><th scope="row">Cabot (미국)</th><td>Lumira(건축 채광 단열재), 독일 프랑크푸르트 인근 공장에서 생산</td><td>2003년 채광 시장 진출, 2011년 Lumira 브랜드 출시</td></tr>
+<tr><th scope="row">LG화학</th><td>산업 배관·설비 단열재, 배터리용 에어로겔</td><td>당진 공장 2025년 9월부터 풀가동, 2026년 하반기 글로벌 완성차 납품 예정</td></tr>
+<tr><th scope="row">Alkegen (미국)</th><td>전기차 배터리용 섬유 강화 에어로겔 AlkeGel</td><td>2025년 본격 생산 시작, 12개국 60곳 이상 제조 시설</td></tr>
 </tbody></table></div>
 
 <h3 id="swing">수요가 흔들릴 때</h3>
 <figure class="fig-panel">
 <div class="bars" role="img" aria-label="Aspen Aerogels 매출: 2024년 452.7백만 달러(열 차단재 306.8, 에너지·산업 145.9), 2025년 271.1백만 달러(열 차단재 168.9, 에너지·산업 102.2)"><div class="axis"><span>백만 달러</span><span class="ticks"><span style="left:0%">0</span><span style="left:20%">100</span><span style="left:40%">200</span><span style="left:60%">300</span><span style="left:80%">400</span><span style="left:100%">500</span></span><span></span></div><div class="row"><span class="name">2024년</span><span class="track"><span class="seg" style="left:0;width:61.4%;background:var(--accent)"></span><span class="seg" style="left:61.4%;width:29.2%;background:var(--tint-strong)"></span></span><span class="val">452.7</span></div><div class="row"><span class="name">2025년</span><span class="track"><span class="seg" style="left:0;width:33.8%;background:var(--accent)"></span><span class="seg" style="left:33.8%;width:20.4%;background:var(--tint-strong)"></span></span><span class="val">271.1</span></div></div><p class="small" style="margin:0.75rem 0 0;display:flex;gap:1.25rem;flex-wrap:wrap"><span><span style="display:inline-block;width:0.8rem;height:0.8rem;background:var(--accent);border-radius:2px;vertical-align:-0.1rem"></span> 열 차단재(전기차)</span><span><span style="display:inline-block;width:0.8rem;height:0.8rem;background:var(--tint-strong);border-radius:2px;vertical-align:-0.1rem"></span> 에너지·산업</span></p>
-<figcaption><b>그림 5-1</b> Aspen Aerogels 부문별 매출(백만 달러). <a class="cite" href="#ref-19" title="Aspen Aerogels, Aspen Aerogels, Inc. Reports Fourth Quarter and Full Year 2025 Financial R…">[19]</a>의 실적 발표를 바탕으로 새로 그림.</figcaption>
+<figcaption><b>그림 5-1</b> Aspen Aerogels 부문별 매출(백만 달러).</figcaption>
 </figure>
-<p>미국 에어로겔 기업 Aspen Aerogels의 매출은 2024년 4억 5,270만 달러에서 2025년 2억 7,110만 달러로 40% 줄었다. 줄어든 금액의 약 76%가 전기차용 열 차단재였다 <a class="cite" href="#ref-19" title="Aspen Aerogels, Aspen Aerogels, Inc. Reports Fourth Quarter and Full Year 2025 Financial R…">[19]</a>. 배터리 시장이 크게 자라는 만큼, 그 경기를 그대로 따라 흔들린다는 뜻이다.</p>
+<p>에어로겔 수요는 배터리에 크게 기대고 있어서, 배터리 시장이 주춤하면 함께 흔들린다. 미국 에어로겔 기업 Aspen Aerogels의 매출은 2024년 4억 5,270만 달러에서 2025년 2억 7,110만 달러로 40% 줄었다. 줄어든 금액의 약 76%가 전기차용 열 차단재였다.</p>
 
 <h3 id="korea">국내 동향: LG화학</h3>
 <ol class="timeline">
-<li><span class="y">2013</span><span>에어로젤 연구를 시작했다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</span></li>
-<li><span class="y">2016</span><span>파일럿 설비로 초임계 건조 공정을 시험했다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</span></li>
-<li class="key"><span class="y">2023</span><span>3월 충남 당진 석문국가산업단지에 공장을 착공했다 <a class="cite" href="#ref-21" title="LG, “플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최, 보도자료, 2023.03.30. lg.co.kr">[21]</a>.</span></li>
-<li class="key"><span class="y">2025</span><span>9월부터 풀가동. 생산 물량은 수년치 선계약으로 채워졌다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</span></li>
-<li><span class="y">2026</span><span>하반기부터 글로벌 완성차 업체에 납품할 예정이다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</span></li>
-<li><span class="y">2028</span><span>수요가 계속 늘면 이 무렵 증설을 검토한다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</span></li>
+<li><span class="y">2013</span><span>에어로겔 연구를 시작했다.</span></li>
+<li><span class="y">2016</span><span>파일럿(시험 생산) 설비로 초임계 건조 공정을 검증했다.</span></li>
+<li class="key"><span class="y">2023</span><span>3월 충남 당진 석문국가산업단지에 공장을 짓기 시작했다.</span></li>
+<li class="key"><span class="y">2025</span><span>9월부터 공장을 풀가동하고 있다. 앞으로 몇 년 동안 만들 물량까지 이미 주문이 들어와 있다.</span></li>
+<li><span class="y">2026</span><span>하반기부터 해외 완성차 업체에 납품할 예정이다.</span></li>
+<li><span class="y">2028</span><span>수요가 계속 늘면 이 무렵 공장 증설을 검토한다.</span></li>
 </ol>
-<p>LG화학은 처음에 전기차 배터리 수요를 예상했지만, 지금은 화재 위험에 민감한 대형 ESS 주문이 빠르게 늘고 있다고 밝혔다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>.</p>
+<p>LG화학은 처음에 전기차 배터리 수요를 예상했지만, 지금은 화재 위험에 민감한 대형 ESS(에너지저장장치) 주문이 빠르게 늘고 있다고 밝혔다.</p>
 
-</div></section><section id="issue" class="band gutter page-sec" aria-labelledby="h-issue"><div class="col">
-<div class="page-head"><p class="seq">6 / 6</p><h2 class="sec-title" id="h-issue">한계와 해결</h2><p class="en">Challenges</p><section class="summary" aria-labelledby="sum-issue"><h3 id="sum-issue">요약</h3><ul><li>가장 큰 약점은 잘 부서진다는 것과 만드는 데 비용이 많이 든다는 것이다.</li><li>섬유 보강, 고분자 가교, 상압 건조, 값싼 원료가 해결 방향으로 연구되고 있다.</li><li>다만 보강하면 밀도와 열전도율이 올라가는 등 무언가를 내줘야 한다.</li></ul></section></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#problems">문제와 해결 방향</a><a href="#outlook">전망</a><a href="#ours">우리 조의 견해</a></nav>
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#application"><span>이전</span><b>응용</b></a><a class="next" href="#issue"><span>다음</span><b>한계와 해결</b></a></nav>
+</div></section><section id="issue" class="band gutter page-sec page" aria-labelledby="h-issue"><div class="col">
+<div class="page-head"><p class="seq">6 / 6</p><h2 class="sec-title" id="h-issue">한계와 해결</h2><p class="en">Challenges</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#problems">문제와 해결 방향</a><a href="#hot">온도가 높아지면: 복사로 새는 열이 커진다</a><a href="#outlook">전망</a></nav>
 
 <h3 id="problems">문제와 해결 방향</h3>
+<p>에어로겔이 이렇게 좋은데 왜 아직 어디에나 쓰이지 않을까? 가장 큰 이유는 잘 부서지고 비싸다는 것이다. 문제마다 어떤 해결책이 연구되는지, 그리고 그 대가는 무엇인지 정리했다.</p>
 <div class="table-wrap"><table class="problems">
 <thead><tr><th scope="col">문제</th><th scope="col">해결 방향</th><th scope="col">대가와 남은 과제</th></tr></thead>
 <tbody>
-<tr><th scope="row">잘 부서지고 강도가 낮다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a><a class="cite" href="#ref-5" title="B. P. Jelle, A. Gustavsen 외, Properties, requirements and possibilities of traditional, st…">[5]</a></th><td>유리섬유 등으로 보강한 블랭킷 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>. 골격을 고분자로 감싸 강도를 100배 이상 높인 연구 <a class="cite" href="#ref-11" title="N. Leventis, C. Sotiriou-Leventis, G. Zhang, A.-M. M. Rawashdeh, Nanoengineering Strong Si…">[11]</a></td><td>섬유 보강은 단열 성능을, 고분자·산화물 가교는 밀도와 단열 성능을 손해 본다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">초임계 건조는 비싸고 위험하다 <a class="cite" href="#ref-9" title="S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, Silica aerogel films prepared at ambi…">[9]</a></th><td>표면을 바꿔 상압에서 건조. 기공률 98.5% 필름을 만들었다 <a class="cite" href="#ref-9" title="S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, Silica aerogel films prepared at ambi…">[9]</a>. 시약 조합으로 건조 기간을 1일로 줄인 보고 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>상업 생산은 아직 대부분 초임계 건조를 쓴다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td></tr>
-<tr><th scope="row">알콕사이드 원료가 비싸고 유해하다 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></th><td>물유리(규산나트륨), 실리카 19–22%를 함유한 왕겨 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a></td><td>—</td></tr>
-<tr><th scope="row">분진이 날려 다루기 어렵다 <a class="cite" href="#ref-23" title="알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입, 더팀스(PR Newswire 배포), 2025.06.04. theteams.kr">[23]</a></th><td>분진이 적은 섬유 강화 제품 <a class="cite" href="#ref-23" title="알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입, 더팀스(PR Newswire 배포), 2025.06.04. theteams.kr">[23]</a></td><td>—</td></tr>
-<tr><th scope="row">고온에서 복사 열전달이 커진다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a></th><td>복사를 막는 방법이 연구 과제로 남아 있다 <a class="cite" href="#ref-3" title="F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, Thermal Insulation Performance of Aerogel Nano-Po…">[3]</a></td><td>배터리 화재처럼 고온에서 쓰일수록 중요해진다</td></tr>
-<tr><th scope="row">대량 생산 비용과 품질 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a></th><td>공장 증설로 규모 키우기 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a></td><td>배터리 수요가 흔들리면 매출도 흔들린다 <a class="cite" href="#ref-19" title="Aspen Aerogels, Aspen Aerogels, Inc. Reports Fourth Quarter and Full Year 2025 Financial R…">[19]</a></td></tr>
+<tr><th scope="row">충격에 잘 부서지고 강도가 낮다</th><td>유리섬유 매트에 에어로겔을 채운 블랭킷으로 만든다. 골격을 고분자로 감싸 강도를 100배 이상 높인 연구도 있다</td><td>섬유를 넣으면 단열 성능이, 골격을 감싸면 무게(밀도)와 단열 성능이 손해를 본다</td></tr>
+<tr><th scope="row">초임계 건조는 고압 장비가 필요해 비싸고 위험하다</th><td>표면을 바꿔 보통 대기압에서 말린다(상압 건조). 1995년 빈 공간 98.5%의 막을 만들었고, 시약 조합으로 건조 기간을 1일로 줄인 보고도 있다</td><td>그래도 상업 생산은 아직 대부분 초임계 건조를 쓴다</td></tr>
+<tr><th scope="row">원료(TEOS 같은 알콕사이드)가 비싸고 유해하다</th><td>값싼 물유리(규산나트륨), 실리카가 19–22% 들어 있는 왕겨</td><td>—</td></tr>
+<tr><th scope="row">가루(분진)가 날려 다루기 어렵다</th><td>가루가 덜 날리는 섬유 강화 제품</td><td>—</td></tr>
+<tr><th scope="row">온도가 높으면 적외선(복사)으로 새는 열이 커진다</th><td>복사를 막는 방법이 연구 과제로 남아 있다. 원리는 <a href="#hot">아래</a> 참고</td><td>배터리 화재처럼 고온에서 쓰일수록 중요해진다</td></tr>
+<tr><th scope="row">대량 생산 비용과 품질 관리</th><td>공장을 늘려 생산 규모를 키운다</td><td>배터리 수요가 흔들리면 매출도 흔들린다</td></tr>
 </tbody></table></div>
-<p class="small muted">세 번째 열의 출처 없는 문장은 같은 줄의 출처를 바탕으로 정리한 해석이다.</p>
+
+<h3 id="hot">온도가 높아지면: 복사로 새는 열이 커진다</h3>
+<p>에어로겔은 상온에서 <a href="#heat">열이 지나가는 세 길</a>을 모두 잘 막는다. 하지만 온도가 오르면 복사로 새는 열이 커진다. 아래는 고온용 에어로겔 블랭킷(유리섬유로 보강한 상용 제품)의 온도별 열전도율이다.</p>
+<figure class="fig-panel kt"><svg viewBox="0 0 480 262" role="img" aria-label="에어로겔 블랭킷 열전도율: 0도 20, 300도 35, 600도 89 mW/(m·K)"><line x1="58" x2="455" y1="172.8" y2="172.8" stroke="var(--line)" stroke-width="1"/><text x="50" y="177.8" text-anchor="end" font-size="15" fill="var(--muted)">25</text><line x1="58" x2="455" y1="128.5" y2="128.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="133.5" text-anchor="end" font-size="15" fill="var(--muted)">50</text><line x1="58" x2="455" y1="84.2" y2="84.2" stroke="var(--line)" stroke-width="1"/><text x="50" y="89.2" text-anchor="end" font-size="15" fill="var(--muted)">75</text><line x1="58" x2="455" y1="40.0" y2="40.0" stroke="var(--line)" stroke-width="1"/><text x="50" y="45.0" text-anchor="end" font-size="15" fill="var(--muted)">100</text><line x1="58" x2="455" y1="217" y2="217" stroke="var(--muted)" stroke-width="1"/><text x="58.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">0</text><text x="124.2" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">100</text><text x="190.3" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">200</text><text x="256.5" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">300</text><text x="322.7" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">400</text><text x="388.8" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">500</text><text x="455.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">600</text><text x="455" y="257" text-anchor="end" font-size="15" fill="var(--muted)">온도(°C)</text><text x="8" y="18" font-size="15" fill="var(--muted)">mW/(m·K)</text><polyline points="58.0,181.6 124.2,176.3 190.3,167.4 256.5,155.1 322.7,135.6 388.8,103.7 455.0,59.5" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/><g class="kt-pt"><title>0 °C: 20 mW/(m·K)</title><circle cx="58.0" cy="181.6" r="12" fill="transparent"/><circle cx="58.0" cy="181.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>100 °C: 23 mW/(m·K)</title><circle cx="124.2" cy="176.3" r="12" fill="transparent"/><circle cx="124.2" cy="176.3" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>200 °C: 28 mW/(m·K)</title><circle cx="190.3" cy="167.4" r="12" fill="transparent"/><circle cx="190.3" cy="167.4" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>300 °C: 35 mW/(m·K)</title><circle cx="256.5" cy="155.1" r="12" fill="transparent"/><circle cx="256.5" cy="155.1" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>400 °C: 46 mW/(m·K)</title><circle cx="322.7" cy="135.6" r="12" fill="transparent"/><circle cx="322.7" cy="135.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>500 °C: 64 mW/(m·K)</title><circle cx="388.8" cy="103.7" r="12" fill="transparent"/><circle cx="388.8" cy="103.7" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>600 °C: 89 mW/(m·K)</title><circle cx="455.0" cy="59.5" r="12" fill="transparent"/><circle cx="455.0" cy="59.5" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><text x="68.0" y="169.6" font-size="16" font-weight="600" fill="var(--ink)">20</text><text x="445.0" y="57.5" text-anchor="end" font-size="16" font-weight="600" fill="var(--ink)">89</text></svg><figcaption><b>그림 6-1</b> 에어로겔 블랭킷(Pyrogel XTE)의 온도별 열전도율.</figcaption></figure>
+<p>600 °C에서는 0 °C의 4배가 넘는다. 온도가 오르면 복사의 중심 파장이 실리카가 거의 흡수하지 못하는 3–8 μm 적외선 구간으로 옮겨 가고, 복사 자체도 세지기 때문이다.</p>
+<details class="more">
+<summary>식으로 더 보기: 왜 파장이 바뀔까</summary>
+<p>뜨거운 물체가 내는 적외선이 가장 센 파장은 빈의 변위 법칙 λ<sub>max</sub> = 2,898 μm·K ÷ <var>T</var>를 따른다.</p>
+<ul>
+<li>상온(약 300 K): 약 10 μm. 실리카는 이 근처(약 9 μm)의 빛을 Si–O–Si 결합의 진동으로 잘 흡수한다.</li>
+<li>600 °C(873 K): 약 3.3 μm. 실리카가 거의 흡수하지 못하는 3–8 μm 구간이라 복사가 골격을 통과한다.</li>
+<li>복사가 열전도율에 보태는 몫은 절대온도의 세제곱에 비례한다. 절대온도가 2배면 약 8배다.</li>
+</ul>
+</details>
 
 <h3 id="outlook">전망</h3>
-<p>CAS는 에어로겔 시장이 아직 초기 단계지만 전망은 밝다고 평가한다 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>. 특허가 꾸준히 늘고 <a class="cite" href="#ref-14" title="H. Goyal, 단열을 넘어: 에어로젤의 새로운 응용 분야, CAS Insights, 2025.05.15. cas.org">[14]</a>, 국내에서도 양산 공장이 풀가동에 들어갔다 <a class="cite" href="#ref-22" title="이동인, 꿈의 단열재 에어로젤 주문폭주…증설 검토, 매일경제, 2026.01.28. 다음 뉴스">[22]</a>. 남은 숙제는 강도와 가격이다. 상압 건조처럼 공정을 단순하게 만드는 기술 <a class="cite" href="#ref-9" title="S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, Silica aerogel films prepared at ambi…">[9]</a>과 값싼 원료 <a class="cite" href="#ref-2" title="F. Akhter, S. A. Soomro, V. J. Inglezakis, Silica aerogels; a review of synthesis, applica…">[2]</a>가 자리 잡으면, 배터리와 산업 설비를 넘어 건물과 생활 제품으로 쓰임이 넓어질 것이다.</p>
+<p>CAS는 에어로겔 시장이 아직 초기 단계지만 전망은 밝다고 평가한다. 특허가 꾸준히 늘고 있고, 국내에서도 양산 공장이 풀가동에 들어갔다. 남은 숙제는 강도와 가격이다. 상압 건조처럼 공정을 단순하게 만드는 기술과 값싼 원료가 자리 잡으면, 배터리와 산업 설비를 넘어 건물과 생활 제품으로 쓰임이 넓어질 것이다.</p>
 
-<h3 id="ours">우리 조의 견해</h3>
-<div class="mine">
-<h4>조원들이 직접 쓰는 칸</h4>
-<p>발표와 인쇄물에도 쓸 수 있도록, 조원 각자의 생각을 두세 문장씩 정리해 이 칸을 채운다. 참고할 질문:</p>
-<ul>
-<li>에어로겔이 우리 생활에 가장 먼저 들어올 곳은 어디일까?</li>
-<li>배터리 화재가 사회 문제가 된 지금, 에어로겔 차단재는 의무화돼야 할까?</li>
-<li>값이 얼마나 내려가야 일반 건물 단열재를 대신할 수 있을까?</li>
-</ul>
-</div>
-
-</div></section><section id="reference" class="band gutter page-sec" aria-labelledby="h-reference"><div class="col">
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#trend"><span>이전</span><b>산업과 시장</b></a><a class="next" href="#reference"><span>다음</span><b>참고문헌</b></a></nav>
+</div></section><section id="reference" class="band gutter page-sec page" aria-labelledby="h-reference"><div class="col">
 <div class="page-head"><h2 class="sec-title" id="h-reference">참고문헌</h2><p class="en">References</p></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#g1">논문·학술 자료</a><a href="#g13">데이터베이스</a><a href="#g14">기관·기업 자료</a><a href="#g22">뉴스</a></nav>
-<p style="margin-top:2rem">본문의 [번호]는 아래 번호와 같다. 웹 자료는 2026년 10월 29일에 접속해 확인했다.</p>
-<h3 id="g1">논문·학술 자료</h3><ol class="refs" start="1"><li id="ref-1" value="1">S. Kistler, <span class="t">Coherent Expanded Aerogels and Jellies</span>, Nature 127, 741 (1931). <a href="https://doi.org/10.1038/127741a0">doi:10.1038/127741a0</a></li><li id="ref-2" value="2">F. Akhter, S. A. Soomro, V. J. Inglezakis, <span class="t">Silica aerogels; a review of synthesis, applications and fabrication of hybrid composites</span>, Journal of Porous Materials (2021). <a href="https://doi.org/10.1007/s10934-021-01091-3">doi:10.1007/s10934-021-01091-3</a></li><li id="ref-3" value="3">F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, <span class="t">Thermal Insulation Performance of Aerogel Nano-Porous Materials: Characterization and Test Methods</span>, Gels 9(3), 220 (2023). <a href="https://doi.org/10.3390/gels9030220">doi:10.3390/gels9030220</a></li><li id="ref-4" value="4">R. Baetens, B. P. Jelle, A. Gustavsen, <span class="t">Aerogel insulation for building applications: A state-of-the-art review</span>, Energy and Buildings 43(4), 761–769 (2011). 공개본: <a href="http://hdl.handle.net/11250/2453469">hdl.handle.net/11250/2453469</a></li><li id="ref-5" value="5">B. P. Jelle, A. Gustavsen 외, <span class="t">Properties, requirements and possibilities of traditional, state-of-the-art and beyond state-of-the-art thermal building insulation materials</span>, 9th Nordic Symposium on Building Physics (NSB 2011), Tampere. <a href="https://webpages.tuni.fi/nsb2011/sites/www.tut.fi.nsb2011/files/b3_02_jelle_-_nsb_2011.pdf">PDF</a></li><li id="ref-6" value="6">U. Schubert, <span class="t">Chemistry and Fundamentals of the Sol–Gel Process</span>, in D. Levy, M. Zayat (eds.), The Sol–Gel Handbook, Wiley-VCH (2015), Chapter 1. <a href="https://application.wiley-vch.de/books/sample/3527334866_c01.pdf">PDF(견본 장)</a></li><li id="ref-7" value="7">C. J. Brinker, G. W. Scherer, <span class="t">Sol-Gel Science: The Physics and Chemistry of Sol-Gel Processing</span>, Academic Press (1990). ISBN 978-0-12-134970-7. <a href="https://shop.elsevier.com/books/sol-gel-science/brinker/978-0-12-134970-7">출판사 페이지</a></li><li id="ref-8" value="8">윤호성, 박형상, 김상환, <span class="t">알칼리 조건하에서 졸-겔 법에 의한 TEOS의 가수 분해와 축합중합 반응에 대한 속도론적 연구</span>, 화학공학 32(4), 557–565 (1994). <a href="https://www.kiche.or.kr/journal/kcer/view/all/32/4/557">한국화학공학회</a></li><li id="ref-9" value="9">S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, <span class="t">Silica aerogel films prepared at ambient pressure by using surface derivatization to induce reversible drying shrinkage</span>, Nature 374, 439–443 (1995). <a href="https://doi.org/10.1038/374439a0">doi:10.1038/374439a0</a></li><li id="ref-10" value="10">G. A. Spiering, G. F. Godshall, R. B. Moore, <span class="t">Effect of the Gel Drying Method on Properties of Semicrystalline Aerogels Prepared with Different Network Morphologies</span>, Gels 11(6), 447 (2025). <a href="https://doi.org/10.3390/gels11060447">doi:10.3390/gels11060447</a></li><li id="ref-11" value="11">N. Leventis, C. Sotiriou-Leventis, G. Zhang, A.-M. M. Rawashdeh, <span class="t">Nanoengineering Strong Silica Aerogels</span>, Nano Letters 2(9), 957–960 (2002). <a href="https://doi.org/10.1021/nl025690e">doi:10.1021/nl025690e</a></li><li id="ref-12" value="12">H. Sun, Z. Xu, C. Gao, <span class="t">Multifunctional, Ultra-Flyweight, Synergistically Assembled Carbon Aerogels</span>, Advanced Materials 25(18), 2554–2560 (2013).</li></ol><h3 id="g13">데이터베이스</h3><ol class="refs" start="13"><li id="ref-13" value="13">NIST Chemistry WebBook, SRD 69, <span class="t">Carbon dioxide: Phase change data</span> (임계온도 304.18 K, 임계압력 73.80 bar). <a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=C124389&amp;Mask=4">webbook.nist.gov</a></li></ol><h3 id="g14">기관·기업 자료</h3><ol class="refs" start="14"><li id="ref-14" value="14">H. Goyal, <span class="t">단열을 넘어: 에어로젤의 새로운 응용 분야</span>, CAS Insights, 2025.05.15. <a href="https://www.cas.org/ko/resources/cas-insights/aerogel-applications">cas.org</a></li><li id="ref-15" value="15">NASA Jet Propulsion Laboratory, <span class="t">Ideas that gel</span>, 2002.02.11. <a href="https://www.jpl.nasa.gov/news/ideas-that-gel/">jpl.nasa.gov</a></li><li id="ref-16" value="16">NASA Science, <span class="t">Stardust</span> (미션 소개). <a href="https://science.nasa.gov/mission/stardust/">science.nasa.gov</a></li><li id="ref-17" value="17">Aerogel.org, <span class="t">Properties of Aerogels</span>. <a href="https://www.aerogel.org/?p=103">aerogel.org</a></li><li id="ref-18" value="18">Aspen Aerogels, <span class="t">Battery Electric Vehicles</span> (PyroThin 열 차단재). <a href="https://www.aerogel.com/?p=6427">aerogel.com</a></li><li id="ref-19" value="19">Aspen Aerogels, <span class="t">Aspen Aerogels, Inc. Reports Fourth Quarter and Full Year 2025 Financial Results</span>, 2026.02.25. <a href="https://ir.aerogel.com/news/news-details/2026/Aspen-Aerogels-Inc--Reports-Fourth-Quarter-and-Full-Year-2025-Financial-Results-and-Recent-Business-Highlights/default.aspx">ir.aerogel.com</a></li><li id="ref-20" value="20">Cabot Corporation, <span class="t">Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting</span>, 2011.06.01. <a href="https://cabotog.gcs-web.com/node/9306">cabotcorp</a></li><li id="ref-21" value="21">LG, <span class="t">“플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최</span>, 보도자료, 2023.03.30. <a href="https://www.lg.co.kr/media/release/26080">lg.co.kr</a></li></ol><h3 id="g22">뉴스</h3><ol class="refs" start="22"><li id="ref-22" value="22">이동인, <span class="t">꿈의 단열재 에어로젤 주문폭주…증설 검토</span>, 매일경제, 2026.01.28. <a href="https://v.daum.net/v/20260128174201889">다음 뉴스</a></li><li id="ref-23" value="23"><span class="t">알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입</span>, 더팀스(PR Newswire 배포), 2025.06.04. <a href="https://www.theteams.kr/news/detail/3414">theteams.kr</a></li><li id="ref-24" value="24"><span class="t">World's lightest material</span> (저장대 탄소 에어로겔 연구 소개), Nanowerk, 2013.03.22. <a href="https://www.nanowerk.com/news2/newsid=29667.php">nanowerk.com</a></li></ol>
-</div></section><section id="team" class="band gutter page-sec" aria-labelledby="h-team"><div class="col">
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#g1">논문·학술 자료</a><a href="#g14">데이터베이스</a><a href="#g16">기관·기업 자료</a><a href="#g26">뉴스</a></nav>
+<p style="margin-top:2rem">이 홈페이지를 만들 때 참고한 논문과 자료다. 웹 자료는 2026년 10월 29일에 접속해 확인했다.</p>
+<h3 id="g1">논문·학술 자료</h3><ol class="refs" start="1"><li id="ref-1" value="1">S. Kistler, <span class="t">Coherent Expanded Aerogels and Jellies</span>, Nature 127, 741 (1931). <a href="https://doi.org/10.1038/127741a0">doi:10.1038/127741a0</a></li><li id="ref-2" value="2">F. Akhter, S. A. Soomro, V. J. Inglezakis, <span class="t">Silica aerogels; a review of synthesis, applications and fabrication of hybrid composites</span>, Journal of Porous Materials (2021). <a href="https://doi.org/10.1007/s10934-021-01091-3">doi:10.1007/s10934-021-01091-3</a></li><li id="ref-3" value="3">F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, <span class="t">Thermal Insulation Performance of Aerogel Nano-Porous Materials: Characterization and Test Methods</span>, Gels 9(3), 220 (2023). <a href="https://doi.org/10.3390/gels9030220">doi:10.3390/gels9030220</a></li><li id="ref-4" value="4">R. Baetens, B. P. Jelle, A. Gustavsen, <span class="t">Aerogel insulation for building applications: A state-of-the-art review</span>, Energy and Buildings 43(4), 761–769 (2011). 공개본: <a href="http://hdl.handle.net/11250/2453469">hdl.handle.net/11250/2453469</a></li><li id="ref-5" value="5">B. P. Jelle, A. Gustavsen 외, <span class="t">Properties, requirements and possibilities of traditional, state-of-the-art and beyond state-of-the-art thermal building insulation materials</span>, 9th Nordic Symposium on Building Physics (NSB 2011), Tampere. <a href="https://webpages.tuni.fi/nsb2011/sites/www.tut.fi.nsb2011/files/b3_02_jelle_-_nsb_2011.pdf">PDF</a></li><li id="ref-6" value="6">U. Schubert, <span class="t">Chemistry and Fundamentals of the Sol–Gel Process</span>, in D. Levy, M. Zayat (eds.), The Sol–Gel Handbook, Wiley-VCH (2015), Chapter 1. <a href="https://application.wiley-vch.de/books/sample/3527334866_c01.pdf">PDF(견본 장)</a></li><li id="ref-7" value="7">C. J. Brinker, G. W. Scherer, <span class="t">Sol-Gel Science: The Physics and Chemistry of Sol-Gel Processing</span>, Academic Press (1990). ISBN 978-0-12-134970-7. <a href="https://shop.elsevier.com/books/sol-gel-science/brinker/978-0-12-134970-7">출판사 페이지</a></li><li id="ref-8" value="8">윤호성, 박형상, 김상환, <span class="t">알칼리 조건하에서 졸-겔 법에 의한 TEOS의 가수 분해와 축합중합 반응에 대한 속도론적 연구</span>, 화학공학 32(4), 557–565 (1994). <a href="https://www.kiche.or.kr/journal/kcer/view/all/32/4/557">한국화학공학회</a></li><li id="ref-9" value="9">S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, <span class="t">Silica aerogel films prepared at ambient pressure by using surface derivatization to induce reversible drying shrinkage</span>, Nature 374, 439–443 (1995). <a href="https://doi.org/10.1038/374439a0">doi:10.1038/374439a0</a></li><li id="ref-10" value="10">G. A. Spiering, G. F. Godshall, R. B. Moore, <span class="t">Effect of the Gel Drying Method on Properties of Semicrystalline Aerogels Prepared with Different Network Morphologies</span>, Gels 11(6), 447 (2025). <a href="https://doi.org/10.3390/gels11060447">doi:10.3390/gels11060447</a></li><li id="ref-11" value="11">N. Leventis, C. Sotiriou-Leventis, G. Zhang, A.-M. M. Rawashdeh, <span class="t">Nanoengineering Strong Silica Aerogels</span>, Nano Letters 2(9), 957–960 (2002). <a href="https://doi.org/10.1021/nl025690e">doi:10.1021/nl025690e</a></li><li id="ref-12" value="12">H. Sun, Z. Xu, C. Gao, <span class="t">Multifunctional, Ultra-Flyweight, Synergistically Assembled Carbon Aerogels</span>, Advanced Materials 25(18), 2554–2560 (2013).</li><li id="ref-13" value="13">Z. Wang, X. Tang, Y. Zhou, H. Huang, H. Dai, <span class="t">Experimental and Modeling Analysis of Thermal Runaway for LiNi0.5Mn0.3Co0.2O2/Graphite Pouch Cell Triggered by Surface Heating</span>, Energies 17(4), 826 (2024). <a href="https://doi.org/10.3390/en17040826">doi:10.3390/en17040826</a></li></ol><h3 id="g14">데이터베이스</h3><ol class="refs" start="14"><li id="ref-14" value="14">NIST Chemistry WebBook, SRD 69, <span class="t">Carbon dioxide: Phase change data</span> (임계온도 304.18 K, 임계압력 73.80 bar). <a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=C124389&amp;Mask=4">webbook.nist.gov</a></li><li id="ref-15" value="15">The Engineering ToolBox, <span class="t">Thermal Conductivity of Common Materials: Solids, Liquids and Gases</span> (마이카 0.71, 폴리우레탄 폼 0.03 W/(m·K)). <a href="https://engineeringtoolbox.com/thermal-conductivity-d_429.html">engineeringtoolbox.com</a></li></ol><h3 id="g16">기관·기업 자료</h3><ol class="refs" start="16"><li id="ref-16" value="16">H. Goyal, <span class="t">단열을 넘어: 에어로젤의 새로운 응용 분야</span>, CAS Insights, 2025.05.15. <a href="https://www.cas.org/ko/resources/cas-insights/aerogel-applications">cas.org</a></li><li id="ref-17" value="17">NASA Jet Propulsion Laboratory, <span class="t">Ideas that gel</span>, 2002.02.11. <a href="https://www.jpl.nasa.gov/news/ideas-that-gel/">jpl.nasa.gov</a></li><li id="ref-18" value="18">NASA Science, <span class="t">Stardust</span> (미션 소개). <a href="https://science.nasa.gov/mission/stardust/">science.nasa.gov</a></li><li id="ref-19" value="19">Aerogel.org, <span class="t">Properties of Aerogels</span>. <a href="https://www.aerogel.org/?p=103">aerogel.org</a></li><li id="ref-20" value="20">Aspen Aerogels, <span class="t">Battery Electric Vehicles</span> (PyroThin 열 차단재). <a href="https://www.aerogel.com/?p=6427">aerogel.com</a></li><li id="ref-21" value="21">Aspen Aerogels, <span class="t">Aspen Aerogels, Inc. Reports Fourth Quarter and Full Year 2025 Financial Results</span>, 2026.02.25. <a href="https://ir.aerogel.com/news/news-details/2026/Aspen-Aerogels-Inc--Reports-Fourth-Quarter-and-Full-Year-2025-Financial-Results-and-Recent-Business-Highlights/default.aspx">ir.aerogel.com</a></li><li id="ref-22" value="22">Cabot Corporation, <span class="t">Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting</span>, 2011.06.01. <a href="https://cabotog.gcs-web.com/node/9306">cabotcorp</a></li><li id="ref-23" value="23">LG, <span class="t">“플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최</span>, 보도자료, 2023.03.30. <a href="https://www.lg.co.kr/media/release/26080">lg.co.kr</a></li><li id="ref-24" value="24">Aspen Aerogels, <span class="t">Pyrogel XTE Datasheet</span>, Rev 4.2 (ASTM C177 열전도율 표). <a href="https://www.aerogel.com/wp-content/uploads/2021/06/Pyrogel-XTE-Datasheet-English-v4.2.pdf">aerogel.com</a></li><li id="ref-25" value="25">Battery Design, <span class="t">Specific Heat Capacity of Lithium Ion Cells</span> (Maleki 외 1999 측정값 정리). <a href="https://www.batterydesign.net/specific-heat-capacity-of-lithium-ion-cells/">batterydesign.net</a></li></ol><h3 id="g26">뉴스</h3><ol class="refs" start="26"><li id="ref-26" value="26">이동인, <span class="t">꿈의 단열재 에어로젤 주문폭주…증설 검토</span>, 매일경제, 2026.01.28. <a href="https://v.daum.net/v/20260128174201889">다음 뉴스</a></li><li id="ref-27" value="27"><span class="t">알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입</span>, 더팀스(PR Newswire 배포), 2025.06.04. <a href="https://www.theteams.kr/news/detail/3414">theteams.kr</a></li><li id="ref-28" value="28"><span class="t">World's lightest material</span> (저장대 탄소 에어로겔 연구 소개), Nanowerk, 2013.03.22. <a href="https://www.nanowerk.com/news2/newsid=29667.php">nanowerk.com</a></li><li id="ref-29" value="29">T. Lombardo, <span class="t">Aspen Aerogels’ cutting-edge materials protect against thermal runaway</span>, Charged EVs, 2023.04.14. <a href="https://chargedevs.com/features/thermal-runaway-in-ev-battery-packs-designing-a-mitigation-strategy/">chargedevs.com</a></li></ol>
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#issue"><span>이전</span><b>한계와 해결</b></a><a class="next" href="#team"><span>다음</span><b>조원</b></a></nav>
+</div></section><section id="team" class="band gutter page-sec page" aria-labelledby="h-team"><div class="col">
 <div class="page-head"><h2 class="sec-title" id="h-team">조원</h2><p class="en">Team</p></div>
 
-<p style="margin-top:2rem">명지대학교 화학과 컴퓨터화학 ○조. 이름은 기여도 순서다.</p>
-<ol class="members"><li><span class="name">조원 이름 1</span><span class="role">담당: 구조와 원리, 만드는 법 페이지 작성 · 발표</span></li><li><span class="name">조원 이름 2</span><span class="role">담당: 응용, 산업과 시장 조사 · 홈페이지 제작</span></li><li><span class="name">조원 이름 3</span><span class="role">담당: 한계와 해결, 참고문헌 정리 · 인쇄물</span></li></ol>
-<h3 id="tools">만든 방법</h3>
-<p>HTML과 CSS로 만들어 GitHub Pages로 공개했다. 그림은 코드로 그렸고, 수치는 논문과 공식 자료에서 가져와 번호로 출처를 달았다.</p>
+<p style="margin-top:2rem">명지대학교 화학과 컴퓨터화학 6조</p>
+<ul class="members"><li><span class="name">이우현</span></li><li><span class="name">김상현</span></li><li><span class="name">장지아</span></li></ul>
+<p class="members-note">기여도는 모두 동일합니다.</p>
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#reference"><span>이전</span><b>참고문헌</b></a></nav>
 </div></section>
 </main>
 <footer class="footer gutter"><div class="col-wide">
-<p>명지대학교 화학과 컴퓨터화학 ○조, 2026</p>
-<p>그림은 모두 이 사이트를 위해 새로 그렸습니다. 본문의 [번호]는 <a href="#reference">참고문헌</a> 번호와 같습니다.</p>
+<p>명지대학교 화학과 컴퓨터화학 6조 · 이우현, 김상현, 장지아 · 2026</p>
 </div></footer>
 
+<script>
+(function () {
+  var root = document.getElementById('dry-demo');
+  if (!root) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var seed = 11;
+  function rnd() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+  var C = 150, H = 100, G = 6, step = 2 * H / (G - 1), nodes = [], edges = [];
+  for (var i = 0; i < G; i++) for (var j = 0; j < G; j++) {
+    nodes.push({ x: C - H + i * step + (rnd() - 0.5) * step * 0.55, y: C - H + j * step + (rnd() - 0.5) * step * 0.55,
+                 r: 5 + rnd() * 3, dx: (rnd() - 0.5) * 2, dy: (rnd() - 0.5) * 2 });
+  }
+  for (i = 0; i < G; i++) for (j = 0; j < G; j++) {
+    var k = i * G + j;
+    if (i + 1 < G && rnd() < 0.8) edges.push([k, k + G]);
+    if (j + 1 < G && rnd() < 0.8) edges.push([k, k + 1]);
+    if (i + 1 < G && j + 1 < G && rnd() < 0.18) edges.push([k, k + G + 1]);
+  }
+  function el(name, attrs, parent) { var e = document.createElementNS(NS, name); for (var a in attrs) e.setAttribute(a, attrs[a]); parent.appendChild(e); return e; }
+  var arrowAt = [];
+  for (i = 0; i < 12; i++) {
+    var side = i % 4, f = (Math.floor(i / 4) + 1) / 4, ex = 0, ey = 0;
+    if (side === 0) { ex = -H + 2 * H * f; ey = -H - 22; }
+    if (side === 1) { ex = H + 22; ey = -H + 2 * H * f; }
+    if (side === 2) { ex = H - 2 * H * f; ey = H + 22; }
+    if (side === 3) { ex = -H - 22; ey = H - 2 * H * f; }
+    arrowAt.push({ x: ex, y: ey, rot: [0, 90, 180, 270][side] });
+  }
+  var panels = [].map.call(root.querySelectorAll('.dry-panel'), function (p) {
+    var svg = p.querySelector('svg'), mode = p.getAttribute('data-mode');
+    var liquid = el('rect', { 'class': 'dry-liquid', rx: 18 }, svg);
+    var gE = el('g', { 'class': 'dry-edges' }, svg), gN = el('g', { 'class': 'dry-nodes' }, svg), gA = el('g', { 'class': 'dry-arrows' }, svg);
+    var lines = edges.map(function () { return el('line', {}, gE); });
+    var dots = nodes.map(function (n) { return el('circle', { r: n.r }, gN); });
+    var arrows = arrowAt.map(function () { return el('path', { d: 'M0,-8 L0,6 M-4.5,1.5 L0,6 L4.5,1.5' }, gA); });
+    return { mode: mode, liquid: liquid, lines: lines, dots: dots, arrows: arrows, gA: gA, state: p.querySelector('.dry-state'), last: '' };
+  });
+  function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function draw(P, t) {
+    var s = 1, crumple = 0, lOp = 0.55, lFill = '#9fc4ec', aOp = 0, msg;
+    if (P.mode === 'evap') {
+      var e = ease(Math.min(t / 0.9, 1));
+      s = 1 - 0.48 * e; crumple = 13 * e;
+      lOp = t < 0.85 ? 0.55 : 0.55 * (1 - (t - 0.85) / 0.15);
+      aOp = t > 0 && t < 0.92 ? Math.sin(Math.PI * Math.min(t / 0.92, 1)) : 0;
+      msg = t === 0 ? '액체가 가득 찬 겔' : t < 1 ? '액체가 증발하며 그물을 안쪽으로 끌어당긴다' : '크게 쪼그라든 덩어리(제로겔)가 남는다';
+    } else {
+      if (t < 0.35) { var u = t / 0.35; lFill = mix('#9fc4ec', '#cfe2f6', u); }
+      else { lFill = '#cfe2f6'; lOp = 0.55 * (1 - (t - 0.35) / 0.65); }
+      msg = t === 0 ? '액체가 가득 찬 겔' : t < 0.35 ? '액체가 초임계 유체로 바뀌어 경계면이 사라진다' : t < 1 ? '유체만 천천히 빠져나간다' : '모양이 그대로인 에어로겔이 남는다';
+    }
+    var pos = nodes.map(function (n) { return [C + (n.x - C) * s + n.dx * crumple, C + (n.y - C) * s + n.dy * crumple]; });
+    var half = (H + 18) * s;
+    P.liquid.setAttribute('x', C - half); P.liquid.setAttribute('y', C - half);
+    P.liquid.setAttribute('width', 2 * half); P.liquid.setAttribute('height', 2 * half);
+    P.liquid.setAttribute('fill', lFill); P.liquid.setAttribute('fill-opacity', Math.max(lOp, 0));
+    edges.forEach(function (ed, k) { var a = pos[ed[0]], b = pos[ed[1]], L = P.lines[k];
+      L.setAttribute('x1', a[0]); L.setAttribute('y1', a[1]); L.setAttribute('x2', b[0]); L.setAttribute('y2', b[1]); });
+    P.dots.forEach(function (d, k) { d.setAttribute('cx', pos[k][0]); d.setAttribute('cy', pos[k][1]); });
+    P.gA.setAttribute('opacity', aOp);
+    P.arrows.forEach(function (a, k) { var q = arrowAt[k];
+      a.setAttribute('transform', 'translate(' + (C + q.x * s) + ',' + (C + q.y * s) + ') rotate(' + q.rot + ')'); });
+    if (msg !== P.last) { P.state.textContent = msg; P.last = msg; }
+  }
+  function mix(a, b, u) {
+    var pa = [1, 3, 5].map(function (i) { return parseInt(a.substr(i, 2), 16); }), pb = [1, 3, 5].map(function (i) { return parseInt(b.substr(i, 2), 16); });
+    return 'rgb(' + pa.map(function (v, i) { return Math.round(v + (pb[i] - v) * u); }).join(',') + ')';
+  }
+  panels.forEach(function (P) { draw(P, 0); });
+  var btn = document.getElementById('dry-go'), raf = 0, DUR = 3600;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  btn.addEventListener('click', function () {
+    cancelAnimationFrame(raf);
+    if (reduce) { panels.forEach(function (P) { draw(P, 1); }); btn.textContent = '다시 보기'; return; }
+    var t0 = null; btn.disabled = true;
+    function tick(ts) {
+      if (t0 === null) t0 = ts;
+      var t = Math.min((ts - t0) / DUR, 1);
+      panels.forEach(function (P) { draw(P, t); });
+      if (t < 1) raf = requestAnimationFrame(tick);
+      else { btn.disabled = false; btn.textContent = '다시 보기'; }
+    }
+    panels.forEach(function (P) { draw(P, 0); });
+    raf = requestAnimationFrame(tick);
+  });
+})();
+</script>
 <script>
 (function () {
   var r = document.getElementById('mw'), o = document.getElementById('mw-out'), res = document.getElementById('mw-res');
@@ -1592,23 +2095,209 @@ html { scroll-behavior: smooth; }
 </script>
 <script>
 (function () {
-  var links = Array.prototype.slice.call(document.querySelectorAll('.menu a'));
-  var menu = document.querySelector('.menu');
-  if (!('IntersectionObserver' in window) || !links.length) return;
-  var byId = {};
-  links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      links.forEach(function (l) { l.removeAttribute('aria-current'); });
-      var a = byId[e.target.id];
-      if (a) {
-        a.setAttribute('aria-current', 'true');
-        if (menu && menu.scrollWidth > menu.clientWidth) menu.scrollTo({ left: Math.max(0, a.offsetLeft - 24) });
+  var fig = document.getElementById('knudsen-sim');
+  if (!fig) return;
+  var cv = document.getElementById('sim-canvas'), ctx = cv.getContext('2d');
+  var slider = document.getElementById('sim-d'), dval = document.getElementById('sim-dval');
+  var knEl = document.getElementById('sim-kn'), molEl = document.getElementById('sim-mol'),
+      wallEl = document.getElementById('sim-wall'), ratioEl = document.getElementById('sim-ratio'),
+      verdict = document.getElementById('sim-verdict');
+  var playBtn = document.getElementById('sim-play'), resetBtn = document.getElementById('sim-reset');
+  var presets = fig.querySelectorAll('button[data-d]');
+  var LAMBDA = 69, DMIN = 10, DMAX = 1000, N = 40, SPEED = 2.4;
+  var css = getComputedStyle(document.documentElement);
+  function col(name, fb) { var v = css.getPropertyValue(name).trim(); return v || fb; }
+  var C = { bg: col('--bg', '#fff'), ink: col('--ink', '#13233f'), muted: col('--muted', '#5a6880'),
+            accent: col('--accent', '#2c69b0'), tint: col('--tint-strong', '#c9dcf3'), heat: col('--heat', '#c4501d'), line: col('--line', '#dfe7f1') };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var running = !reduce, D = 30, W = 720, H = 460, dpr = 1, S = 300, bx = 0, by = 0, lamPx = 0;
+  var mols = [], flashes = [], nMol = 0, nWall = 0, frame = 0, ready = false;
+  var rnd = (function () { var s = 20261029; return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; })();
+
+  function sliderToD(v) { return Math.round(DMIN * Math.pow(DMAX / DMIN, v / 1000)); }
+  function dToSlider(d) { return Math.round(1000 * Math.log(d / DMIN) / Math.log(DMAX / DMIN)); }
+  function freePath() { return -Math.log(1 - rnd()) * lamPx; }
+  function randDir() { var a = rnd() * 2 * Math.PI; return [Math.cos(a), Math.sin(a)]; }
+
+  function layout() {
+    var w = Math.round(fig.clientWidth - 40);
+    if (w < 200) return false;
+    W = w; H = W < 520 ? W + 78 : Math.round(Math.min(Math.max(W * 0.62, 300), 460));
+    dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cv.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    S = Math.min(H - 118, W - 40); bx = Math.round((W - S) / 2); by = 18;
+    lamPx = S * LAMBDA / D;
+    return true;
+  }
+  function seed() {
+    mols = [];
+    for (var i = 0; i < N; i++) {
+      var d = randDir();
+      mols.push({ x: 12 + rnd() * (S - 24), y: 12 + rnd() * (S - 24), dx: d[0], dy: d[1], r: freePath(), tr: [] });
+    }
+  }
+  function setD(d, keepCounts) {
+    D = Math.max(DMIN, Math.min(DMAX, d));
+    slider.value = dToSlider(D);
+    dval.textContent = D + ' nm';
+    lamPx = S * LAMBDA / D;
+    mols.forEach(function (m) { m.r = freePath(); m.tr = []; });
+    if (!keepCounts) { nMol = 0; nWall = 0; }
+    presets.forEach(function (b) { b.setAttribute('aria-pressed', String(Number(b.dataset.d) === D)); });
+    updateReadout();
+  }
+  function wallBounce(m, side) {
+    // diffuse (cosine-weighted) re-emission from the wall
+    var u = rnd(), sinT = Math.sqrt(u), cosT = Math.sqrt(1 - u), s = rnd() < 0.5 ? -1 : 1;
+    var nx = 0, ny = 0;
+    if (side === 'L') nx = 1; else if (side === 'R') nx = -1; else if (side === 'T') ny = 1; else ny = -1;
+    var tx = -ny, ty = nx;
+    m.dx = nx * cosT + tx * sinT * s; m.dy = ny * cosT + ty * sinT * s;
+  }
+  function step(m) {
+    var rem = SPEED;
+    for (var guard = 0; guard < 8 && rem > 1e-6; guard++) {
+      var tx = m.dx > 0 ? (S - m.x) / m.dx : (m.dx < 0 ? -m.x / m.dx : Infinity);
+      var ty = m.dy > 0 ? (S - m.y) / m.dy : (m.dy < 0 ? -m.y / m.dy : Infinity);
+      var tw = Math.min(tx, ty);
+      if (m.r <= tw && m.r <= rem) {
+        m.x += m.dx * m.r; m.y += m.dy * m.r; rem -= m.r;
+        var d = randDir(); m.dx = d[0]; m.dy = d[1]; m.r = freePath(); nMol++;
+        flashes.push({ x: m.x, y: m.y, t: 0, k: 'm' });
+      } else if (tw <= rem) {
+        m.x += m.dx * tw; m.y += m.dy * tw; rem -= tw; m.r -= tw;
+        var side = tx < ty ? (m.dx > 0 ? 'R' : 'L') : (m.dy > 0 ? 'B' : 'T');
+        m.x = Math.min(S, Math.max(0, m.x)); m.y = Math.min(S, Math.max(0, m.y));
+        wallBounce(m, side); nWall++;
+        flashes.push({ x: m.x, y: m.y, t: 0, k: 'w' });
+        m.tr.push(null);
+      } else {
+        m.x += m.dx * rem; m.y += m.dy * rem; m.r -= rem; rem = 0;
       }
+    }
+    m.tr.push([m.x, m.y]);
+    if (m.tr.length > 26) m.tr.shift();
+  }
+  function drawWalls() {
+    // aerogel skeleton beads around the pore
+    ctx.fillStyle = C.tint; ctx.strokeStyle = C.accent; ctx.lineWidth = 1; ctx.globalAlpha = 1;
+    var r = 6, gap = 13;
+    function bead(x, y) { ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill(); ctx.globalAlpha = 0.6; ctx.stroke(); ctx.globalAlpha = 1; }
+    for (var p = 0; p <= S; p += gap) { bead(bx + p, by - r); bead(bx + p, by + S + r); bead(bx - r, by + p); bead(bx + S + r, by + p); }
+  }
+  function drawBars() {
+    var y1 = by + S + 40, y2 = y1 + 42, maxW = W - bx - 16;
+    ctx.font = '13px ' + css.getPropertyValue('--font');
+    ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+    // pore diameter bar
+    ctx.fillStyle = C.ink; ctx.fillText('기공 지름 D = ' + D + ' nm', bx, y1 - 10);
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(bx, y1); ctx.lineTo(bx + S, y1); ctx.moveTo(bx, y1 - 5); ctx.lineTo(bx, y1 + 5); ctx.moveTo(bx + S, y1 - 5); ctx.lineTo(bx + S, y1 + 5); ctx.stroke();
+    // mean free path bar, same scale
+    var ratio = LAMBDA / D, L = Math.min(lamPx, maxW), cut = lamPx > maxW;
+    ctx.fillStyle = C.heat;
+    var lab1 = '분자가 다른 분자와 부딪히기 전까지 날아가는 거리', lab2 = '69 nm = D의 ' + (ratio < 1 ? ratio.toFixed(2) : ratio.toFixed(1)) + '배';
+    if (ctx.measureText(lab1 + ' ' + lab2).width <= W - bx - 8) ctx.fillText(lab1 + ' ' + lab2, bx, y2 - 10);
+    else { ctx.fillText(lab1, bx, y2 - 25); ctx.fillText(lab2, bx, y2 - 9); }
+    ctx.strokeStyle = C.heat;
+    ctx.beginPath(); ctx.moveTo(bx, y2); ctx.lineTo(bx + L, y2); ctx.moveTo(bx, y2 - 5); ctx.lineTo(bx, y2 + 5);
+    if (!cut) { ctx.moveTo(bx + L, y2 - 5); ctx.lineTo(bx + L, y2 + 5); }
+    ctx.stroke();
+    if (cut) { ctx.beginPath(); ctx.moveTo(bx + L + 8, y2); ctx.lineTo(bx + L - 2, y2 - 6); ctx.lineTo(bx + L - 2, y2 + 6); ctx.closePath(); ctx.fill(); }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+    drawWalls();
+    ctx.save(); ctx.translate(bx, by);
+    // trails
+    ctx.lineWidth = 1.2; ctx.strokeStyle = C.muted;
+    mols.forEach(function (m) {
+      ctx.globalAlpha = 0.35; ctx.beginPath(); var pen = false;
+      m.tr.forEach(function (p) { if (!p) { pen = false; return; } if (pen) ctx.lineTo(p[0], p[1]); else { ctx.moveTo(p[0], p[1]); pen = true; } });
+      ctx.stroke();
     });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  document.querySelectorAll('section.page-sec, #top').forEach(function (s) { io.observe(s); });
+    ctx.globalAlpha = 1;
+    // collision flashes
+    flashes.forEach(function (f) {
+      ctx.globalAlpha = 1 - f.t / 22; ctx.strokeStyle = f.k === 'w' ? C.heat : C.accent; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(f.x, f.y, 3 + f.t * 0.6, 0, 2 * Math.PI); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    // molecules
+    ctx.fillStyle = C.ink;
+    mols.forEach(function (m) { ctx.beginPath(); ctx.arc(m.x, m.y, 3.2, 0, 2 * Math.PI); ctx.fill(); });
+    ctx.restore();
+    drawBars();
+  }
+  function updateReadout() {
+    var kn = LAMBDA / D, tot = nMol + nWall;
+    knEl.textContent = kn >= 10 ? kn.toFixed(0) : kn.toFixed(kn < 1 ? 2 : 1);
+    molEl.textContent = nMol.toLocaleString('ko-KR');
+    wallEl.textContent = nWall.toLocaleString('ko-KR');
+    ratioEl.textContent = tot ? Math.round(100 * nWall / tot) + '%' : '–';
+    if (kn > 1) verdict.textContent = '에어로겔은 기공이 작아 분자가 다른 분자보다 벽에 더 자주 부딪혀 기체가 열을 잘 나르지 못한다.';
+    else if (kn > 0.3) verdict.textContent = '기공이 분자가 다른 분자와 부딪히기 전까지 날아가는 거리와 비슷하다. 분자끼리 충돌과 벽 충돌이 섞여 있다.';
+    else verdict.textContent = '기공이 분자가 다른 분자와 부딪히기 전까지 날아가는 거리보다 훨씬 크다. 분자끼리 주로 부딪히며 보통 공기처럼 열을 나른다.';
+  }
+  function tick() {
+    if (cv.offsetParent !== null) {
+      if (cv.clientWidth && (!ready || Math.abs(cv.clientWidth - W) > 2)) { if (layout()) { seed(); setD(D, ready); ready = true; } }
+      if (running) {
+        mols.forEach(step);
+        flashes.forEach(function (f) { f.t++; });
+        flashes = flashes.filter(function (f) { return f.t < 22; });
+        if (++frame % 10 === 0) updateReadout();
+      }
+      draw();
+    }
+    requestAnimationFrame(tick);
+  }
+  slider.addEventListener('input', function () { setD(sliderToD(Number(slider.value))); });
+  presets.forEach(function (b) { b.addEventListener('click', function () { setD(Number(b.dataset.d)); }); });
+  playBtn.addEventListener('click', function () {
+    running = !running; playBtn.textContent = running ? '일시정지' : '재생'; playBtn.setAttribute('aria-pressed', String(!running));
+  });
+  resetBtn.addEventListener('click', function () { nMol = 0; nWall = 0; updateReadout(); });
+  playBtn.textContent = running ? '일시정지' : '재생';
+  playBtn.setAttribute('aria-pressed', String(!running));
+  if (layout()) { seed(); ready = true; }
+  setD(30);
+  requestAnimationFrame(tick);
+})();
+</script>
+
+<script>
+(function () {
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+  var menu = document.querySelector('.menu');
+  var menuLinks = Array.prototype.slice.call(document.querySelectorAll('.menu a'));
+  var baseTitle = document.title;
+  if (!pages.length) return;
+  function pageOf(el) {
+    while (el && !(el.classList && el.classList.contains('page'))) el = el.parentNode;
+    return el;
+  }
+  function show() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (id === 'main') return;
+    var target = id ? document.getElementById(id) : null;
+    var page = target ? pageOf(target) : null;
+    if (!page) { page = document.getElementById('top'); target = null; }
+    pages.forEach(function (p) { p.hidden = (p !== page); });
+    var name = '';
+    menuLinks.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + page.id;
+      if (on) { a.setAttribute('aria-current', 'page'); name = a.textContent.trim(); } else { a.removeAttribute('aria-current'); }
+      if (on && menu && menu.scrollWidth > menu.clientWidth) menu.scrollLeft = Math.max(0, a.getBoundingClientRect().left - menu.getBoundingClientRect().left + menu.scrollLeft - 16);
+    });
+    document.title = name ? name + ' | 에어로겔' : baseTitle;
+    if (target && target !== page) { target.scrollIntoView(); } else { window.scrollTo(0, 0); }
+  }
+  window.addEventListener('hashchange', show);
+  show();
 })();
 </script>
 </body>
