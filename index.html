@@ -629,6 +629,126 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 .beyond p { margin: 0; font-size: 0.92rem; line-height: 1.7; }
 @media (max-width: 760px) { .beyond { grid-template-columns: 1fr; gap: 1.1rem; } }
 
+/* market page: forecasts, growth chart, company map, revenue, LG rail */
+.fc { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.fc li { min-width: 0; padding: 1rem 1.1rem; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.fc-src { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.fc-src b { display: block; color: var(--ink); font-size: 0.95rem; }
+.fc-src { min-height: 2.9em; }
+.fc-v { margin: 0.4rem 0 0.1rem; font-size: 1.7rem; font-weight: 600; color: var(--accent); letter-spacing: -0.01em; }
+.fc-d { margin: 0; font-size: 0.9rem; }
+@media (max-width: 640px) { .fc { grid-template-columns: 1fr; gap: 0.6rem; } .fc li { padding: 0.8rem 1rem; } .fc-v { font-size: 1.45rem; } }
+.growth svg { display: block; width: 100%; max-width: 620px; height: auto; margin: 0 auto; }
+
+.cmap { margin: 1.25rem 0 0; }
+.cm-row { display: grid; grid-template-columns: 9.5rem repeat(3, minmax(0, 1fr)); gap: 0.6rem 0.75rem; align-items: start; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+.cm-head { padding: 0 0 0.5rem; border-bottom: 2px solid var(--ink); font-size: 0.85rem; color: var(--muted); }
+.cm-name b { display: block; font-size: 1rem; }
+.cm-name small { font-size: 0.8rem; color: var(--muted); }
+.cm-cell { display: flex; flex-wrap: wrap; gap: 0.35rem; min-height: 1.9rem; align-content: flex-start; }
+.cm-cell.is-empty { background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px) center / 100% 1px no-repeat; }
+.cm-area { display: none; font-style: normal; font-size: 0.75rem; color: var(--muted); width: 100%; }
+.chip { display: inline-block; padding: 0.25rem 0.65rem; border-radius: 999px; background: var(--tint); color: var(--accent); font-size: 0.88rem; font-weight: 600; }
+.cm-news { grid-column: 2 / -1; margin: 0; font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+@media (max-width: 640px) {
+  .cm-head { display: none; }
+  .cm-row { grid-template-columns: 1fr; gap: 0.4rem; }
+  .cm-cell.is-empty { display: none; }
+  .cm-area { display: block; }
+  .cm-news { grid-column: 1; }
+}
+
+.rv .rv-unit { margin: 0 0 0.6rem; font-size: 0.82rem; color: var(--muted); }
+.rv-row { display: grid; grid-template-columns: 4rem minmax(0, 1fr) 4.5rem; gap: 0.75rem; align-items: center; padding: 0.35rem 0; }
+.rv-y { font-weight: 600; }
+.rv-track { position: relative; height: 1.6rem; }
+.rv-a, .rv-b { position: absolute; top: 0; bottom: 0; }
+.rv-a { left: 0; background: var(--accent); border-radius: 4px 0 0 4px; }
+.rv-b { background: var(--tint-strong); border-radius: 0 4px 4px 0; border-left: 2px solid var(--surface); }
+.rv-v { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.rv-drop { margin: 0.2rem 0 0; font-size: 1.5rem; font-weight: 600; color: var(--heat); }
+.rv-drop::after { content: " 2024 → 2025"; font-size: 0.82rem; font-weight: 400; color: var(--muted); }
+.rv-key { margin: 0.6rem 0 0; display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.85rem; }
+.rv-key i { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 2px; vertical-align: -0.1rem; margin-right: 0.35rem; }
+.rv-key .ka { background: var(--accent); } .rv-key .kb { background: var(--tint-strong); }
+
+.rail.rail6 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.rail6 li.future .y { color: var(--muted); }
+.rail6 li.future::before { border-style: dashed; border-color: var(--muted); }
+.rail6 li.future b::after { content: " (예정)"; font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+@media (max-width: 900px) and (min-width: 721px) { .rail.rail6 { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 1.5rem; } .rail.rail6::before { display: none; } }
+@media (max-width: 720px) { .rail.rail6 { grid-template-columns: 1fr; } }
+
+/* challenges: progress board */
+.board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem 0 0; align-items: start; }
+.lane { min-width: 0; background: var(--surface); border-radius: 10px; padding: 0.9rem 0.9rem 0.4rem; }
+.board .lane .lane-t { margin: 0 0 0.8rem; font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+.lane .dots { display: inline-flex; gap: 3px; }
+.lane .dots i { width: 0.6rem; height: 0.6rem; border-radius: 50%; border: 2px solid currentColor; box-sizing: border-box; }
+.lane.done .lane-t { color: var(--accent); } .lane.done .dots i { background: currentColor; }
+.lane.doing .lane-t { color: #6b5a1f; } .lane.doing .dots i:nth-child(-n+2) { background: currentColor; }
+.lane.todo .lane-t { color: var(--heat); } .lane.todo .dots i:first-child { background: currentColor; }
+.prob { background: #fff; border-radius: 8px; padding: 0.8rem 0.9rem; margin-bottom: 0.6rem; border: 1px solid var(--line); }
+.lane.done .prob { border-left: 3px solid var(--accent); }
+.lane.doing .prob { border-left: 3px solid #c9a227; }
+.lane.todo .prob { border-left: 3px solid var(--heat); }
+.board .prob .prob-t { margin: 0 0 0.45rem; font-size: 0.98rem; font-weight: 600; line-height: 1.4; }
+.prob p { margin: 0 0 0.35rem; font-size: 0.88rem; line-height: 1.65; }
+.prob p b { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-right: 0.4rem; }
+.prob p.cost { color: var(--muted); }
+@media (min-width: 1100px) { .board { width: min(64rem, calc(100vw - 3rem)); margin-left: calc(50% - min(32rem, 50vw - 1.5rem)); } }
+@media (max-width: 760px) { .board { grid-template-columns: 1fr; } }
+
+/* team page: three equal beads joined like the silica skeleton */
+.team { text-align: center; margin: 2.5rem 0 1rem; }
+.team-org { margin: 0; font-size: 1rem; color: var(--muted); }
+.team-name { margin: 0.2rem 0 0; font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.15; color: var(--ink); }
+.beads { list-style: none; margin: 2.5rem auto 0; padding: 0; display: flex; justify-content: center; align-items: center; }
+.bead { position: relative; width: 11rem; height: 11rem; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 34% 28%, #ffffff 0%, var(--tint) 50%, var(--tint-strong) 100%);
+  border: 2px solid var(--accent); z-index: 1; }
+.bead + .bead { margin-left: -0.9rem; }
+.bead:nth-child(2) { transform: translateY(-1.1rem); }
+.bead .name { font-size: 1.55rem; font-weight: 600; color: var(--ink); letter-spacing: 0.02em; }
+.team-note { margin: 2.2rem 0 0; font-size: 1.15rem; font-weight: 600; color: var(--accent); }
+.team-cap { margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--muted); }
+@media (max-width: 560px) {
+  .bead { width: 7rem; height: 7rem; }
+  .bead + .bead { margin-left: -0.6rem; }
+  .bead:nth-child(2) { transform: translateY(-0.7rem); }
+  .bead .name { font-size: 1.1rem; }
+  .team-note { font-size: 1.02rem; }
+}
+.team-members { list-style: none; margin: 2.4rem 0 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem 3rem; }
+.team-members li { font-size: clamp(1.9rem, 5vw, 2.6rem); font-weight: 600; color: var(--accent); letter-spacing: 0.04em; }
+@media (max-width: 560px) { .team-members { gap: 0.4rem 1.6rem; } }
+
+/* AI page */
+.rail.rail5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.ai-rail .y { font-weight: 600; }
+@media (max-width: 720px) { .rail.rail5 { grid-template-columns: 1fr; } }
+.roles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1.25rem 0 0; }
+.role { min-width: 0; border-radius: 10px; padding: 1rem 1.2rem; }
+.role.ai { background: var(--surface); border: 1px solid var(--line); }
+.role.us { background: var(--tint); border: 1px solid var(--tint-strong); }
+.roles .role .role-t { margin: 0 0 0.6rem; font-size: 1.05rem; font-weight: 600; }
+.role.us .role-t { color: var(--accent); }
+.role ul { margin: 0; padding-left: 1.1rem; }
+.role li { margin: 0.35rem 0; font-size: 0.95rem; }
+.role li span { display: block; font-size: 0.82rem; color: var(--muted); }
+@media (max-width: 640px) { .roles { grid-template-columns: 1fr; } }
+.fixes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.25rem 0 0; }
+.fix { min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; background: #fff; }
+.fixes .fix .fix-t { margin: 0 0 0.6rem; font-size: 1rem; font-weight: 600; line-height: 1.4; }
+.fix p { margin: 0; font-size: 0.9rem; line-height: 1.65; padding-left: 1.4rem; position: relative; }
+.fix p::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+.fix .was { color: var(--muted); margin-bottom: 0.55rem; }
+.fix .was::before { content: "✕"; color: var(--heat); }
+.fix .now::before { content: "✓"; color: var(--accent); }
+@media (max-width: 760px) { .fixes { grid-template-columns: 1fr; } }
+.rules { margin: 1rem 0 0; padding-left: 1.2rem; }
+.rules li { margin: 0.4rem 0; }
+
 /* one file, one page shown at a time */
 [hidden] { display: none !important; }
 .menu a[aria-current] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent); border-radius: 0; }
@@ -693,7 +813,7 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 <header class="topbar"><div class="topbar-inner gutter">
 <a class="wordmark" href="#top">에어로겔 <small>Aerogel</small></a>
-<nav class="menu" aria-label="주 메뉴"><ul><li><a href="#about">에어로겔이란</a></li><li><a href="#science">구조와 원리</a></li><li><a href="#making">만드는 법</a></li><li><a href="#application">응용</a></li><li><a href="#trend">산업과 시장</a></li><li><a href="#issue">한계와 해결</a></li><li><a href="#reference">참고문헌</a></li><li><a href="#team">조원</a></li></ul></nav>
+<nav class="menu" aria-label="주 메뉴"><ul><li><a href="#about">에어로겔이란</a></li><li><a href="#science">구조와 원리</a></li><li><a href="#making">만드는 법</a></li><li><a href="#application">응용</a></li><li><a href="#trend">산업과 시장</a></li><li><a href="#issue">한계와 해결</a></li><li><a href="#ai">AI 활용</a></li><li><a href="#reference">참고문헌</a></li><li><a href="#team">조원</a></li></ul></nav>
 </div></header>
 <main id="main">
 <div id="top" class="page">
@@ -1458,7 +1578,7 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 
 </div>
 <section id="about" class="band gutter page-sec page" aria-labelledby="h-about"><div class="col">
-<div class="page-head"><p class="seq">1 / 6</p><h2 class="sec-title" id="h-about">에어로겔이란</h2><p class="en">About</p></div>
+<div class="page-head"><p class="seq">1 / 7</p><h2 class="sec-title" id="h-about">에어로겔이란</h2><p class="en">About</p></div>
 <nav class="onpage" aria-label="이 부분의 내용"><a href="#define">정의: 액체 대신 공기가 찬 겔</a><a href="#history">기술 발전사: 무너지는 겔을 붙잡기까지</a><a href="#types">종류: 무엇으로 골격을 만드나</a></nav>
 
 <h3 id="define">정의: 액체 대신 공기가 찬 겔</h3>
@@ -1497,7 +1617,7 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 
 <nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#top"><span>이전</span><b>처음으로</b></a><a class="next" href="#science"><span>다음</span><b>구조와 원리</b></a></nav>
 </div></section><section id="science" class="band gutter page-sec page" aria-labelledby="h-science"><div class="col">
-<div class="page-head"><p class="seq">2 / 6</p><h2 class="sec-title" id="h-science">구조와 원리</h2><p class="en">Structure & Science</p></div>
+<div class="page-head"><p class="seq">2 / 7</p><h2 class="sec-title" id="h-science">구조와 원리</h2><p class="en">Structure & Science</p></div>
 <nav class="onpage" aria-label="이 부분의 내용"><a href="#structure">구조: 덩어리에서 입자까지</a><a href="#heat">왜 열이 잘 안 통할까</a><a href="#compare">다른 단열재와 비교</a></nav>
 
 <h3 id="structure">구조: 덩어리에서 입자까지</h3>
@@ -1675,7 +1795,7 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 
 <nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#about"><span>이전</span><b>에어로겔이란</b></a><a class="next" href="#making"><span>다음</span><b>만드는 법</b></a></nav>
 </div></section><section id="making" class="band gutter page-sec page" aria-labelledby="h-making"><div class="col">
-<div class="page-head"><p class="seq">3 / 6</p><h2 class="sec-title" id="h-making">만드는 법</h2><p class="en">Making</p></div>
+<div class="page-head"><p class="seq">3 / 7</p><h2 class="sec-title" id="h-making">만드는 법</h2><p class="en">Making</p></div>
 <nav class="onpage" aria-label="이 부분의 내용"><a href="#process">에어로겔 만드는 과정</a><a href="#catalyst">산 촉매와 염기 촉매</a><a href="#drying">건조: 왜 그냥 말리면 안 될까</a></nav>
 
 <h3 id="process">에어로겔 만드는 과정</h3>
@@ -1865,101 +1985,73 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 
 <nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#science"><span>이전</span><b>구조와 원리</b></a><a class="next" href="#application"><span>다음</span><b>응용</b></a></nav>
 </div></section><section id="application" class="band gutter page-sec page" aria-labelledby="h-application"><div class="col">
-<div class="page-head"><p class="seq">4 / 6</p><h2 class="sec-title" id="h-application">응용</h2><p class="en">Applications</p></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#temp">온도 차가 큰 곳에서 열을 막는다</a><a href="#battery">배터리: 불이 옆 셀로 번지는 것을 막는다</a><a href="#beyond">단열 말고도</a></nav>
+<div class="page-head"><p class="seq">4 / 7</p><h2 class="sec-title" id="h-application">응용</h2><p class="en">Applications</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#temp">온도 차가 큰 곳에서 열을 막는다</a><a href="#battery">배터리: 불이 옆 셀로 번지는 것을 막는다</a><a href="#beyond">다양한 활용</a></nav>
 
 <h3 id="temp">온도 차가 큰 곳에서 열을 막는다</h3>
 <p>에어로겔은 영하 253 °C의 액화수소부터 수백 °C의 배관과 배터리까지, 안팎의 온도 차가 큰 곳에서 쓰인다.</p>
 <figure class="tspec" role="img" aria-label="에어로겔이 쓰이는 온도: 액화수소 영하 253도, 건물 상온, 고온 산업 배관 수백 도, 배터리 열폭주 170도에서 약 720도"><div class="ts-area"><div class="ts-bar"></div><div class="ts-ticks"><span style="left:20.6%">0</span><span style="left:40.5%">250</span><span style="left:60.3%">500</span><span style="left:80.2%">750</span><span style="left:100.0%">1,000</span></div><span class="ts-pt ts-below at-start" style="left:0.6%"><i><span class="lf">액화수소 −253 °C</span><span class="ls">액화수소 −253 °C</span></i></span><span class="ts-pt ts-above" style="left:22.2%"><i><span class="lf">건물 · 상온</span><span class="ls">건물</span></i></span><span class="ts-bd ts-above" style="left:28.6%;width:39.7%"><i><span class="lf">고온 산업 배관 · 수백 °C</span><span class="ls">고온 배관</span></i></span><span class="ts-bd ts-below" style="left:34.1%;width:43.7%"><i><span class="lf">배터리 열폭주 · 170 → 약 720 °C</span><span class="ls">배터리 열폭주</span></i></span></div><p class="ts-unit">온도(°C)</p><figcaption><b>그림 4-1</b> 에어로겔이 열을 막는 온도 범위.</figcaption></figure>
-<ul class="tuses"><li class="use-cold"><span class="tag">−253 °C</span><h4>액화수소 탱크·배관</h4><p>바깥 열이 스며들면 액체 수소가 끓어 날아간다. LG화학은 액화수소 수송·보관용 수요를 겨냥하고, Aspen Aerogels는 극저온용 Cryogel을 만든다.</p></li><li class="use-room"><span class="tag">상온</span><h4>건물 채광창</h4><p>창과 채광창은 빛을 들이는 만큼 열도 샌다. Cabot의 Lumira는 빛은 통과시키고 열은 막는 에어로겔 알갱이로, 빛을 부드럽게 퍼뜨려 눈부심도 줄인다.</p></li><li class="use-warm"><span class="tag">수백 °C</span><h4>고온 산업 배관</h4><p>뜨거운 증기 배관과 설비에서 새는 열을 얇은 두께로 줄인다. Aspen Aerogels의 고온용 Pyrogel이 대표적이다.</p></li><li class="use-hot"><span class="tag">170 °C →</span><h4>배터리 열폭주</h4><p>셀 하나에 불이 나면 옆 셀로 번지기 쉽다. 셀 사이에 얇은 에어로겔 시트를 끼워 막는다. 아래에서 자세히 본다.</p></li></ul>
+<ul class="tuses"><li class="use-cold"><span class="tag">−253 °C</span><h4>액화수소 탱크·배관</h4><p>바깥 열이 스며들면 액체 수소가 끓어 날아간다. LG화학은 액화수소 수송·보관용 수요를 겨냥하고, Aspen Aerogels는 극저온용 Cryogel을 만든다.</p></li><li class="use-room"><span class="tag">상온</span><h4>건물 채광창</h4><p>창과 채광창은 빛을 들이는 만큼 열도 샌다. Cabot의 Lumira는 채광창 안에 채워 넣는 에어로겔 단열재로, 빛은 통과시키고 열은 막는다. 빛을 부드럽게 퍼뜨려 눈부심도 줄인다.</p></li><li class="use-warm"><span class="tag">수백 °C</span><h4>고온 산업 배관</h4><p>뜨거운 증기 배관과 설비에서 새는 열을 얇은 두께로 줄인다. Aspen Aerogels의 고온용 Pyrogel이 대표적이다.</p></li><li class="use-hot"><span class="tag">170 °C →</span><h4>배터리 열폭주</h4><p>셀 하나에 불이 나면 옆 셀로 번지기 쉽다. 셀 사이에 얇은 에어로겔 시트를 끼워 막는다.</p></li></ul>
 
 <h3 id="battery">배터리: 불이 옆 셀로 번지는 것을 막는다</h3>
 <p>배터리 셀 하나가 과열되면 스스로 열을 내며 온도가 치솟는다. 이를 <dfn>열폭주</dfn>라 한다. 이 열이 옆 셀로 번지면 연쇄적으로 불이 난다. 셀 사이에 얇은 차단재를 끼워 열이 넘어가는 것을 막는데, 차단재를 바꿔 같은 조건에서 계산해 보면 차이가 뚜렷하다.</p>
 <figure class="btfig"><p class="bt-title">셀 1이 열폭주하고 5분 뒤 (셀 사이 차단재 2 mm, 냉각판 있음)</p><div class="bt-row bt-head" aria-hidden="true"><span></span><span class="bt-cells"><span>셀 1</span><span>셀 2</span><span>셀 3</span><span>셀 4</span><span>셀 5</span></span><span class="bt-first">셀 2에 불이 붙기까지</span><span class="bt-spread">번진 셀</span></div><div class="bt-row"><span class="bt-name">폴리우레탄 폼</span><span class="bt-cells"><span class="bt-cell" style="background:rgb(199,65,31);color:#fff">673°</span><span class="bt-cell" style="background:rgb(199,65,31);color:#fff">676°</span><span class="bt-cell" style="background:rgb(198,64,31);color:#fff">680°</span><span class="bt-cell" style="background:rgb(198,63,31);color:#fff">684°</span><span class="bt-cell" style="background:rgb(198,63,31);color:#fff">687°</span></span><span class="bt-first"><span class="m-lab">셀 2 열폭주까지 </span>9초</span><span class="bt-spread"><span class="m-lab">번진 셀 </span>4 / 4</span></div><div class="bt-row"><span class="bt-name">마이카 시트</span><span class="bt-cells"><span class="bt-cell" style="background:rgb(201,67,32);color:#fff">662°</span><span class="bt-cell" style="background:rgb(199,65,31);color:#fff">674°</span><span class="bt-cell" style="background:rgb(196,61,30);color:#fff">697°</span><span class="bt-cell" style="background:rgb(191,56,29);color:#fff">729°</span><span class="bt-cell" style="background:rgb(185,53,28);color:#fff">756°</span></span><span class="bt-first"><span class="m-lab">셀 2 열폭주까지 </span>30초</span><span class="bt-spread"><span class="m-lab">번진 셀 </span>4 / 4</span></div><div class="bt-row is-aero"><span class="bt-name">에어로겔</span><span class="bt-cells"><span class="bt-cell" style="background:rgb(201,68,32);color:#fff">657°</span><span class="bt-cell" style="background:rgb(246,226,159);color:#13233f">121°</span><span class="bt-cell" style="background:rgb(203,220,240);color:#13233f">28°</span><span class="bt-cell" style="background:rgb(201,220,243);color:#13233f">25°</span><span class="bt-cell" style="background:rgb(201,220,243);color:#13233f">25°</span></span><span class="bt-first">번지지 않음<small>셀 2 최고 133 °C</small></span><span class="bt-spread"><span class="m-lab">번진 셀 </span>0 / 4</span></div><div class="bt-legend"><span class="bt-grad"><span style="background:rgb(201,220,243)"></span><span style="background:rgb(213,222,222)"></span><span style="background:rgb(224,223,200)"></span><span style="background:rgb(236,225,179)"></span><span style="background:rgb(246,224,155)"></span><span style="background:rgb(246,210,111)"></span><span style="background:rgb(246,196,69)"></span><span style="background:rgb(244,187,66)"></span><span style="background:rgb(243,179,63)"></span><span style="background:rgb(241,170,60)"></span><span style="background:rgb(240,162,57)"></span><span style="background:rgb(239,153,55)"></span><span style="background:rgb(237,145,52)"></span><span style="background:rgb(236,136,49)"></span><span style="background:rgb(234,128,46)"></span><span style="background:rgb(233,119,43)"></span><span style="background:rgb(230,113,41)"></span><span style="background:rgb(227,109,40)"></span><span style="background:rgb(224,104,39)"></span><span style="background:rgb(221,100,38)"></span><span style="background:rgb(218,95,38)"></span><span style="background:rgb(216,90,37)"></span><span style="background:rgb(213,86,36)"></span><span style="background:rgb(210,81,35)"></span><span style="background:rgb(207,77,34)"></span><span style="background:rgb(204,72,33)"></span><span style="background:rgb(201,68,32)"></span><span style="background:rgb(198,63,31)"></span><span style="background:rgb(195,59,30)"></span><span style="background:rgb(190,56,29)"></span><span style="background:rgb(186,53,28)"></span><span style="background:rgb(181,50,28)"></span><span style="background:rgb(176,47,27)"></span><span style="background:rgb(172,44,27)"></span><span style="background:rgb(167,41,26)"></span><span style="background:rgb(163,37,25)"></span><span style="background:rgb(158,34,25)"></span><span style="background:rgb(154,31,24)"></span><span style="background:rgb(149,28,23)"></span><span style="background:rgb(145,25,23)"></span><span style="background:rgb(140,22,22)"></span></span><span class="bt-l0">25 °C</span><span class="bt-l170" style="left:14.9%">170 °C 열폭주</span><span class="bt-l1">1,000 °C</span></div><figcaption><b>그림 4-2</b> 차단재에 따른 열폭주 전파 계산 결과. 셀 안 숫자는 5분 뒤 온도다.</figcaption></figure>
 <p>폴리우레탄 폼과 마이카 시트는 1분도 안 돼 옆 셀로 번졌지만, 에어로겔은 셀 2가 133 °C에 그쳐 번지지 않았다. 다만 냉각판 없이 자연 냉각만 하면 에어로겔도 5분 12초 뒤 셀 2로 번진다. 차단재와 냉각을 함께 써야 하는 이유다.</p>
 <p>실제로 Aspen Aerogels의 PyroThin은 800 V 이상 초고속 충전 배터리 팩까지 겨냥하고, Alkegen은 가루가 덜 날리는 섬유 강화 에어로겔을 양산하기 시작했다. LG화학에는 화재 위험에 민감한 대형 ESS(에너지저장장치) 주문이 늘고 있다.</p>
-<details class="more">
-<summary>더 보기: 계산 조건과 값의 출처</summary>
-<ul>
-<li>셀은 온도가 하나인 덩어리로 보고, 셀과 셀 사이는 두께 2 mm 차단재를 통한 열전도로만 연결했다. 2 mm는 Aspen Aerogels PyroThin 시트 두께다(Charged EVs, 2023).</li>
-<li>열전도율: 폴리우레탄 폼 0.03, 마이카 0.71 W/(m·K)(Engineering ToolBox). 에어로겔은 0 °C 0.020에서 600 °C 0.089 W/(m·K)까지 온도에 따라 커지는 Pyrogel XTE 데이터시트 값을 썼다.</li>
-<li>폴리우레탄 폼은 약 100–300 °C까지만 견딘다(Charged EVs, 2023). 그래서 300 °C를 넘으면 차단 기능을 잃는 것으로 처리했다.</li>
-<li>열폭주 시작 온도 170 °C는 NCM523 파우치 셀 실험의 기준값이다(Wang 외, 2024). 최고 온도는 실험값(약 720 °C)보다 가혹하게 1,000 °C로 두었다.</li>
-<li>셀 비열 1,040 J/(kg·K)(Battery Design 정리, Maleki 외 1999 측정), 셀 두께 20 mm, 밀도 2,500 kg/m³(가정). 냉각판은 50, 자연 냉각은 7 W/(m²·K)(Wang 외, 2024)로 두었다.</li>
-<li>5분은 중국 배터리 안전 기준의 열 전파 경보 시간이다(Charged EVs, 2023). 불꽃, 가스 분출, 셀 팽창은 넣지 않은 단순화 모델이라 소재끼리 비교하는 용도로 읽어야 한다.</li>
-</ul>
-</details>
 
-<h3 id="beyond">단열 말고도</h3>
-<p>가벼움, 넓은 표면, 낮은 굴절률을 살린 쓰임도 있다.</p>
+<h3 id="beyond">다양한 활용</h3>
 <ul class="beyond"><li><h4>우주 탐사</h4><p>혜성 먼지는 소총 탄환의 최대 6배 속도로 날아온다. 입구는 성기고 안쪽으로 갈수록 촘촘한 에어로겔이 먼지를 서서히 멈춰 세워, NASA 스타더스트 탐사선이 2006년 혜성 먼지를 지구로 가져왔다. 1997년에는 화성 로버 소저너의 단열재로도 쓰였다.</p></li><li><h4>기름 흡착</h4><p>넓은 표면과 빈 공간이 스펀지처럼 기름을 빨아들인다. 중국 저장대학교의 탄소 에어로겔은 자기 무게의 최대 900배까지 기름을 흡수했다.</p></li><li><h4>그 밖의 쓰임</h4><p>빠른 입자를 구별하는 체렌코프 검출기, 흡음재, 촉매 담체, 약물 전달 소재로 쓰이거나 연구된다. 화장품에는 번들거림을 줄이거나 자외선 차단 효과를 높이는 첨가제로 들어간다.</p></li></ul>
 
 <nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#making"><span>이전</span><b>만드는 법</b></a><a class="next" href="#trend"><span>다음</span><b>산업과 시장</b></a></nav>
 </div></section><section id="trend" class="band gutter page-sec page" aria-labelledby="h-trend"><div class="col">
-<div class="page-head"><p class="seq">5 / 6</p><h2 class="sec-title" id="h-trend">산업과 시장</h2><p class="en">Industry & Market</p></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#market">시장 전망</a><a href="#companies">주요 기업</a><a href="#swing">수요가 흔들릴 때</a><a href="#korea">국내 동향: LG화학</a></nav>
+<div class="page-head"><p class="seq">5 / 7</p><h2 class="sec-title" id="h-trend">산업과 시장</h2><p class="en">Industry & Market</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#market">시장 전망</a><a href="#companies">주요 기업: 누가 어느 분야에 파나</a><a href="#swing">수요가 흔들릴 때</a><a href="#korea">국내 동향: LG화학</a></nav>
 
 <h3 id="market">시장 전망</h3>
-<p>에어로겔 시장이 얼마나 커질지는 발표한 곳마다 숫자가 다르다.</p>
-<div class="table-wrap"><table>
-<thead><tr><th scope="col">출처</th><th scope="col">전망</th></tr></thead>
-<tbody>
-<tr><th scope="row">CAS (2025)</th><td>2025–2035년 연평균 약 17% 성장</td></tr>
-<tr><th scope="row">IDTechEx (매일경제 인용, 2026)</th><td>2033년 세계 시장 약 24억 달러</td></tr>
-<tr><th scope="row">LG화학 (2023 보도자료, 2026 보도)</th><td>연평균 30% 이상 성장</td></tr>
-</tbody></table></div>
-<p>세 전망은 기간과 기준이 서로 달라 숫자도 다르다. 공통점은 모두 빠른 성장을 예상한다는 것이다. 연평균 17%는 매년 17%씩 커진다는 뜻으로, 이 속도라면 4–5년마다 시장이 두 배가 된다. 하나의 숫자보다 '연 17%에서 30% 이상'처럼 범위와 출처를 함께 말하는 편이 정확하다.</p>
-<p>연구가 실제 제품으로 넘어가고 있다는 신호도 있다. CAS 분석에 따르면 2013년 이후 에어로겔 특허가 꾸준히 늘었고, 일부 유형은 특허 수가 논문 수를 앞선다. 논문보다 특허가 많다는 것은 기업들이 상품화를 준비하고 있다는 뜻으로 읽을 수 있다.</p>
+<p>발표한 곳마다 숫자는 다르지만, 모두 빠른 성장을 예상한다.</p>
+<ul class="fc"><li><p class="fc-src"><b>CAS</b> 2025</p><p class="fc-v">연 17%</p><p class="fc-d">2025–2035년 연평균 성장</p></li><li><p class="fc-src"><b>IDTechEx</b> 매일경제 인용, 2026</p><p class="fc-v">24억 달러</p><p class="fc-d">2033년 세계 시장 규모</p></li><li><p class="fc-src"><b>LG화학</b> 2023 보도자료, 2026 보도</p><p class="fc-v">연 30% 이상</p><p class="fc-d">연평균 성장</p></li></ul>
+<p style="margin-top:1.5rem">연 17%는 매년 17%씩 커진다는 뜻이다. 이 속도가 이어지면 시장은 4–5년마다 두 배가 된다.</p>
+<figure class="fig-panel growth"><svg viewBox="0 0 560 270" role="img" aria-label="연 17%로 커지면 2025년을 1로 볼 때 약 4.4년 뒤 2배, 약 8.8년 뒤 4배, 10년 뒤 약 4.8배가 된다"><line x1="52" x2="535" y1="182.4" y2="182.4" stroke="var(--line)"/><text x="42" y="187.4" text-anchor="end" font-size="17" fill="var(--muted)">1배</text><line x1="52" x2="535" y1="142.8" y2="142.8" stroke="var(--line)"/><text x="42" y="147.8" text-anchor="end" font-size="17" fill="var(--muted)">2배</text><line x1="52" x2="535" y1="103.2" y2="103.2" stroke="var(--line)"/><text x="42" y="108.2" text-anchor="end" font-size="17" fill="var(--muted)">3배</text><line x1="52" x2="535" y1="63.6" y2="63.6" stroke="var(--line)"/><text x="42" y="68.6" text-anchor="end" font-size="17" fill="var(--muted)">4배</text><line x1="52" x2="535" y1="24.0" y2="24.0" stroke="var(--line)"/><text x="42" y="29.0" text-anchor="end" font-size="17" fill="var(--muted)">5배</text><line x1="52" x2="535" y1="222" y2="222" stroke="var(--muted)"/><text x="52.0" y="244" text-anchor="middle" font-size="17" fill="var(--muted)">2025</text><text x="148.6" y="244" text-anchor="middle" font-size="17" fill="var(--muted)">2027</text><text x="245.2" y="244" text-anchor="middle" font-size="17" fill="var(--muted)">2029</text><text x="341.8" y="244" text-anchor="middle" font-size="17" fill="var(--muted)">2031</text><text x="438.4" y="244" text-anchor="middle" font-size="17" fill="var(--muted)">2033</text><text x="535.0" y="244" text-anchor="middle" font-size="17" fill="var(--muted)">2035</text><polyline points="52.0,182.4 56.8,181.8 61.7,181.1 66.5,180.5 71.3,179.8 76.2,179.2 81.0,178.5 85.8,177.8 90.6,177.1 95.5,176.4 100.3,175.7 105.1,174.9 110.0,174.2 114.8,173.4 119.6,172.7 124.5,171.9 129.3,171.1 134.1,170.3 138.9,169.5 143.8,168.6 148.6,167.8 153.4,166.9 158.3,166.1 163.1,165.2 167.9,164.3 172.8,163.4 177.6,162.4 182.4,161.5 187.2,160.5 192.1,159.6 196.9,158.6 201.7,157.6 206.6,156.6 211.4,155.5 216.2,154.5 221.1,153.4 225.9,152.3 230.7,151.2 235.5,150.1 240.4,149.0 245.2,147.8 250.0,146.6 254.9,145.4 259.7,144.2 264.5,143.0 269.4,141.7 274.2,140.5 279.0,139.2 283.8,137.9 288.7,136.5 293.5,135.2 298.3,133.8 303.2,132.4 308.0,131.0 312.8,129.6 317.6,128.1 322.5,126.6 327.3,125.1 332.1,123.6 337.0,122.0 341.8,120.4 346.6,118.8 351.5,117.2 356.3,115.5 361.1,113.8 365.9,112.1 370.8,110.4 375.6,108.6 380.4,106.8 385.3,105.0 390.1,103.2 394.9,101.3 399.8,99.4 404.6,97.4 409.4,95.4 414.2,93.4 419.1,91.4 423.9,89.3 428.7,87.2 433.6,85.1 438.4,82.9 443.2,80.7 448.1,78.5 452.9,76.2 457.7,73.9 462.6,71.6 467.4,69.2 472.2,66.8 477.0,64.3 481.9,61.8 486.7,59.3 491.5,56.7 496.4,54.1 501.2,51.5 506.0,48.8 510.9,46.0 515.7,43.2 520.5,40.4 525.3,37.5 530.2,34.6 535.0,31.6" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/><line x1="265.2" x2="265.2" y1="142.8" y2="222" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1.3"/><circle cx="265.2" cy="142.8" r="5" fill="#fff" stroke="var(--accent)" stroke-width="2"/><text x="255.2" y="132.8" text-anchor="end" font-size="17" font-weight="600" fill="var(--ink)">약 4.4년 뒤 2배</text><line x1="478.5" x2="478.5" y1="63.6" y2="222" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1.3"/><circle cx="478.5" cy="63.6" r="5" fill="#fff" stroke="var(--accent)" stroke-width="2"/><text x="468.5" y="53.6" text-anchor="end" font-size="17" font-weight="600" fill="var(--ink)">약 8.8년 뒤 4배</text><text x="531" y="19.6" text-anchor="end" font-size="17" font-weight="600" fill="var(--accent)">10년 뒤 약 4.8배</text></svg><figcaption><b>그림 5-1</b> 연 17%씩 10년 동안 커질 때의 시장 크기(2025년 = 1배).</figcaption></figure>
+<p>연구도 제품으로 넘어가고 있다. CAS 분석에 따르면 2013년 이후 에어로겔 특허가 꾸준히 늘었다.</p>
 
-<h3 id="companies">주요 기업</h3>
-<div class="table-wrap"><table>
-<thead><tr><th scope="col">기업</th><th scope="col">주요 제품·사업</th><th scope="col">최근 소식</th></tr></thead>
-<tbody>
-<tr><th scope="row">Aspen Aerogels (미국)</th><td>PyroThin(배터리 열 차단재), Pyrogel(고온용), Cryogel(극저온용)</td><td>2025년 매출 2억 7,110만 달러</td></tr>
-<tr><th scope="row">Cabot (미국)</th><td>Lumira(건축 채광 단열재), 독일 프랑크푸르트 인근 공장에서 생산</td><td>2003년 채광 시장 진출, 2011년 Lumira 브랜드 출시</td></tr>
-<tr><th scope="row">LG화학</th><td>산업 배관·설비 단열재, 배터리용 에어로겔</td><td>당진 공장 2025년 9월부터 풀가동, 2026년 하반기 글로벌 완성차 납품 예정</td></tr>
-<tr><th scope="row">Alkegen (미국)</th><td>전기차 배터리용 섬유 강화 에어로겔 AlkeGel</td><td>2025년 본격 생산 시작, 12개국 60곳 이상 제조 시설</td></tr>
-</tbody></table></div>
+<h3 id="companies">주요 기업: 누가 어느 분야에 파나</h3>
+<div class="cmap" role="table" aria-label="주요 기업별 에어로겔 제품 분야"><div class="cm-row cm-head" aria-hidden="true"><span></span><span>배터리</span><span>산업·에너지</span><span>건축</span></div><div class="cm-row"><span class="cm-name"><b>Aspen Aerogels</b><small>미국</small></span><span class="cm-cell"><em class="cm-area">배터리</em><span class="chip">PyroThin</span></span><span class="cm-cell"><em class="cm-area">산업·에너지</em><span class="chip">Pyrogel</span><span class="chip">Cryogel</span></span><span class="cm-cell is-empty" aria-hidden="true"></span><p class="cm-news">2025년 매출 2억 7,110만 달러</p></div><div class="cm-row"><span class="cm-name"><b>Cabot</b><small>미국</small></span><span class="cm-cell is-empty" aria-hidden="true"></span><span class="cm-cell is-empty" aria-hidden="true"></span><span class="cm-cell"><em class="cm-area">건축</em><span class="chip">Lumira</span></span><p class="cm-news">2003년 채광 시장 진출, 2011년 Lumira 출시. 독일 프랑크푸르트 인근 공장에서 생산</p></div><div class="cm-row"><span class="cm-name"><b>LG화학</b><small>한국</small></span><span class="cm-cell"><em class="cm-area">배터리</em><span class="chip">배터리용 에어로겔</span></span><span class="cm-cell"><em class="cm-area">산업·에너지</em><span class="chip">배관·설비 단열재</span></span><span class="cm-cell is-empty" aria-hidden="true"></span><p class="cm-news">당진 공장 2025년 9월부터 풀가동, 2026년 하반기 해외 완성차 납품 예정</p></div><div class="cm-row"><span class="cm-name"><b>Alkegen</b><small>미국</small></span><span class="cm-cell"><em class="cm-area">배터리</em><span class="chip">AlkeGel</span></span><span class="cm-cell is-empty" aria-hidden="true"></span><span class="cm-cell is-empty" aria-hidden="true"></span><p class="cm-news">2025년 본격 생산 시작, 12개국 60곳 이상 제조 시설</p></div></div>
 
 <h3 id="swing">수요가 흔들릴 때</h3>
-<figure class="fig-panel">
-<div class="bars" role="img" aria-label="Aspen Aerogels 매출: 2024년 452.7백만 달러(열 차단재 306.8, 에너지·산업 145.9), 2025년 271.1백만 달러(열 차단재 168.9, 에너지·산업 102.2)"><div class="axis"><span>백만 달러</span><span class="ticks"><span style="left:0%">0</span><span style="left:20%">100</span><span style="left:40%">200</span><span style="left:60%">300</span><span style="left:80%">400</span><span style="left:100%">500</span></span><span></span></div><div class="row"><span class="name">2024년</span><span class="track"><span class="seg" style="left:0;width:61.4%;background:var(--accent)"></span><span class="seg" style="left:61.4%;width:29.2%;background:var(--tint-strong)"></span></span><span class="val">452.7</span></div><div class="row"><span class="name">2025년</span><span class="track"><span class="seg" style="left:0;width:33.8%;background:var(--accent)"></span><span class="seg" style="left:33.8%;width:20.4%;background:var(--tint-strong)"></span></span><span class="val">271.1</span></div></div><p class="small" style="margin:0.75rem 0 0;display:flex;gap:1.25rem;flex-wrap:wrap"><span><span style="display:inline-block;width:0.8rem;height:0.8rem;background:var(--accent);border-radius:2px;vertical-align:-0.1rem"></span> 열 차단재(전기차)</span><span><span style="display:inline-block;width:0.8rem;height:0.8rem;background:var(--tint-strong);border-radius:2px;vertical-align:-0.1rem"></span> 에너지·산업</span></p>
-<figcaption><b>그림 5-1</b> Aspen Aerogels 부문별 매출(백만 달러).</figcaption>
-</figure>
-<p>에어로겔 수요는 배터리에 크게 기대고 있어서, 배터리 시장이 주춤하면 함께 흔들린다. 미국 에어로겔 기업 Aspen Aerogels의 매출은 2024년 4억 5,270만 달러에서 2025년 2억 7,110만 달러로 40% 줄었다. 줄어든 금액의 약 76%가 전기차용 열 차단재였다.</p>
+<p>에어로겔 수요는 배터리에 크게 기대고 있어서, 배터리 시장이 주춤하면 함께 흔들린다.</p>
+<figure class="fig-panel rv" role="img" aria-label="Aspen Aerogels 매출: 2024년 452.7백만 달러에서 2025년 271.1백만 달러로 40% 감소. 감소분 대부분이 전기차용 열 차단재"><p class="rv-unit">매출(백만 달러)</p><div class="rv-row"><span class="rv-y">2024년</span><span class="rv-track"><span class="rv-a" style="width:61.4%"></span><span class="rv-b" style="left:61.4%;width:29.2%"></span></span><span class="rv-v">452.7</span></div><div class="rv-row"><span class="rv-y">2025년</span><span class="rv-track"><span class="rv-a" style="width:33.8%"></span><span class="rv-b" style="left:33.8%;width:20.4%"></span></span><span class="rv-v">271.1</span></div><p class="rv-drop">−40%</p><p class="rv-key"><span><i class="ka"></i>열 차단재(전기차)</span><span><i class="kb"></i>에너지·산업</span></p><figcaption><b>그림 5-2</b> Aspen Aerogels 부문별 매출.</figcaption></figure>
+<p>미국 Aspen Aerogels의 매출은 2024년 4억 5,270만 달러에서 2025년 2억 7,110만 달러로 40% 줄었다. 줄어든 금액의 약 76%가 전기차용 열 차단재였다.</p>
 
 <h3 id="korea">국내 동향: LG화학</h3>
-<ol class="timeline">
-<li><span class="y">2013</span><span>에어로겔 연구를 시작했다.</span></li>
-<li><span class="y">2016</span><span>파일럿(시험 생산) 설비로 초임계 건조 공정을 검증했다.</span></li>
-<li class="key"><span class="y">2023</span><span>3월 충남 당진 석문국가산업단지에 공장을 짓기 시작했다.</span></li>
-<li class="key"><span class="y">2025</span><span>9월부터 공장을 풀가동하고 있다. 앞으로 몇 년 동안 만들 물량까지 이미 주문이 들어와 있다.</span></li>
-<li><span class="y">2026</span><span>하반기부터 해외 완성차 업체에 납품할 예정이다.</span></li>
-<li><span class="y">2028</span><span>수요가 계속 늘면 이 무렵 공장 증설을 검토한다.</span></li>
-</ol>
-<p>LG화학은 처음에 전기차 배터리 수요를 예상했지만, 지금은 화재 위험에 민감한 대형 ESS(에너지저장장치) 주문이 빠르게 늘고 있다고 밝혔다.</p>
+<ol class="rail rail6"><li><span class="y">2013</span><b>연구 시작</b><p>에어로겔 연구를 시작했다.</p></li><li><span class="y">2016</span><b>파일럿</b><p>파일럿 설비로 초임계 건조 공정을 검증했다.</p></li><li><span class="y">2023</span><b>착공</b><p>충남 당진 석문국가산업단지에 공장을 짓기 시작했다.</p></li><li><span class="y">2025</span><b>풀가동</b><p>9월부터 풀가동. 몇 년 치 물량까지 주문이 찼다.</p></li><li class="future"><span class="y">2026</span><b>납품</b><p>하반기부터 해외 완성차 업체에 납품한다.</p></li></ol>
+<p style="margin-top:1.75rem">LG화학은 처음에 전기차 배터리 수요를 예상했지만, 지금은 화재 위험에 민감한 대형 ESS(에너지저장장치) 주문이 빠르게 늘고 있다고 밝혔다.</p>
 
 <nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#application"><span>이전</span><b>응용</b></a><a class="next" href="#issue"><span>다음</span><b>한계와 해결</b></a></nav>
 </div></section><section id="issue" class="band gutter page-sec page" aria-labelledby="h-issue"><div class="col">
-<div class="page-head"><p class="seq">6 / 6</p><h2 class="sec-title" id="h-issue">한계와 해결</h2><p class="en">Challenges</p></div>
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#problems">문제와 해결 방향</a><a href="#hot">온도가 높아지면: 복사로 새는 열이 커진다</a><a href="#outlook">전망</a></nav>
+<div class="page-head"><p class="seq">6 / 7</p><h2 class="sec-title" id="h-issue">한계와 해결</h2><p class="en">Challenges</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#problems">해결은 어디까지 왔나</a><a href="#hot">온도가 높아지면: 복사로 새는 열이 커진다</a><a href="#outlook">전망</a></nav>
 
-<h3 id="problems">문제와 해결 방향</h3>
-<p>에어로겔이 이렇게 좋은데 왜 아직 어디에나 쓰이지 않을까? 가장 큰 이유는 잘 부서지고 비싸다는 것이다. 문제마다 어떤 해결책이 연구되는지, 그리고 그 대가는 무엇인지 정리했다.</p>
-<div class="table-wrap"><table class="problems">
-<thead><tr><th scope="col">문제</th><th scope="col">해결 방향</th><th scope="col">대가와 남은 과제</th></tr></thead>
-<tbody>
-<tr><th scope="row">충격에 잘 부서지고 강도가 낮다</th><td>유리섬유 매트에 에어로겔을 채운 블랭킷으로 만든다. 골격을 고분자로 감싸 강도를 100배 이상 높인 연구도 있다</td><td>섬유를 넣으면 단열 성능이, 골격을 감싸면 무게(밀도)와 단열 성능이 손해를 본다</td></tr>
-<tr><th scope="row">초임계 건조는 고압 장비가 필요해 비싸고 위험하다</th><td>표면을 바꿔 보통 대기압에서 말린다(상압 건조). 1995년 빈 공간 98.5%의 막을 만들었고, 시약 조합으로 건조 기간을 1일로 줄인 보고도 있다</td><td>그래도 상업 생산은 아직 대부분 초임계 건조를 쓴다</td></tr>
-<tr><th scope="row">원료(TEOS 같은 알콕사이드)가 비싸고 유해하다</th><td>값싼 물유리(규산나트륨), 실리카가 19–22% 들어 있는 왕겨</td><td>—</td></tr>
-<tr><th scope="row">가루(분진)가 날려 다루기 어렵다</th><td>가루가 덜 날리는 섬유 강화 제품</td><td>—</td></tr>
-<tr><th scope="row">온도가 높으면 적외선(복사)으로 새는 열이 커진다</th><td>복사를 막는 방법이 연구 과제로 남아 있다. 원리는 <a href="#hot">아래</a> 참고</td><td>배터리 화재처럼 고온에서 쓰일수록 중요해진다</td></tr>
-<tr><th scope="row">대량 생산 비용과 품질 관리</th><td>공장을 늘려 생산 규모를 키운다</td><td>배터리 수요가 흔들리면 매출도 흔들린다</td></tr>
-</tbody></table></div>
+<h3 id="problems">해결은 어디까지 왔나</h3>
+<p>에어로겔이 이렇게 좋은데 왜 아직 어디에나 쓰이지 않을까? 잘 부서지고 비싸기 때문이다. 문제마다 해결이 어디까지 왔는지 정리했다.</p>
+<div class="board">
+<section class="lane done" aria-labelledby="lane-done"><h4 class="lane-t" id="lane-done"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>제품으로 나옴</h4>
+<article class="prob"><h4 class="prob-t">충격에 잘 부서진다</h4><p><b>해결</b>유리섬유 매트에 에어로겔을 채운 블랭킷으로 만든다. 골격을 고분자로 감싸 강도를 100배 이상 높인 연구도 있다.</p><p class="cost"><b>대가</b>섬유를 넣으면 단열 성능이, 골격을 감싸면 무게와 단열 성능이 손해를 본다.</p></article>
+<article class="prob"><h4 class="prob-t">가루가 날려 다루기 어렵다</h4><p><b>해결</b>가루가 덜 날리는 섬유 강화 제품이 양산되고 있다.</p></article>
+</section>
+<section class="lane doing" aria-labelledby="lane-doing"><h4 class="lane-t" id="lane-doing"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>연구·진행 중</h4>
+<article class="prob"><h4 class="prob-t">초임계 건조는 비싸고 위험하다</h4><p><b>해결</b>표면을 바꿔 보통 대기압에서 말린다(상압 건조). 건조 기간을 1일로 줄인 보고도 있다.</p><p class="cost"><b>대가</b>상업 생산은 아직 대부분 초임계 건조를 쓴다.</p></article>
+<article class="prob"><h4 class="prob-t">원료가 비싸고 유해하다</h4><p><b>해결</b>TEOS 대신 값싼 물유리나, 실리카가 19–22% 든 왕겨를 쓴다.</p></article>
+<article class="prob"><h4 class="prob-t">대량 생산 비용</h4><p><b>해결</b>공장을 늘려 생산 규모를 키운다.</p><p class="cost"><b>대가</b>배터리 수요가 흔들리면 매출도 흔들린다.</p></article>
+</section>
+<section class="lane todo" aria-labelledby="lane-todo"><h4 class="lane-t" id="lane-todo"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>남은 과제</h4>
+<article class="prob"><h4 class="prob-t">고온에서 복사로 새는 열</h4><p><b>해결</b>복사를 막는 방법이 연구 과제로 남아 있다. 아래 그래프 참고.</p><p class="cost"><b>대가</b>배터리 화재처럼 고온에서 쓰일수록 중요해진다.</p></article>
+</section>
+</div>
+<p class="small muted" style="margin-top:0.75rem"><b>그림 6-1</b> 에어로겔의 한계와 해결 진행 상황.</p>
 
 <h3 id="hot">온도가 높아지면: 복사로 새는 열이 커진다</h3>
 <p>에어로겔은 상온에서 <a href="#heat">열이 지나가는 세 길</a>을 모두 잘 막는다. 하지만 온도가 오르면 복사로 새는 열이 커진다. 아래는 고온용 에어로겔 블랭킷(유리섬유로 보강한 상용 제품)의 온도별 열전도율이다.</p>
-<figure class="fig-panel kt"><svg viewBox="0 0 480 262" role="img" aria-label="에어로겔 블랭킷 열전도율: 0도 20, 300도 35, 600도 89 mW/(m·K)"><line x1="58" x2="455" y1="172.8" y2="172.8" stroke="var(--line)" stroke-width="1"/><text x="50" y="177.8" text-anchor="end" font-size="15" fill="var(--muted)">25</text><line x1="58" x2="455" y1="128.5" y2="128.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="133.5" text-anchor="end" font-size="15" fill="var(--muted)">50</text><line x1="58" x2="455" y1="84.2" y2="84.2" stroke="var(--line)" stroke-width="1"/><text x="50" y="89.2" text-anchor="end" font-size="15" fill="var(--muted)">75</text><line x1="58" x2="455" y1="40.0" y2="40.0" stroke="var(--line)" stroke-width="1"/><text x="50" y="45.0" text-anchor="end" font-size="15" fill="var(--muted)">100</text><line x1="58" x2="455" y1="217" y2="217" stroke="var(--muted)" stroke-width="1"/><text x="58.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">0</text><text x="124.2" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">100</text><text x="190.3" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">200</text><text x="256.5" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">300</text><text x="322.7" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">400</text><text x="388.8" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">500</text><text x="455.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">600</text><text x="455" y="257" text-anchor="end" font-size="15" fill="var(--muted)">온도(°C)</text><text x="8" y="18" font-size="15" fill="var(--muted)">mW/(m·K)</text><polyline points="58.0,181.6 124.2,176.3 190.3,167.4 256.5,155.1 322.7,135.6 388.8,103.7 455.0,59.5" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/><g class="kt-pt"><title>0 °C: 20 mW/(m·K)</title><circle cx="58.0" cy="181.6" r="12" fill="transparent"/><circle cx="58.0" cy="181.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>100 °C: 23 mW/(m·K)</title><circle cx="124.2" cy="176.3" r="12" fill="transparent"/><circle cx="124.2" cy="176.3" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>200 °C: 28 mW/(m·K)</title><circle cx="190.3" cy="167.4" r="12" fill="transparent"/><circle cx="190.3" cy="167.4" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>300 °C: 35 mW/(m·K)</title><circle cx="256.5" cy="155.1" r="12" fill="transparent"/><circle cx="256.5" cy="155.1" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>400 °C: 46 mW/(m·K)</title><circle cx="322.7" cy="135.6" r="12" fill="transparent"/><circle cx="322.7" cy="135.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>500 °C: 64 mW/(m·K)</title><circle cx="388.8" cy="103.7" r="12" fill="transparent"/><circle cx="388.8" cy="103.7" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>600 °C: 89 mW/(m·K)</title><circle cx="455.0" cy="59.5" r="12" fill="transparent"/><circle cx="455.0" cy="59.5" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><text x="68.0" y="169.6" font-size="16" font-weight="600" fill="var(--ink)">20</text><text x="445.0" y="57.5" text-anchor="end" font-size="16" font-weight="600" fill="var(--ink)">89</text></svg><figcaption><b>그림 6-1</b> 에어로겔 블랭킷(Pyrogel XTE)의 온도별 열전도율.</figcaption></figure>
+<figure class="fig-panel kt"><svg viewBox="0 0 480 262" role="img" aria-label="에어로겔 블랭킷 열전도율: 0도 20, 300도 35, 600도 89 mW/(m·K)"><line x1="58" x2="455" y1="172.8" y2="172.8" stroke="var(--line)" stroke-width="1"/><text x="50" y="177.8" text-anchor="end" font-size="15" fill="var(--muted)">25</text><line x1="58" x2="455" y1="128.5" y2="128.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="133.5" text-anchor="end" font-size="15" fill="var(--muted)">50</text><line x1="58" x2="455" y1="84.2" y2="84.2" stroke="var(--line)" stroke-width="1"/><text x="50" y="89.2" text-anchor="end" font-size="15" fill="var(--muted)">75</text><line x1="58" x2="455" y1="40.0" y2="40.0" stroke="var(--line)" stroke-width="1"/><text x="50" y="45.0" text-anchor="end" font-size="15" fill="var(--muted)">100</text><line x1="58" x2="455" y1="217" y2="217" stroke="var(--muted)" stroke-width="1"/><text x="58.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">0</text><text x="124.2" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">100</text><text x="190.3" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">200</text><text x="256.5" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">300</text><text x="322.7" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">400</text><text x="388.8" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">500</text><text x="455.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">600</text><text x="455" y="257" text-anchor="end" font-size="15" fill="var(--muted)">온도(°C)</text><text x="8" y="18" font-size="15" fill="var(--muted)">mW/(m·K)</text><polyline points="58.0,181.6 124.2,176.3 190.3,167.4 256.5,155.1 322.7,135.6 388.8,103.7 455.0,59.5" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/><g class="kt-pt"><title>0 °C: 20 mW/(m·K)</title><circle cx="58.0" cy="181.6" r="12" fill="transparent"/><circle cx="58.0" cy="181.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>100 °C: 23 mW/(m·K)</title><circle cx="124.2" cy="176.3" r="12" fill="transparent"/><circle cx="124.2" cy="176.3" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>200 °C: 28 mW/(m·K)</title><circle cx="190.3" cy="167.4" r="12" fill="transparent"/><circle cx="190.3" cy="167.4" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>300 °C: 35 mW/(m·K)</title><circle cx="256.5" cy="155.1" r="12" fill="transparent"/><circle cx="256.5" cy="155.1" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>400 °C: 46 mW/(m·K)</title><circle cx="322.7" cy="135.6" r="12" fill="transparent"/><circle cx="322.7" cy="135.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>500 °C: 64 mW/(m·K)</title><circle cx="388.8" cy="103.7" r="12" fill="transparent"/><circle cx="388.8" cy="103.7" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>600 °C: 89 mW/(m·K)</title><circle cx="455.0" cy="59.5" r="12" fill="transparent"/><circle cx="455.0" cy="59.5" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><text x="68.0" y="169.6" font-size="16" font-weight="600" fill="var(--ink)">20</text><text x="445.0" y="57.5" text-anchor="end" font-size="16" font-weight="600" fill="var(--ink)">89</text></svg><figcaption><b>그림 6-2</b> 에어로겔 블랭킷(Pyrogel XTE)의 온도별 열전도율.</figcaption></figure>
 <p>600 °C에서는 0 °C의 4배가 넘는다. 온도가 오르면 복사의 중심 파장이 실리카가 거의 흡수하지 못하는 3–8 μm 적외선 구간으로 옮겨 가고, 복사 자체도 세지기 때문이다.</p>
 <details class="more">
 <summary>식으로 더 보기: 왜 파장이 바뀔까</summary>
@@ -1972,21 +2064,61 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 </details>
 
 <h3 id="outlook">전망</h3>
-<p>CAS는 에어로겔 시장이 아직 초기 단계지만 전망은 밝다고 평가한다. 특허가 꾸준히 늘고 있고, 국내에서도 양산 공장이 풀가동에 들어갔다. 남은 숙제는 강도와 가격이다. 상압 건조처럼 공정을 단순하게 만드는 기술과 값싼 원료가 자리 잡으면, 배터리와 산업 설비를 넘어 건물과 생활 제품으로 쓰임이 넓어질 것이다.</p>
+<p class="statement">남은 숙제는 강도와 가격이다.</p>
+<p>CAS는 에어로겔 시장이 아직 초기 단계지만 전망은 밝다고 평가한다. 특허가 꾸준히 늘고 있고, 국내에서도 양산 공장이 풀가동에 들어갔다. 상압 건조처럼 공정을 단순하게 만드는 기술과 값싼 원료가 자리 잡으면, 배터리와 산업 설비를 넘어 건물과 생활 제품으로 쓰임이 넓어질 것이다.</p>
 
-<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#trend"><span>이전</span><b>산업과 시장</b></a><a class="next" href="#reference"><span>다음</span><b>참고문헌</b></a></nav>
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#trend"><span>이전</span><b>산업과 시장</b></a><a class="next" href="#ai"><span>다음</span><b>AI 활용</b></a></nav>
+</div></section><section id="ai" class="band gutter page-sec page" aria-labelledby="h-ai"><div class="col">
+<div class="page-head"><p class="seq">7 / 7</p><h2 class="sec-title" id="h-ai">AI 활용</h2><p class="en">How We Used AI</p></div>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#how">어떻게 만들었나</a><a href="#roles">AI와 우리의 역할</a><a href="#mistakes">AI가 틀렸던 순간</a><a href="#rules">AI를 쓰며 지킨 원칙</a></nav>
+
+<h3 id="how">어떻게 만들었나</h3>
+<p>이 홈페이지는 AI(Claude)와 대화하며 만들었다. 다섯 단계를 거쳤다.</p>
+<ol class="rail rail5 ai-rail"><li><span class="y">1</span><b>조사</b><p>지난 3년 학생 홈페이지를 분석하고, 논문과 공식 자료를 찾았다. 참고문헌 29건이 여기서 나왔다.</p></li><li><span class="y">2</span><b>구성</b><p>페이지 구조와 디자인 방향을 정했다. Wix 대신 HTML로 직접 만들어 GitHub Pages에 올리기로 했다.</p></li><li><span class="y">3</span><b>작성</b><p>글 초안을 받은 뒤, 이해가 안 되는 문장은 질문하고 쉬운 말로 다시 썼다.</p></li><li><span class="y">4</span><b>시각화</b><p>그림, 시뮬레이션, 그래프를 코드로 그렸다. 사진은 쓰지 않았다.</p></li><li><span class="y">5</span><b>검증</b><p>원문과 대조해 오류를 고치고, 페이지마다 다른 숫자와 용어를 하나로 맞췄다.</p></li></ol>
+
+<h3 id="roles">AI와 우리의 역할</h3>
+<div class="roles">
+<section class="role ai"><h4 class="role-t">AI가 한 일</h4><ul>
+<li>자료 검색과 요약</li><li>글 초안 작성</li><li>HTML 코드, 그림, 시뮬레이션 코드 작성</li><li>계산(모세관 압력, 성장률 등)</li>
+</ul></section>
+<section class="role us"><h4 class="role-t">우리가 한 일</h4><ul>
+<li>주제와 방향, 페이지 구성 결정</li><li>모르는 개념을 질문하며 공부<span>평균자유행로, 음속, 미네랄울, 축척…</span></li><li>표현과 디자인 선택, 70번 넘는 수정 요청</li><li>사실 확인을 요청하고 최종 판단</li>
+</ul></section>
+</div>
+
+<h3 id="mistakes">AI가 틀렸던 순간</h3>
+<p>AI가 만든 내용을 그대로 믿지 않고 확인하자, 실제로 틀린 곳이 나왔다.</p>
+<div class="fixes">
+<article class="fix"><h4 class="fix-t">산·염기 촉매 설명이 거꾸로였다</h4><p class="was">산 촉매는 결합이 많은 규소에서, 염기 촉매는 사슬 끝에서 반응한다고 썼다.</p><p class="now">출처 교재를 다시 보니 앞뒤 내용이 서로 달랐다. 다른 교과서(Brinker·Scherer)와 대조해 바로잡았다.</p></article>
+<article class="fix"><h4 class="fix-t">용어가 틀렸다</h4><p class="was">'3–8 μm 근적외선'이라고 썼다.</p><p class="now">3–8 μm는 근적외선이 아니라 중적외선 구간이다. 용어를 고쳤다.</p></article>
+<article class="fix"><h4 class="fix-t">같은 값이 페이지마다 달랐다</h4><p class="was">빈 공간 비율이 90%와 80%로, 열전도율이 13과 16–30으로 적혀 있었고 단위도 W와 mW가 섞여 있었다.</p><p class="now">출처를 확인해 숫자와 단위를 하나로 통일했다.</p></article>
+</div>
+
+<h3 id="rules">AI를 쓰며 지킨 원칙</h3>
+<ul class="rules">
+<li>모든 수치는 출처를 확인하고 참고문헌에 남겼다.</li>
+<li>이해하지 못한 문장은 그대로 두지 않고 질문해 고쳤다.</li>
+<li>사진은 쓰지 않고, 그림은 모두 코드로 새로 그렸다.</li>
+</ul>
+<p class="statement">AI는 빠르게 만들어 주지만, 맞는지 확인하는 건 우리 몫이었다.</p>
+
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#issue"><span>이전</span><b>한계와 해결</b></a><a class="next" href="#reference"><span>다음</span><b>참고문헌</b></a></nav>
 </div></section><section id="reference" class="band gutter page-sec page" aria-labelledby="h-reference"><div class="col">
 <div class="page-head"><h2 class="sec-title" id="h-reference">참고문헌</h2><p class="en">References</p></div>
 <nav class="onpage" aria-label="이 부분의 내용"><a href="#g1">논문·학술 자료</a><a href="#g14">데이터베이스</a><a href="#g16">기관·기업 자료</a><a href="#g26">뉴스</a></nav>
 <p style="margin-top:2rem">이 홈페이지를 만들 때 참고한 논문과 자료다. 웹 자료는 2026년 10월 29일에 접속해 확인했다.</p>
 <h3 id="g1">논문·학술 자료</h3><ol class="refs" start="1"><li id="ref-1" value="1">S. Kistler, <span class="t">Coherent Expanded Aerogels and Jellies</span>, Nature 127, 741 (1931). <a href="https://doi.org/10.1038/127741a0">doi:10.1038/127741a0</a></li><li id="ref-2" value="2">F. Akhter, S. A. Soomro, V. J. Inglezakis, <span class="t">Silica aerogels; a review of synthesis, applications and fabrication of hybrid composites</span>, Journal of Porous Materials (2021). <a href="https://doi.org/10.1007/s10934-021-01091-3">doi:10.1007/s10934-021-01091-3</a></li><li id="ref-3" value="3">F. Lou, S. Dong, K. Zhu, X. Chen, Y. Ma, <span class="t">Thermal Insulation Performance of Aerogel Nano-Porous Materials: Characterization and Test Methods</span>, Gels 9(3), 220 (2023). <a href="https://doi.org/10.3390/gels9030220">doi:10.3390/gels9030220</a></li><li id="ref-4" value="4">R. Baetens, B. P. Jelle, A. Gustavsen, <span class="t">Aerogel insulation for building applications: A state-of-the-art review</span>, Energy and Buildings 43(4), 761–769 (2011). 공개본: <a href="http://hdl.handle.net/11250/2453469">hdl.handle.net/11250/2453469</a></li><li id="ref-5" value="5">B. P. Jelle, A. Gustavsen 외, <span class="t">Properties, requirements and possibilities of traditional, state-of-the-art and beyond state-of-the-art thermal building insulation materials</span>, 9th Nordic Symposium on Building Physics (NSB 2011), Tampere. <a href="https://webpages.tuni.fi/nsb2011/sites/www.tut.fi.nsb2011/files/b3_02_jelle_-_nsb_2011.pdf">PDF</a></li><li id="ref-6" value="6">U. Schubert, <span class="t">Chemistry and Fundamentals of the Sol–Gel Process</span>, in D. Levy, M. Zayat (eds.), The Sol–Gel Handbook, Wiley-VCH (2015), Chapter 1. <a href="https://application.wiley-vch.de/books/sample/3527334866_c01.pdf">PDF(견본 장)</a></li><li id="ref-7" value="7">C. J. Brinker, G. W. Scherer, <span class="t">Sol-Gel Science: The Physics and Chemistry of Sol-Gel Processing</span>, Academic Press (1990). ISBN 978-0-12-134970-7. <a href="https://shop.elsevier.com/books/sol-gel-science/brinker/978-0-12-134970-7">출판사 페이지</a></li><li id="ref-8" value="8">윤호성, 박형상, 김상환, <span class="t">알칼리 조건하에서 졸-겔 법에 의한 TEOS의 가수 분해와 축합중합 반응에 대한 속도론적 연구</span>, 화학공학 32(4), 557–565 (1994). <a href="https://www.kiche.or.kr/journal/kcer/view/all/32/4/557">한국화학공학회</a></li><li id="ref-9" value="9">S. S. Prakash, C. J. Brinker, A. J. Hurd, S. M. Rao, <span class="t">Silica aerogel films prepared at ambient pressure by using surface derivatization to induce reversible drying shrinkage</span>, Nature 374, 439–443 (1995). <a href="https://doi.org/10.1038/374439a0">doi:10.1038/374439a0</a></li><li id="ref-10" value="10">G. A. Spiering, G. F. Godshall, R. B. Moore, <span class="t">Effect of the Gel Drying Method on Properties of Semicrystalline Aerogels Prepared with Different Network Morphologies</span>, Gels 11(6), 447 (2025). <a href="https://doi.org/10.3390/gels11060447">doi:10.3390/gels11060447</a></li><li id="ref-11" value="11">N. Leventis, C. Sotiriou-Leventis, G. Zhang, A.-M. M. Rawashdeh, <span class="t">Nanoengineering Strong Silica Aerogels</span>, Nano Letters 2(9), 957–960 (2002). <a href="https://doi.org/10.1021/nl025690e">doi:10.1021/nl025690e</a></li><li id="ref-12" value="12">H. Sun, Z. Xu, C. Gao, <span class="t">Multifunctional, Ultra-Flyweight, Synergistically Assembled Carbon Aerogels</span>, Advanced Materials 25(18), 2554–2560 (2013).</li><li id="ref-13" value="13">Z. Wang, X. Tang, Y. Zhou, H. Huang, H. Dai, <span class="t">Experimental and Modeling Analysis of Thermal Runaway for LiNi0.5Mn0.3Co0.2O2/Graphite Pouch Cell Triggered by Surface Heating</span>, Energies 17(4), 826 (2024). <a href="https://doi.org/10.3390/en17040826">doi:10.3390/en17040826</a></li></ol><h3 id="g14">데이터베이스</h3><ol class="refs" start="14"><li id="ref-14" value="14">NIST Chemistry WebBook, SRD 69, <span class="t">Carbon dioxide: Phase change data</span> (임계온도 304.18 K, 임계압력 73.80 bar). <a href="https://webbook.nist.gov/cgi/cbook.cgi?ID=C124389&amp;Mask=4">webbook.nist.gov</a></li><li id="ref-15" value="15">The Engineering ToolBox, <span class="t">Thermal Conductivity of Common Materials: Solids, Liquids and Gases</span> (마이카 0.71, 폴리우레탄 폼 0.03 W/(m·K)). <a href="https://engineeringtoolbox.com/thermal-conductivity-d_429.html">engineeringtoolbox.com</a></li></ol><h3 id="g16">기관·기업 자료</h3><ol class="refs" start="16"><li id="ref-16" value="16">H. Goyal, <span class="t">단열을 넘어: 에어로젤의 새로운 응용 분야</span>, CAS Insights, 2025.05.15. <a href="https://www.cas.org/ko/resources/cas-insights/aerogel-applications">cas.org</a></li><li id="ref-17" value="17">NASA Jet Propulsion Laboratory, <span class="t">Ideas that gel</span>, 2002.02.11. <a href="https://www.jpl.nasa.gov/news/ideas-that-gel/">jpl.nasa.gov</a></li><li id="ref-18" value="18">NASA Science, <span class="t">Stardust</span> (미션 소개). <a href="https://science.nasa.gov/mission/stardust/">science.nasa.gov</a></li><li id="ref-19" value="19">Aerogel.org, <span class="t">Properties of Aerogels</span>. <a href="https://www.aerogel.org/?p=103">aerogel.org</a></li><li id="ref-20" value="20">Aspen Aerogels, <span class="t">Battery Electric Vehicles</span> (PyroThin 열 차단재). <a href="https://www.aerogel.com/?p=6427">aerogel.com</a></li><li id="ref-21" value="21">Aspen Aerogels, <span class="t">Aspen Aerogels, Inc. Reports Fourth Quarter and Full Year 2025 Financial Results</span>, 2026.02.25. <a href="https://ir.aerogel.com/news/news-details/2026/Aspen-Aerogels-Inc--Reports-Fourth-Quarter-and-Full-Year-2025-Financial-Results-and-Recent-Business-Highlights/default.aspx">ir.aerogel.com</a></li><li id="ref-22" value="22">Cabot Corporation, <span class="t">Cabot Launches Lumira™ aerogel Brand for Architectural Daylighting</span>, 2011.06.01. <a href="https://cabotog.gcs-web.com/node/9306">cabotcorp</a></li><li id="ref-23" value="23">LG, <span class="t">“플라스틱 재활용ㆍ미래 소재 육성 첫 삽” LG화학, 당진공장 착공식 개최</span>, 보도자료, 2023.03.30. <a href="https://www.lg.co.kr/media/release/26080">lg.co.kr</a></li><li id="ref-24" value="24">Aspen Aerogels, <span class="t">Pyrogel XTE Datasheet</span>, Rev 4.2 (ASTM C177 열전도율 표). <a href="https://www.aerogel.com/wp-content/uploads/2021/06/Pyrogel-XTE-Datasheet-English-v4.2.pdf">aerogel.com</a></li><li id="ref-25" value="25">Battery Design, <span class="t">Specific Heat Capacity of Lithium Ion Cells</span> (Maleki 외 1999 측정값 정리). <a href="https://www.batterydesign.net/specific-heat-capacity-of-lithium-ion-cells/">batterydesign.net</a></li></ol><h3 id="g26">뉴스</h3><ol class="refs" start="26"><li id="ref-26" value="26">이동인, <span class="t">꿈의 단열재 에어로젤 주문폭주…증설 검토</span>, 매일경제, 2026.01.28. <a href="https://v.daum.net/v/20260128174201889">다음 뉴스</a></li><li id="ref-27" value="27"><span class="t">알케젠, 전기차(EV) 배터리 화재 방지 에어로겔 본격 생산 돌입</span>, 더팀스(PR Newswire 배포), 2025.06.04. <a href="https://www.theteams.kr/news/detail/3414">theteams.kr</a></li><li id="ref-28" value="28"><span class="t">World's lightest material</span> (저장대 탄소 에어로겔 연구 소개), Nanowerk, 2013.03.22. <a href="https://www.nanowerk.com/news2/newsid=29667.php">nanowerk.com</a></li><li id="ref-29" value="29">T. Lombardo, <span class="t">Aspen Aerogels’ cutting-edge materials protect against thermal runaway</span>, Charged EVs, 2023.04.14. <a href="https://chargedevs.com/features/thermal-runaway-in-ev-battery-packs-designing-a-mitigation-strategy/">chargedevs.com</a></li></ol>
-<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#issue"><span>이전</span><b>한계와 해결</b></a><a class="next" href="#team"><span>다음</span><b>조원</b></a></nav>
+<nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#ai"><span>이전</span><b>AI 활용</b></a><a class="next" href="#team"><span>다음</span><b>조원</b></a></nav>
 </div></section><section id="team" class="band gutter page-sec page" aria-labelledby="h-team"><div class="col">
 <div class="page-head"><h2 class="sec-title" id="h-team">조원</h2><p class="en">Team</p></div>
 
-<p style="margin-top:2rem">명지대학교 화학과 컴퓨터화학 6조</p>
-<ul class="members"><li><span class="name">이우현</span></li><li><span class="name">김상현</span></li><li><span class="name">장지아</span></li></ul>
-<p class="members-note">기여도는 모두 동일합니다.</p>
+
+<div class="team">
+<p class="team-org">명지대학교 화학과</p>
+<p class="team-name">컴퓨터화학 6조</p>
+<ul class="team-members" aria-label="조원"><li>이우현</li><li>김상현</li><li>장지아</li></ul>
+<p class="team-note">기여도는 모두 동일합니다.</p>
+</div>
 <nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#reference"><span>이전</span><b>참고문헌</b></a></nav>
 </div></section>
 </main>
