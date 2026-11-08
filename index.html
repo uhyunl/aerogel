@@ -737,7 +737,7 @@ details.more .eq { margin: 0.4rem 0 0.6rem; }
 .role li { margin: 0.35rem 0; font-size: 0.95rem; }
 .role li span { display: block; font-size: 0.82rem; color: var(--muted); }
 @media (max-width: 640px) { .roles { grid-template-columns: 1fr; } }
-.fixes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.25rem 0 0; }
+.fixes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1.25rem 0 0; }
 .fix { min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; background: #fff; }
 .fixes .fix .fix-t { margin: 0 0 0.6rem; font-size: 1rem; font-weight: 600; line-height: 1.4; }
 .fix p { margin: 0; font-size: 0.9rem; line-height: 1.65; padding-left: 1.4rem; position: relative; }
@@ -949,6 +949,14 @@ body::after {
 .ai-flow th[scope="row"], .ai-sims th[scope="row"] { white-space: nowrap; font-weight: 600; }
 .ai-flow td:last-child { color: var(--accent); font-weight: 600; }
 @media (max-width: 640px) { .ai-stats li { width: calc(50% - 0.5rem); max-width: 9rem; } }
+/* work flow: titles only, laid out as a horizontal stepper */
+@media (min-width: 641px) {
+  .vsteps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); max-width: none; margin-top: 1.75rem; }
+  .vsteps li { grid-template-columns: 1fr; justify-items: center; text-align: center; row-gap: 0.7rem; padding-bottom: 0; }
+  .vsteps li::after { left: calc(50% + 1.25rem); right: calc(-50% + 1.25rem); top: calc(1.25rem - 1px); bottom: auto; width: auto; height: 2px; }
+  .vsteps .body { padding-top: 0; }
+  .vsteps b { margin-bottom: 0; }
+}
 </style>
 </head>
 <body>
@@ -2281,16 +2289,15 @@ body::after {
 <nav class="onpage" aria-label="이 부분의 내용"><a href="#problems">해결은 어디까지 왔나</a><a href="#hot">고온에서의 단열 한계</a><a href="#outlook">전망</a></nav>
 
 <h3 id="problems">해결은 어디까지 왔나</h3>
-<p>에어로겔이 이렇게 좋은데 왜 아직 어디에나 쓰이지 않을까? 잘 부서지고 비싸기 때문이다. 문제마다 해결이 어디까지 왔는지 정리했다.</p>
+<p>에어로겔이 이렇게 좋은데 왜 아직 어디에나 쓰이지 않을까? 잘 부서지고 비싸기 때문이다.</p>
 <div class="board">
 <section class="lane done" aria-labelledby="lane-done"><h4 class="lane-t" id="lane-done"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>상용화됨</h4>
-<article class="prob"><h4 class="prob-t">충격에 잘 부서진다</h4><p><b>해결</b>유리섬유 매트에 에어로겔을 채운 블랭킷으로 만든다. 골격을 고분자로 감싸 강도를 100배 이상 높인 연구도 있다.</p><p class="cost"><b>대가</b>섬유를 넣으면 단열 성능이 조금 떨어지고, 골격을 고분자로 감싸면 무거워지고 단열 성능도 떨어진다.</p></article>
+<article class="prob"><h4 class="prob-t">충격에 잘 부서진다</h4><p><b>해결</b>유리섬유 매트에 에어로겔을 채워 복합재로 만든다. 에어로겔 골격 입자를 고분자로 감싸 강도를 100배 이상 높인 연구도 있다.</p><p class="cost"><b>대가</b>섬유를 넣으면 단열 성능이 조금 떨어지고, 골격을 고분자로 감싸면 무거워지고 단열 성능도 떨어진다.</p></article>
 <article class="prob"><h4 class="prob-t">가루가 날려 다루기 어렵다</h4><p><b>해결</b>가루가 덜 날리는 섬유 강화 제품이 양산되고 있다.</p></article>
 </section>
 <section class="lane doing" aria-labelledby="lane-doing"><h4 class="lane-t" id="lane-doing"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>연구·진행 중</h4>
 <article class="prob"><h4 class="prob-t">초임계 건조는 비싸고 위험하다</h4><p><b>해결</b>표면을 바꿔 보통 대기압에서 말린다(상압 건조). 건조 기간을 1일로 줄인 보고도 있다.</p><p class="cost"><b>대가</b>상업 생산은 아직 대부분 초임계 건조를 쓴다.</p></article>
 <article class="prob"><h4 class="prob-t">원료가 비싸고 유해하다</h4><p><b>해결</b>TEOS 대신 값싼 물유리나, 실리카가 19–22% 든 왕겨를 쓴다.</p></article>
-<article class="prob"><h4 class="prob-t">대량 생산 비용</h4><p><b>해결</b>공장을 늘려 생산 규모를 키운다.</p><p class="cost"><b>대가</b>배터리 수요가 흔들리면 매출도 흔들린다.</p></article>
 </section>
 <section class="lane todo" aria-labelledby="lane-todo"><h4 class="lane-t" id="lane-todo"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>남은 과제</h4>
 <article class="prob"><h4 class="prob-t">고온에서 복사로 새는 열</h4><p><b>해결</b>복사를 막는 방법이 연구 과제로 남아 있다. 아래 그래프 참고.</p><p class="cost"><b>대가</b>배터리 화재처럼 고온에서 쓰일수록 중요해진다.</p></article>
@@ -2299,18 +2306,9 @@ body::after {
 <p class="small muted" style="margin-top:0.75rem"><b>그림 6-1</b> 에어로겔의 한계와 해결 진행 상황.</p>
 
 <h3 id="hot">고온에서의 단열 한계</h3>
-<p>에어로겔은 상온에서 <a href="#heat">열이 지나가는 세 길</a>을 모두 잘 막는다. 하지만 온도가 오르면 복사로 새는 열이 커진다. 아래는 고온용 에어로겔 블랭킷(유리섬유로 보강한 상용 제품)의 온도별 열전도율이다.</p>
+<p>에어로겔은 상온에서 <a href="#heat">열이 지나가는 세 길</a>을 모두 잘 막는다. 하지만 온도가 오르면 복사로 새는 열이 커진다. 아래는 고온용 에어로겔의 온도별 열전도율이다.</p>
 <figure class="fig-panel kt"><svg viewBox="0 0 480 262" role="img" aria-label="에어로겔 블랭킷 열전도율: 0도 20, 300도 35, 600도 89 mW/(m·K)"><line x1="58" x2="455" y1="172.8" y2="172.8" stroke="var(--line)" stroke-width="1"/><text x="50" y="177.8" text-anchor="end" font-size="15" fill="var(--muted)">25</text><line x1="58" x2="455" y1="128.5" y2="128.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="133.5" text-anchor="end" font-size="15" fill="var(--muted)">50</text><line x1="58" x2="455" y1="84.2" y2="84.2" stroke="var(--line)" stroke-width="1"/><text x="50" y="89.2" text-anchor="end" font-size="15" fill="var(--muted)">75</text><line x1="58" x2="455" y1="40.0" y2="40.0" stroke="var(--line)" stroke-width="1"/><text x="50" y="45.0" text-anchor="end" font-size="15" fill="var(--muted)">100</text><line x1="58" x2="455" y1="217" y2="217" stroke="var(--muted)" stroke-width="1"/><text x="58.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">0</text><text x="124.2" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">100</text><text x="190.3" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">200</text><text x="256.5" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">300</text><text x="322.7" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">400</text><text x="388.8" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">500</text><text x="455.0" y="237" text-anchor="middle" font-size="15" fill="var(--muted)">600</text><text x="455" y="257" text-anchor="end" font-size="15" fill="var(--muted)">온도(°C)</text><text x="8" y="18" font-size="15" fill="var(--muted)">mW/(m·K)</text><polyline points="58.0,181.6 124.2,176.3 190.3,167.4 256.5,155.1 322.7,135.6 388.8,103.7 455.0,59.5" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/><g class="kt-pt"><title>0 °C: 20 mW/(m·K)</title><circle cx="58.0" cy="181.6" r="12" fill="transparent"/><circle cx="58.0" cy="181.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>100 °C: 23 mW/(m·K)</title><circle cx="124.2" cy="176.3" r="12" fill="transparent"/><circle cx="124.2" cy="176.3" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>200 °C: 28 mW/(m·K)</title><circle cx="190.3" cy="167.4" r="12" fill="transparent"/><circle cx="190.3" cy="167.4" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>300 °C: 35 mW/(m·K)</title><circle cx="256.5" cy="155.1" r="12" fill="transparent"/><circle cx="256.5" cy="155.1" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>400 °C: 46 mW/(m·K)</title><circle cx="322.7" cy="135.6" r="12" fill="transparent"/><circle cx="322.7" cy="135.6" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>500 °C: 64 mW/(m·K)</title><circle cx="388.8" cy="103.7" r="12" fill="transparent"/><circle cx="388.8" cy="103.7" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><g class="kt-pt"><title>600 °C: 89 mW/(m·K)</title><circle cx="455.0" cy="59.5" r="12" fill="transparent"/><circle cx="455.0" cy="59.5" r="4.5" fill="#fff" stroke="var(--accent)" stroke-width="2"/></g><text x="68.0" y="169.6" font-size="16" font-weight="600" fill="var(--ink)">20</text><text x="445.0" y="57.5" text-anchor="end" font-size="16" font-weight="600" fill="var(--ink)">89</text></svg><figcaption><b>그림 6-2</b> 에어로겔 블랭킷(Pyrogel XTE)의 온도별 열전도율.</figcaption></figure>
 <p>600 °C에서는 0 °C의 4배가 넘는다. 온도가 오르면 복사의 중심 파장이 실리카가 거의 흡수하지 못하는 3–8 μm 적외선 구간으로 옮겨 가고, 복사 자체도 세지기 때문이다.</p>
-<details class="more">
-<summary>식으로 더 보기: 왜 파장이 바뀔까</summary>
-<p>뜨거운 물체가 내는 적외선이 가장 센 파장은 빈의 변위 법칙 λ<sub>max</sub> = 2,898 μm·K ÷ <var>T</var>를 따른다.</p>
-<ul>
-<li>상온(약 300 K): 약 10 μm. 실리카는 이 근처(약 9 μm)의 빛을 Si–⁠O–⁠Si 결합의 진동으로 잘 흡수한다.</li>
-<li>600 °C(873 K): 약 3.3 μm. 실리카가 거의 흡수하지 못하는 3–8 μm 구간이라 복사가 골격을 통과한다.</li>
-<li>복사가 열전도율에 보태는 몫은 절대온도의 세제곱에 비례한다. 절대온도가 2배면 약 8배다.</li>
-</ul>
-</details>
 
 <h3 id="outlook">전망</h3>
 <p class="statement">남은 숙제는 강도와 가격이다.</p>
@@ -2320,10 +2318,10 @@ body::after {
 </div></div></section><section id="ai" class="band gutter page-sec page" aria-labelledby="h-ai"><div class="col">
 <div class="page-head"><p class="seq">7 / 7</p><h2 class="sec-title" id="h-ai">AI 활용</h2><p class="en">How We Used AI</p></div>
 </div><div class="sheet"><div class="col">
-<nav class="onpage" aria-label="이 부분의 내용"><a href="#ai-sum">한눈에 보기</a><a href="#flow">작업 흐름</a><a href="#roles">역할 분담</a><a href="#checks">검증 사례</a><a href="#sims">시뮬레이션 설계</a><a href="#rules">지킨 원칙</a></nav>
+<nav class="onpage" aria-label="이 부분의 내용"><a href="#ai-sum">한눈에 보기</a><a href="#flow">작업 흐름</a><a href="#roles">역할 분담</a><a href="#checks">검증 사례</a><a href="#sims">시뮬레이션 설계</a></nav>
 
 <h3 id="ai-sum">한눈에 보기</h3>
-<p>이 홈페이지는 생성형 AI인 Claude와 대화하며 기획부터 검증까지 만들었다. AI는 자료 요약, 글 초안, 코드를 빠르게 만들었고, 우리는 무엇을 넣고 뺄지와 내용이 맞는지를 판단했다.</p>
+<p>이 홈페이지는 Claude를 활용하여 만들었다. AI는 자료 조사 및 요약, 글 초안, 코드를 빠르게 만들었고, 우리는 무엇을 넣고 뺄지와 내용이 맞는지를 판단했다.</p>
 <ul class="stats ai-stats">
 <li><span class="k">참고문헌</span><span class="v">29</span><span class="u">건</span></li>
 <li><span class="k">코드로 그린 그림</span><span class="v">18</span><span class="u">개</span></li>
@@ -2334,11 +2332,11 @@ body::after {
 
 <h3 id="flow">작업 흐름</h3>
 <ol class="vsteps">
-<li><span class="n">1</span><div class="body"><b>선배 홈페이지 분석</b><p>지난 3년 학생 홈페이지를 보고 메뉴 7개 구성을 정했다. Wix 대신 HTML로 직접 만들기로 했다.</p></div></li>
-<li><span class="n">2</span><div class="body"><b>자료 모으기</b><p>AI가 찾아 준 논문과 기사 중 원문을 열어 확인한 것만 남겼다. 그렇게 모인 참고문헌이 29건이다.</p></div></li>
-<li><span class="n">3</span><div class="body"><b>초안 읽고 질문하기</b><p>AI 초안을 읽다 막히면 바로 물었다. 평균자유행로, 음속, 미네랄울도 이때 공부했다.</p></div></li>
-<li><span class="n">4</span><div class="body"><b>그림과 시뮬레이션</b><p>보여 주고 싶은 장면을 말로 설명하면 AI가 코드로 그렸고, 화면을 보며 70번 넘게 고쳤다.</p></div></li>
-<li><span class="n">5</span><div class="body"><b>검증과 다듬기</b><p>교과서와 원문으로 틀린 곳을 잡고, 발표 분량에 맞춰 내용을 덜고 다듬었다.</p></div></li>
+<li><span class="n">1</span><div class="body"><b>홈페이지 분석</b></div></li>
+<li><span class="n">2</span><div class="body"><b>자료 모으기</b></div></li>
+<li><span class="n">3</span><div class="body"><b>초안 생성</b></div></li>
+<li><span class="n">4</span><div class="body"><b>그림과 시뮬레이션</b></div></li>
+<li><span class="n">5</span><div class="body"><b>검증과 다듬기</b></div></li>
 </ol>
 
 <h3 id="roles">역할 분담</h3>
@@ -2354,30 +2352,20 @@ body::after {
 <h3 id="checks">검증 사례</h3>
 <p>AI가 만든 결과를 그대로 쓰지 않고 확인하자, 고쳐야 할 곳이 여러 번 나왔다.</p>
 <div class="fixes">
-<article class="fix"><h4 class="fix-t">산·염기 촉매 설명이 거꾸로였다</h4><p class="was">산 촉매는 결합이 많은 규소에서, 염기 촉매는 사슬 끝에서 반응한다고 썼다.</p><p class="now">Brinker·Scherer 교과서와 대조해 바로잡았다.</p></article>
+<article class="fix"><h4 class="fix-t">산·염기 촉매 설명이 거꾸로였다</h4><p class="was">산 촉매는 결합이 많은 규소에서, 염기 촉매는 사슬 끝에서 반응한다고 썼다.</p><p class="now">나노화학 교재와 대조해 바로잡았다.</p></article>
 <article class="fix"><h4 class="fix-t">용어와 숫자가 맞지 않았다</h4><p class="was">3–8 μm를 근적외선이라 썼고, 빈 공간 비율과 열전도율이 페이지마다 달랐다.</p><p class="now">중적외선으로 고치고, 출처를 확인해 숫자와 단위를 하나로 통일했다.</p></article>
-<article class="fix"><h4 class="fix-t">내용이 너무 어려워졌다</h4><p class="was">발표 분량을 늘리려 AI로 내용을 보강하자, 5배위 SN2 메커니즘과 복사 열전달 적분식 같은 심화 내용이 붙었다.</p><p class="now">청중 수준에 맞춰 심화 내용은 빼고, 직접 조작하며 이해할 수 있는 계산기와 시뮬레이션만 남겼다.</p></article>
+<article class="fix"><h4 class="fix-t">내용이 너무 어려워졌다</h4><p class="was">AI에게 논문과 검증된 자료로 자료 수집을 부탁하자, 5배위 SN2 메커니즘과 복사 열전달 적분식 같은 심화 내용이 붙었다.</p><p class="now">학부생 수준에 맞춰 심화 내용은 빼고, 직접 조작하며 이해할 수 있는 계산기와 시뮬레이션만 남겼다.</p></article>
 <article class="fix"><h4 class="fix-t">그림과 시뮬레이션에도 오류가 있었다</h4><p class="was">반응 모식도의 분자 개수가 맞지 않았고, 본문(9초)과 시뮬레이션(9.6초)의 숫자가 달랐다.</p><p class="now">배터리 시뮬레이션을 18가지 조건으로 모두 돌려 보고, 그림 4-2를 같은 모델의 결과로 다시 맞췄다.</p></article>
-<article class="fix"><h4 class="fix-t">이미지가 페이지와 겉돌았다</h4><p class="was">첫 화면 이미지를 맡기자 색감과 질감이 페이지와 어울리지 않는 결과가 여러 번 나왔다.</p><p class="now">사진 두 장과 코드로 그린 그림 두 가지, 모두 네 가지 시안을 비교해 직육면체 블록을 골랐다.</p></article>
-<article class="fix"><h4 class="fix-t">발표 시간이 모자랐다</h4><p class="was">처음 대본은 약 3,300자로, 말하면 10분 남짓이었다.</p><p class="now">글자 수로 시간을 계산하고, 홈페이지 내용을 빠짐없이 다루는 대본으로 다시 짰다.</p></article>
 </div>
 
 <h3 id="sims">시뮬레이션 설계</h3>
 <p>시뮬레이션 코드는 AI가 짰다. 어떤 장면을 보여 주고 어떤 값을 넣을지는 우리가 정했다.</p>
 <ul class="sim-list">
-<li><b>그림 1-1 말려 보기</b><p>그냥 말릴 때와 초임계 건조할 때 겔이 어떻게 달라지는지 버튼 하나로 비교하게 했다. 실제 비율이 아닌 모식도라는 점은 그림 아래에 밝혀 두었다.</p></li>
+<li><b>그림 1-1 말려 보기</b><p>그냥 말릴 때와 초임계 건조할 때 겔이 어떻게 달라지는지 버튼 하나로 비교하게 했다.</p></li>
 <li><b>그림 2-3 크누센 효과</b><p>기공 지름을 500 nm에서 30 nm로 줄이면 벽에 부딪히는 분자가 눈에 띄게 늘어난다. 평균자유행로 69 nm를 기준으로 크누센 수를 계산했다.</p></li>
 <li><b>미네랄울 두께 계산기</b><p>같은 단열 성능이면 두께가 열전도율에 비례한다는 점만 쓴 간단한 계산이다. 미네랄울 100 mm가 에어로겔로는 33–43 mm가 된다.</p></li>
 <li><b>그림 3-3 모세관 압력 계산기</b><p>P = 2γ / r에 액체 네 가지의 표면장력을 넣었다. 반지름을 절반으로 줄이면 압력이 두 배가 되는 걸 직접 확인할 수 있다.</p></li>
 <li><b>그림 4-3 열폭주 전파</b><p>가장 손이 많이 간 시뮬레이션이다. 셀 다섯 개를 각각 온도 하나로 보는 단순한 모델이라, 18가지 조건을 모두 돌려 보며 그림 4-2와 맞는지 확인했다.</p></li>
-</ul>
-
-<h3 id="rules">AI를 쓰며 지킨 원칙</h3>
-<ul class="rules">
-<li>모든 수치는 원문을 열어 확인하고 참고문헌에 남겼다.</li>
-<li>이해하지 못한 문장은 그대로 두지 않고 질문해 고쳤다.</li>
-<li>AI가 덧붙인 내용은 학부생 수준에 맞게 내용을 수정했다.</li>
-<li>사진 없이 모든 그림과 시뮬레이션을 코드로 새로 만들었다.</li>
 </ul>
 
 <nav class="pager" aria-label="이전, 다음 페이지"><a class="prev" href="#issue"><span>이전</span><b>한계와 해결</b></a><a class="next" href="#reference"><span>다음</span><b>참고문헌</b></a></nav>
