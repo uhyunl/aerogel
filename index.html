@@ -2305,7 +2305,7 @@ body::after {
 <li>자료 검색과 요약</li><li>글 초안과 발표 대본 초안</li><li>HTML·SVG·JavaScript 코드</li><li>계산<span>모세관 압력, 크누센 수, 시장 성장률, 열폭주 모델</span></li><li>오류와 어색한 표현 검수 목록</li>
 </ul></section>
 <section class="role us"><h4 class="role-t">우리의 몫은 판단</h4><ul>
-<li>주제, 페이지 구성, 내용의 난이도 결정</li><li>모르는 개념을 질문하며 공부<span>평균자유행로, 음속, 미네랄울, 축척…</span></li><li>70번 넘는 수정 요청</li><li>원문 대조와 사실 확인</li><li>디자인과 첫 화면 이미지 선택</li>
+<li>주제, 페이지 구성, 내용의 난이도 결정</li><li>모르는 개념을 질문하며 공부<span>평균자유행로, 미네랄울, 축척…</span></li><li>70번 넘는 수정 요청</li><li>원문 대조와 사실 확인</li><li>디자인과 첫 화면 이미지 선택</li>
 </ul></section>
 </div>
 
@@ -2424,7 +2424,7 @@ body::after {
   }
   panels.forEach(function (P) { draw(P, 0); });
   var btn = document.getElementById('dry-go'), raf = 0, DUR = 3600;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = false; // 발표용: 컴퓨터의 '애니메이션 줄이기' 설정과 상관없이 항상 애니메이션
   btn.addEventListener('click', function () {
     cancelAnimationFrame(raf);
     if (reduce) { panels.forEach(function (P) { draw(P, 1); }); btn.textContent = '다시 보기'; return; }
@@ -2469,7 +2469,7 @@ body::after {
   function col(name, fb) { var v = css.getPropertyValue(name).trim(); return v || fb; }
   var C = { bg: col('--bg', '#fff'), ink: col('--ink', '#13233f'), muted: col('--muted', '#5a6880'),
             accent: col('--accent', '#2c69b0'), tint: col('--tint-strong', '#c9dcf3'), heat: col('--heat', '#c4501d'), line: col('--line', '#dfe7f1') };
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = false; // 발표용: 컴퓨터의 '애니메이션 줄이기' 설정과 상관없이 항상 애니메이션
   var running = !reduce, D = 30, W = 720, H = 460, dpr = 1, S = 300, bx = 0, by = 0, lamPx = 0;
   var mols = [], flashes = [], nMol = 0, nWall = 0, frame = 0, ready = false;
   var rnd = (function () { var s = 20261029; return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; })();
@@ -2680,7 +2680,7 @@ body::after {
   function col(n, fb) { var v = css.getPropertyValue(n).trim(); return v || fb; }
   var K = { ink: col('--ink', '#13233f'), muted: col('--muted', '#5a6880'), line: col('--line', '#dfe7f1'), accent: col('--accent', '#2c69b0'),
             heat: col('--heat', '#c4501d'), tint: col('--tint', '#e9f2fc'), tintS: col('--tint-strong', '#c9dcf3'), font: css.getPropertyValue('--font') || 'sans-serif' };
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = false; // 발표용: 컴퓨터의 '애니메이션 줄이기' 설정과 상관없이 항상 애니메이션
 
   // ---- model (lumped heat capacity, 5 cells) ----
   var P = { C: 900, A: 0.02, dT: 1200, f: 0.65, t1: 4, t2: 250, hc: 0.65, hn: 0.9, puDeg: 250, puT: 3, puK: 3.0, trig: 170, amb: 25, tEnd: 600, dt: 0.05, speed: 40 };
